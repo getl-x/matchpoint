@@ -8,12 +8,14 @@ export function createReminderController({state,save,env=globalThis,fetcher=glob
  let registration,config,preparing,queue=Promise.resolve();
  const notify=()=>onChange();
  function support(){
+  const permission=env.Notification?.permission||'unsupported';
+  const unavailable=reason=>({supported:false,permission,reason});
   const ios=/iPad|iPhone|iPod/.test(env.navigator.userAgent)||(env.navigator.platform==='MacIntel'&&env.navigator.maxTouchPoints>1);
-  if(!env.isSecureContext)return {supported:false,reason:'通知需要通过 HTTPS 地址访问赛点。'};
-  if(ios&&!env.navigator.standalone&&!env.matchMedia('(display-mode: standalone)').matches)return {supported:false,reason:'请先添加到主屏幕，再从桌面打开赛点（需要 iOS / iPadOS 16.4 或更新版本）。'};
-  if(!env.Notification||!env.PushManager||!env.navigator.serviceWorker)return {supported:false,reason:'当前浏览器不支持后台通知，可选择日历提醒。'};
-  if(env.Notification.permission==='denied')return {supported:false,reason:'通知权限已被关闭，请在系统或浏览器设置中允许赛点发送通知。'};
-  return {supported:true,reason:'开启后，即使关闭网页，也能收到关注比赛的开赛提醒。'};
+  if(!env.isSecureContext)return unavailable('通知需要通过 HTTPS 地址访问赛点。');
+  if(ios&&!env.navigator.standalone&&!env.matchMedia('(display-mode: standalone)').matches)return unavailable('请先添加到主屏幕，再从桌面打开赛点（需要 iOS / iPadOS 16.4 或更新版本）。');
+  if(!env.Notification||!env.PushManager||!env.navigator.serviceWorker)return unavailable('当前浏览器不支持后台通知，可选择日历提醒。');
+  if(permission==='denied')return unavailable('通知权限已被关闭，请在系统或浏览器设置中允许赛点发送通知。');
+  return {supported:true,permission,reason:'开启后，即使关闭网页，也能收到关注比赛的开赛提醒。'};
  }
  function token(){
   let value=env.localStorage.getItem(TOKEN_KEY);if(/^[a-f0-9]{64}$/.test(value||''))return value;
@@ -51,12 +53,13 @@ export function createReminderController({state,save,env=globalThis,fetcher=glob
    const availability=support();if(!availability.supported)throw new Error(availability.reason);
    // Request permission before the first await: iOS requires the button's user gesture.
    const permission=env.Notification.permission==='granted'?Promise.resolve('granted'):env.Notification.requestPermission();
-   state.reminders.busy=true;notify();
+   state.reminders.busy=true;state.reminders.phase=availability.permission==='granted'?'connecting':'permission';state.reminders.syncError='';notify();
    try{
     await serial(async()=>{
      let created;
      try{
      if(await permission!=='granted')throw new Error('未获得通知权限。你仍可手动添加日历提醒。');
+     state.reminders.phase='connecting';notify();
      token();await controller.prepare();
      reconcile();let sub=await registration.pushManager.getSubscription();
      const desired=keyBytes(config.publicKey),old=sub?.options?.applicationServerKey;
@@ -66,10 +69,10 @@ export function createReminderController({state,save,env=globalThis,fetcher=glob
      state.reminders.enabled=true;state.reminders.pendingRemoval=false;if(!save())throw new Error('提醒偏好无法保存，请允许浏览器存储');
      }catch(error){if(created)await created.unsubscribe().catch(()=>{});state.reminders.enabled=false;state.reminders.syncError=error.message;save();throw error;}
     });
-   }finally{state.reminders.busy=false;notify();}
+   }finally{state.reminders.busy=false;state.reminders.phase=null;notify();}
   },
   async disable(){
-   state.reminders.busy=true;notify();
+   state.reminders.busy=true;state.reminders.phase='disabling';notify();
    try{
     await serial(async()=>{
      reconcile();const worker=registration||await env.navigator.serviceWorker?.getRegistration?.('/');const sub=await worker?.pushManager.getSubscription();
@@ -80,7 +83,7 @@ export function createReminderController({state,save,env=globalThis,fetcher=glob
      await request('subscription','DELETE',endpoint?{endpoint}:undefined);state.reminders.pendingRemoval=false;state.reminders.syncError='';save();
     });
    }catch(error){state.reminders.syncError=state.reminders.enabled?error.message:'本机已停止通知，联网后将重试取消服务器提醒。';throw error;}
-   finally{state.reminders.busy=false;notify();}
+   finally{state.reminders.busy=false;state.reminders.phase=null;notify();}
   },
   sync(){
    return serial(async()=>{
@@ -110,6 +113,9 @@ export function createReminderController({state,save,env=globalThis,fetcher=glob
  return controller;
 }
 export function reminderSettingsView(state,availability){
- const settings=state.reminders,enabled=settings.enabled&&availability.supported;
- return `<div class="modal-eyebrow">MATCH REMINDERS</div><h2>开赛前，提醒我。</h2><p class="modal-subtitle">关注比赛，不错过下一场热爱。</p><section class="reminder-status ${enabled&&!settings.syncError?'enabled':''}"><span class="reminder-status-icon">${icon('bell')}</span><div><b>${settings.syncError?'设置待同步':enabled?'通知提醒已开启':'通知提醒未开启'}</b><p>${escape(settings.syncError||availability.reason)}</p></div></section><div class="reminder-field"><label for="reminder-minutes">提前多久提醒</label><div class="reminder-minute-input"><input id="reminder-minutes" type="number" min="1" max="1440" step="1" inputmode="numeric" value="${settings.minutes}"/><span>分钟</span></div><div class="reminder-presets">${[5,10,15,30,60].map(n=>`<button data-action="reminder-preset" data-minutes="${n}" aria-pressed="${settings.minutes===n}">${n} 分钟</button>`).join('')}</div><p>可输入 1～1440 分钟，应用于本设备所有关注比赛。</p></div><label class="reminder-calendar-choice"><input id="reminder-calendar" type="checkbox" ${settings.calendar?'checked':''}/><span><b>显示添加到日历选项</b><small>默认关闭。开启后可为关注比赛手动添加日历事件。</small></span>${icon('calendar')}</label><p class="reminder-calendar-note">日历需要你确认导入；比赛改期后，请重新导入或修改日历事件。</p><div class="reminder-actions"><button class="button secondary" data-action="reminder-save" ${settings.busy?'disabled':''}>${icon('check')}保存设置</button><button class="button primary" data-action="${settings.enabled?'reminder-disable':'reminder-enable'}" ${settings.busy||!availability.supported&&!settings.enabled?'disabled':''}>${icon('bell')}${settings.busy?'正在处理…':settings.enabled?'关闭通知提醒':'开启通知提醒'}</button></div>${settings.enabled?'<button class="reminder-test" data-action="reminder-test">发送测试通知 '+icon('arrow')+'</button>':''}<p class="modal-footnote">iPhone / iPad：iOS 16.4+，使用 HTTPS 并从主屏幕打开。通知送达受设备联网和专注模式影响。</p>`;
+ const settings=state.reminders,enabled=settings.enabled&&availability.supported,authorized=availability.permission==='granted',ready=enabled&&!settings.syncError,connecting=settings.busy&&settings.phase==='connecting',cancelling=settings.pendingRemoval&&!settings.enabled;
+ const title=settings.busy?(connecting?'通知已授权，正在连接':settings.phase==='disabling'?'正在关闭通知提醒':'等待系统通知授权'):cancelling?'本机通知已停止，取消待同步':settings.syncError?(authorized&&!settings.enabled?'通知已授权，提醒未连接':'设置待同步'):enabled?'通知提醒已开启':authorized?'通知已授权，提醒未开启':'通知提醒未开启';
+ const note=settings.busy?(connecting?'正在为本设备连接开赛提醒，请稍候。':settings.phase==='disabling'?'正在取消本设备的提醒订阅。':'请在系统提示中允许赛点发送通知。'):cancelling?'已停止本机通知；联网后会自动同步，也可点击下方重试取消服务器提醒。':settings.syncError?(authorized&&!settings.enabled?'手机权限已经允许，但提醒连接失败：'+settings.syncError+'。请点击下方重试。':settings.syncError):ready?'将于开赛前 '+settings.minutes+' 分钟提醒本设备关注的比赛。':authorized&&availability.supported?'手机权限已经允许，点击下方按钮即可连接开赛提醒。':availability.reason;
+ const label=settings.busy?(connecting?'已授权，连接中…':settings.phase==='disabling'?'正在关闭…':'等待通知授权…'):cancelling?'已停止 · 重试关闭':settings.enabled?(ready?'已开启 · 关闭提醒':'关闭通知提醒'):authorized?(settings.syncError?'已授权 · 重试开启':'已授权 · 开启提醒'):'开启通知提醒';
+ return `<div class="modal-eyebrow">MATCH REMINDERS</div><h2>开赛前，提醒我。</h2><p class="modal-subtitle">关注比赛，不错过下一场热爱。</p><section class="reminder-status ${ready?'enabled':authorized?'authorized':''}" role="status" aria-live="polite" aria-atomic="true"><span class="reminder-status-icon">${icon(ready||authorized?'check':'bell')}</span><div><b>${escape(title)}</b><p>${escape(note)}</p></div></section><div class="reminder-field"><label for="reminder-minutes">提前多久提醒</label><div class="reminder-minute-input"><input id="reminder-minutes" type="number" min="1" max="1440" step="1" inputmode="numeric" value="${settings.minutes}"/><span>分钟</span></div><div class="reminder-presets">${[5,10,15,30,60].map(n=>`<button data-action="reminder-preset" data-minutes="${n}" aria-pressed="${settings.minutes===n}">${n} 分钟</button>`).join('')}</div><p>可输入 1～1440 分钟，应用于本设备所有关注比赛。</p></div><label class="reminder-calendar-choice"><input id="reminder-calendar" type="checkbox" ${settings.calendar?'checked':''}/><span><b>显示添加到日历选项</b><small>默认关闭。开启后可为关注比赛手动添加日历事件。</small></span>${icon('calendar')}</label><p class="reminder-calendar-note">日历需要你确认导入；比赛改期后，请重新导入或修改日历事件。</p><div class="reminder-actions"><button class="button secondary" data-action="reminder-save" ${settings.busy?'disabled':''}>${icon('check')}保存设置</button><button class="button primary ${ready?'is-enabled':''}" data-action="${settings.enabled||cancelling?'reminder-disable':'reminder-enable'}" ${settings.busy||!availability.supported&&!settings.enabled&&!cancelling?'disabled':''}>${icon(ready||authorized?'check':'bell')}${escape(label)}</button></div>${ready?'<button class="reminder-test" data-action="reminder-test">发送测试通知 '+icon('arrow')+'</button>':''}<p class="modal-footnote">iPhone / iPad：iOS 16.4+，使用 HTTPS 并从主屏幕打开。通知送达受设备联网和专注模式影响。</p>`;
 }

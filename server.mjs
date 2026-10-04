@@ -20,6 +20,17 @@ function readJSONBody(req){
   req.on('error',reject);
  });
 }
+function sameOriginReminderRequest(req){
+ const site=req.headers['sec-fetch-site'];
+ if(site&&site!=='same-origin'&&site!=='none')return false;
+ const value=req.headers.origin;
+ if(!value)return true;
+ let origin;try{origin=new URL(value);}catch{return false;}
+ if(!['https:','http:'].includes(origin.protocol)||origin.username||origin.password||origin.origin!==value)return false;
+ // Browser-controlled Fetch Metadata describes the public origin before a proxy rewrites Host.
+ // Device Bearer authorization is still required; untrusted forwarded headers are not used.
+ return site==='same-origin'||origin.host===req.headers.host;
+}
 export function createAppServer({config=runtimeConfig,readFeed=officialFeed,readStandings=officialStandings,history=archive,logos=logoCache,reminders=reminderService,now=Date.now}={}){
  let nextSyncAt=0;
  const rates=new Map();
@@ -46,8 +57,7 @@ export function createAppServer({config=runtimeConfig,readFeed=officialFeed,read
       const rate=rates.get(rateKey)||{until:clock+60000,count:0};if(rate.count++>=limit||rates.size>=5000&&!rates.has(rateKey)){res.setHeader('Retry-After','60');json(res,429,{error:'请求过于频繁，请稍后重试'});return;}rates.set(rateKey,rate);
       if(publicRequest){json(res,200,await reminders.config());return;}
       if(req.method!=='GET'){
-       const origin=req.headers.origin;
-       if(req.headers['sec-fetch-site']==='cross-site'||origin&&new URL(origin).host!==req.headers.host){json(res,403,{error:'只允许在赛点内修改提醒'});return;}
+       if(!sameOriginReminderRequest(req)){json(res,403,{error:'只允许在赛点内修改提醒'});return;}
        if(['PUT','POST'].includes(req.method)&&!/^application\/json(?:;|$)/i.test(req.headers['content-type']||'')){json(res,415,{error:'请使用 JSON 请求'});return;}
       }
       const removal=req.method==='DELETE'&&(Number(req.headers['content-length'])>0||req.headers['transfer-encoding'])?await readJSONBody(req):null;

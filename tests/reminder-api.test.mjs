@@ -44,3 +44,21 @@ test('Chunked obsolete unsubscribe body cannot delete a replacement subscription
  const response=await fetch(base+'/api/reminders/subscription',{method:'DELETE',headers,duplex:'half',body:Readable.from([JSON.stringify({endpoint:body.subscription.endpoint+'-old'})])});
  assert.equal(response.status,200);assert.equal((await (await fetch(base+'/api/reminders/subscription',{headers})).json()).subscribed,true);
 });
+test('Same-origin browser subscriptions work when a reverse proxy rewrites the upstream Host',async t=>{
+ const {base,body,headers}=await setup(t),browserHeaders={...headers,Origin:'https://matches.example.com','Sec-Fetch-Site':'same-origin'};
+ const response=await fetch(base+'/api/reminders/subscription',{method:'PUT',headers:browserHeaders,body:JSON.stringify(body)});
+ assert.equal(response.status,200);
+ assert.equal((await (await fetch(base+'/api/reminders/subscription',{headers})).json()).subscribed,true);
+ assert.equal((await fetch(base+'/api/reminders/test',{method:'POST',headers:browserHeaders,body:'{}'})).status,200);
+ assert.equal((await fetch(base+'/api/reminders/subscription',{method:'DELETE',headers:browserHeaders,body:JSON.stringify({endpoint:body.subscription.endpoint})})).status,200);
+});
+test('Cross-site and sibling-site requests stay rejected even with matching Host or forwarded headers',async t=>{
+ const {base,body,headers}=await setup(t);
+ for(const site of ['cross-site','same-site']){
+  const response=await fetch(base+'/api/reminders/subscription',{method:'PUT',headers:{...headers,'Sec-Fetch-Site':site,'X-Forwarded-Host':'evil.test'},body:JSON.stringify(body)});
+  assert.equal(response.status,403);
+ }
+ const invalid=await fetch(base+'/api/reminders/subscription',{method:'PUT',headers:{...headers,Origin:'null','Sec-Fetch-Site':'same-origin'},body:JSON.stringify(body)});assert.equal(invalid.status,403);
+ const missing=await fetch(base+'/api/reminders/subscription',{method:'PUT',headers:{'Content-Type':'application/json',Origin:'https://matches.example.com','Sec-Fetch-Site':'same-origin'},body:JSON.stringify(body)});assert.equal(missing.status,401);
+ assert.equal((await (await fetch(base+'/api/reminders/subscription',{headers})).json()).subscribed,false);
+});

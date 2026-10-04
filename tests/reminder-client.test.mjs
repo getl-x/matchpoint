@@ -44,3 +44,30 @@ test('Failed subscription rollback completes while its device lock is still held
  const controller=createReminderController({state,env,save:()=>true,fetcher:async(url)=>url.endsWith('/config')?new Response(JSON.stringify({publicKey:Buffer.alloc(65).toString('base64url')})):new Response(JSON.stringify({error:'temporary'}),{status:503})});
  await assert.rejects(controller.enable(),/temporary/);assert.equal(rollbackLocked,true);
 });
+test('Granted phone permission updates the button before a delayed subscription completes',async()=>{
+ const {createReminderController,reminderSettingsView}=await import('../src/reminders.js'),{state,env,save}=await setup();
+ let started,release;const putStarted=new Promise(r=>{started=r;}),pending=new Promise(r=>{release=r;}),renders=[];
+ const controller=createReminderController({state,env,save,onChange:()=>renders.push(reminderSettingsView(state,controller.support())),fetcher:async(url,options)=>{
+  if(options.method==='PUT'){started();await pending;}
+  return new Response(JSON.stringify(url.endsWith('/config')?{publicKey:Buffer.alloc(65).toString('base64url')}:{subscribed:true}));
+ }});
+ const work=controller.enable();await putStarted;
+ const connecting=reminderSettingsView(state,controller.support());assert.match(connecting,/已授权[\s\S]*连接/);assert.equal(state.reminders.enabled,false);
+ assert.ok(renders.some(html=>/已授权[\s\S]*连接/.test(html)));
+ release();await work;
+ const enabled=reminderSettingsView(state,controller.support());assert.match(enabled,/已开启 · 关闭提醒/);assert.match(enabled,/reminder-disable/);assert.equal(state.reminders.enabled,true);
+});
+test('Granted permission with failed synchronization shows a retry button and does not claim enabled',async()=>{
+ const {reminderSettingsView}=await import('../src/reminders.js'),{controller,state,setFail,getRequestCount}=await setup();
+ setFail(true);await assert.rejects(controller.enable());assert.equal(getRequestCount(),1);
+ const html=reminderSettingsView(state,controller.support());assert.match(html,/已授权 · 重试开启/);assert.match(html,/提醒未连接/);assert.equal(state.reminders.enabled,false);
+ setFail(false);await controller.enable();assert.equal(getRequestCount(),1);assert.equal(state.reminders.enabled,true);
+ await controller.disable();const stopped=reminderSettingsView(state,controller.support());assert.match(stopped,/已授权 · 开启提醒/);assert.equal(state.reminders.enabled,false);
+});
+test('Failed cancellation offers retrying shutdown rather than enabling reminders again',async()=>{
+ const {reminderSettingsView}=await import('../src/reminders.js'),{controller,state,setFail,getRequestCount}=await setup();
+ await controller.enable();setFail(true);await assert.rejects(controller.disable());
+ const pending=reminderSettingsView(state,controller.support());assert.match(pending,/本机通知已停止，取消待同步/);assert.match(pending,/已停止 · 重试关闭/);assert.match(pending,/data-action="reminder-disable"/);assert.doesNotMatch(pending,/data-action="reminder-enable"|连接失败/);
+ setFail(false);await controller.disable();assert.equal(state.reminders.enabled,false);assert.equal(state.reminders.pendingRemoval,false);assert.equal(getRequestCount(),1);
+ assert.match(reminderSettingsView(state,controller.support()),/已授权 · 开启提醒/);
+});

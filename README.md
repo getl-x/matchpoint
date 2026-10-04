@@ -1,6 +1,6 @@
 # 赛点 Matchpoint
 
-CS2、无畏契约、英雄联盟和 Apex 电竞赛程、晋级图与历史查询网页，支持深浅主题、手机和 iOS PWA。当前版本 **1.1.0**。
+CS2、无畏契约、英雄联盟和 Apex 电竞赛程、晋级图与历史查询网页，支持深浅主题、手机和 iOS PWA。当前版本 **1.1.1**。
 
 比赛、比分、积分和战队 Logo 来自游戏官方公开来源；不提供模拟赛果或手动填队伍。通知使用开源 `web-push` 和浏览器提供的免费标准推送，不调用付费数据或模型接口。
 
@@ -65,7 +65,7 @@ npm run smoke
 
 - 推送 `main`、创建 `v*` 标签、手动运行：测试 → 构建实际镜像 → Compose 验收 → Docker Hub 发布。
 - PR：仅测试和容器验收，不登录或发布镜像。
-- `latest` 表示默认分支；`v1.1.0` 发布 `1.1.0`、`1.1`；每次发布都有 `sha-<commit>`。
+- `latest` 表示默认分支；`v1.1.1` 发布 `1.1.1`、`1.1`；每次发布都有 `sha-<commit>`。
 - Actions 构建产物 `matchpoint-docker-amd64` 可以下载并 `docker load -i matchpoint-docker-amd64.tar.gz`，即使没有 Registry 凭据。
 
 ## 数据边界

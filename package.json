@@ -1,6 +1,6 @@
 {
   "name": "matchpoint",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "type": "module",
   "description": "赛点：官方电竞赛程、只读晋级图与观看入口 PWA",
