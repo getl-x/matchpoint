@@ -1,0 +1,105 @@
+name: Build and publish Docker Hub image
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Optional image tag (for example edge); leave blank for automatic tags"
+        required: false
+        default: ""
+permissions:
+  contents: read
+concurrency:
+  group: matchpoint-publish-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    uses: ./.github/workflows/ci.yml
+  registry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      configured: ${{ steps.config.outputs.configured }}
+    steps:
+      - name: Check Docker Hub configuration
+        id: config
+        env:
+          DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          if [ -n "$RELEASE_TAG" ] && ! [[ "$RELEASE_TAG" =~ ^[a-zA-Z0-9_][a-zA-Z0-9_.-]{0,127}$ ]]; then
+            echo "::error::Invalid Docker tag"
+            exit 1
+          fi
+          if [ -n "$DOCKERHUB_USERNAME" ] && [ -n "$DOCKERHUB_TOKEN" ]; then
+            if ! [[ "$DOCKERHUB_USERNAME" =~ ^[a-z0-9][a-z0-9_-]{1,30}$ ]]; then
+              echo "::error::Invalid Docker Hub username"
+              exit 1
+            fi
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Docker Hub publication skipped: set repository variable DOCKERHUB_USERNAME and secret DOCKERHUB_TOKEN. Application and container checks still run."
+            {
+              echo "## Docker Hub: not published"
+              echo "Registry credentials are missing. Add DOCKERHUB_USERNAME (variable) and DOCKERHUB_TOKEN (secret), then run this workflow again."
+              echo "The verify job tests a real container and provides a downloadable image artifact."
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+  publish:
+    needs: [verify, registry]
+    if: needs.registry.outputs.configured == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Generate image tags
+        id: metadata
+        uses: docker/metadata-action@v5
+        with:
+          images: docker.io/${{ vars.DOCKERHUB_USERNAME }}/matchpoint
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=${{ inputs.tag }},enable=${{ github.event_name == 'workflow_dispatch' && inputs.tag != '' }}
+            type=sha,prefix=sha-
+      - name: Build and publish amd64 and arm64
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
+          build-args: |
+            VCS_REF=${{ github.sha }}
+          cache-from: type=gha,scope=matchpoint-release
+          cache-to: type=gha,scope=matchpoint-release,mode=max
+          provenance: mode=max
+          sbom: true
+      - name: Publication result
+        env:
+          IMAGE_TAGS: ${{ steps.metadata.outputs.tags }}
+          IMAGE_DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          {
+            echo "## Docker Hub image published"
+            echo '```text'
+            printf '%s\n' "$IMAGE_TAGS"
+            echo '```'
+            echo "Digest: $IMAGE_DIGEST"
+            echo "Compose example: compose.yml"
+          } >> "$GITHUB_STEP_SUMMARY"

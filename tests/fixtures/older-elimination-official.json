@@ -1,0 +1,402 @@
+{
+  "feed": {
+    "game": "valorant",
+    "source": {
+      "name": "无畏契约中国赛事官网",
+      "url": "https://vct.qq.com/",
+      "coverage": "该赛事官方完整场次目录；晋级关系仅按官网已公布内容展示",
+      "retrievedAt": "2026-10-03T09:04:24.782Z"
+    },
+    "matches": [
+      {
+        "id": "valorant:cn:10101",
+        "game": "valorant",
+        "eventId": "valorant:cn:2",
+        "event": "2023全国大赛",
+        "stage": "淘汰赛",
+        "matchName": "CHI66 VS Twz",
+        "format": "BO3",
+        "date": "2023-12-21",
+        "time": "11:00",
+        "startsAt": "2023-12-21T03:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:1000005",
+          "valorant:cn:1000013"
+        ],
+        "score": [
+          2,
+          0
+        ],
+        "winner": "valorant:cn:1000005",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:10102",
+        "game": "valorant",
+        "eventId": "valorant:cn:2",
+        "event": "2023全国大赛",
+        "stage": "淘汰赛",
+        "matchName": "Rainy VS 指间电竞",
+        "format": "BO3",
+        "date": "2023-12-21",
+        "time": "13:30",
+        "startsAt": "2023-12-21T05:30:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:1000001",
+          "valorant:cn:1000008"
+        ],
+        "score": [
+          2,
+          0
+        ],
+        "winner": "valorant:cn:1000001",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:10103",
+        "game": "valorant",
+        "eventId": "valorant:cn:2",
+        "event": "2023全国大赛",
+        "stage": "淘汰赛",
+        "matchName": "SU VS WN",
+        "format": "BO3",
+        "date": "2023-12-21",
+        "time": "16:00",
+        "startsAt": "2023-12-21T08:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:1000010",
+          "valorant:cn:1000011"
+        ],
+        "score": [
+          2,
+          0
+        ],
+        "winner": "valorant:cn:1000010",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:10104",
+        "game": "valorant",
+        "eventId": "valorant:cn:2",
+        "event": "2023全国大赛",
+        "stage": "淘汰赛",
+        "matchName": "TPX VS 成都制造",
+        "format": "BO3",
+        "date": "2023-12-21",
+        "time": "19:00",
+        "startsAt": "2023-12-21T11:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:1000012",
+          "valorant:cn:1000009"
+        ],
+        "score": [
+          0,
+          2
+        ],
+        "winner": "valorant:cn:1000009",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:10112",
+        "game": "valorant",
+        "eventId": "valorant:cn:2",
+        "event": "2023全国大赛",
+        "stage": "淘汰赛",
+        "matchName": "5FW VS TBD",
+        "format": "BO3",
+        "date": "2023-12-21",
+        "time": "21:00",
+        "startsAt": "2023-12-21T13:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:1000004",
+          "valorant:cn:1000010"
+        ],
+        "score": [
+          2,
+          0
+        ],
+        "winner": "valorant:cn:1000004",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:10105",
+        "game": "valorant",
+        "eventId": "valorant:cn:2",
+        "event": "2023全国大赛",
+        "stage": "淘汰赛",
+        "matchName": "上海NA VS TBD",
+        "format": "BO3",
+        "date": "2023-12-22",
+        "time": "13:00",
+        "startsAt": "2023-12-22T05:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:1000007",
+          "valorant:cn:1000005"
+        ],
+        "score": [
+          0,
+          2
+        ],
+        "winner": "valorant:cn:1000005",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:10106",
+        "game": "valorant",
+        "eventId": "valorant:cn:2",
+        "event": "2023全国大赛",
+        "stage": "淘汰赛",
+        "matchName": "UwUFPS电竞 VS TBD",
+        "format": "BO3",
+        "date": "2023-12-22",
+        "time": "15:30",
+        "startsAt": "2023-12-22T07:30:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:1000003",
+          "valorant:cn:1000001"
+        ],
+        "score": [
+          0,
+          2
+        ],
+        "winner": "valorant:cn:1000001",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:10108",
+        "game": "valorant",
+        "eventId": "valorant:cn:2",
+        "event": "2023全国大赛",
+        "stage": "淘汰赛",
+        "matchName": "PDG vs TBD",
+        "format": "BO3",
+        "date": "2023-12-22",
+        "time": "18:00",
+        "startsAt": "2023-12-22T10:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:1000006",
+          "valorant:cn:1000009"
+        ],
+        "score": [
+          1,
+          2
+        ],
+        "winner": "valorant:cn:1000009",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:10107",
+        "game": "valorant",
+        "eventId": "valorant:cn:2",
+        "event": "2023全国大赛",
+        "stage": "淘汰赛",
+        "matchName": "呆猪 vs TBD",
+        "format": "BO3",
+        "date": "2023-12-22",
+        "time": "21:00",
+        "startsAt": "2023-12-22T13:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:1000002",
+          "valorant:cn:1000004"
+        ],
+        "score": [
+          2,
+          1
+        ],
+        "winner": "valorant:cn:1000002",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:10109",
+        "game": "valorant",
+        "eventId": "valorant:cn:2",
+        "event": "2023全国大赛",
+        "stage": "半决赛",
+        "matchName": "Chi66 vs Rainy",
+        "format": "BO3",
+        "date": "2023-12-23",
+        "time": "16:00",
+        "startsAt": "2023-12-23T08:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:1000005",
+          "valorant:cn:1000001"
+        ],
+        "score": [
+          0,
+          2
+        ],
+        "winner": "valorant:cn:1000001",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:10110",
+        "game": "valorant",
+        "eventId": "valorant:cn:2",
+        "event": "2023全国大赛",
+        "stage": "半决赛",
+        "matchName": "成都制造 vs 呆猪",
+        "format": "BO3",
+        "date": "2023-12-23",
+        "time": "18:30",
+        "startsAt": "2023-12-23T10:30:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:1000009",
+          "valorant:cn:1000002"
+        ],
+        "score": [
+          0,
+          2
+        ],
+        "winner": "valorant:cn:1000002",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:10111",
+        "game": "valorant",
+        "eventId": "valorant:cn:2",
+        "event": "2023全国大赛",
+        "stage": "总决赛",
+        "matchName": "Rainy vs 呆猪",
+        "format": "BO3",
+        "date": "2023-12-24",
+        "time": "16:30",
+        "startsAt": "2023-12-24T08:30:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:1000001",
+          "valorant:cn:1000002"
+        ],
+        "score": [
+          2,
+          3
+        ],
+        "winner": "valorant:cn:1000002",
+        "sourceUrl": "https://vct.qq.com/"
+      }
+    ],
+    "teams": {
+      "valorant:cn:1000001": {
+        "id": "valorant:cn:1000001",
+        "name": "Rainy",
+        "short": "Rainy",
+        "mark": "RAI",
+        "color": "#e56e87"
+      },
+      "valorant:cn:1000002": {
+        "id": "valorant:cn:1000002",
+        "name": "呆猪",
+        "short": "呆猪",
+        "mark": "呆猪",
+        "color": "#e56e87"
+      },
+      "valorant:cn:1000009": {
+        "id": "valorant:cn:1000009",
+        "name": "成都制造",
+        "short": "成都制造",
+        "mark": "成都制",
+        "color": "#e56e87"
+      },
+      "valorant:cn:1000005": {
+        "id": "valorant:cn:1000005",
+        "name": "Chi66",
+        "short": "Chi66",
+        "mark": "CHI",
+        "color": "#e56e87"
+      },
+      "valorant:cn:1000004": {
+        "id": "valorant:cn:1000004",
+        "name": "5FW",
+        "short": "5FW",
+        "mark": "5FW",
+        "color": "#e56e87"
+      },
+      "valorant:cn:1000006": {
+        "id": "valorant:cn:1000006",
+        "name": "山东头蛇电竞",
+        "short": "山东头蛇电竞",
+        "mark": "山东头",
+        "color": "#e56e87"
+      },
+      "valorant:cn:1000003": {
+        "id": "valorant:cn:1000003",
+        "name": "UwUFPS电竞",
+        "short": "UwUFPS电竞",
+        "mark": "UWU",
+        "color": "#e56e87"
+      },
+      "valorant:cn:1000007": {
+        "id": "valorant:cn:1000007",
+        "name": "上海NA",
+        "short": "上海NA",
+        "mark": "上海N",
+        "color": "#e56e87"
+      },
+      "valorant:cn:1000010": {
+        "id": "valorant:cn:1000010",
+        "name": "SU",
+        "short": "SU",
+        "mark": "SU",
+        "color": "#e56e87"
+      },
+      "valorant:cn:1000012": {
+        "id": "valorant:cn:1000012",
+        "name": "TPX",
+        "short": "TPX",
+        "mark": "TPX",
+        "color": "#e56e87"
+      },
+      "valorant:cn:1000011": {
+        "id": "valorant:cn:1000011",
+        "name": "WN",
+        "short": "WN",
+        "mark": "WN",
+        "color": "#e56e87"
+      },
+      "valorant:cn:1000008": {
+        "id": "valorant:cn:1000008",
+        "name": "指间电竞",
+        "short": "指间电竞",
+        "mark": "指间电",
+        "color": "#e56e87"
+      },
+      "valorant:cn:1000013": {
+        "id": "valorant:cn:1000013",
+        "name": "TWZ",
+        "short": "TWZ",
+        "mark": "TWZ",
+        "color": "#e56e87"
+      }
+    },
+    "events": [
+      {
+        "id": "valorant:cn:2",
+        "game": "valorant",
+        "provider": "valorant-cn",
+        "nativeId": "2",
+        "name": "2023全国大赛",
+        "startsAt": "2023-12-20T16:00:00.000Z",
+        "endsAt": "2023-12-23T16:00:00.000Z",
+        "year": "2023",
+        "originalName": "2023全国大赛",
+        "sourceUrl": "https://vct.qq.com/",
+        "officialStatus": 3,
+        "archiveStatus": "loading",
+        "nameZh": "2023全国大赛",
+        "topologyPublished": false
+      }
+    ],
+    "promotions": [],
+    "coverage": "该赛事官方完整场次目录；晋级关系仅按官网已公布内容展示"
+  }
+}

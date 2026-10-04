@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {selectBlastTournaments} from '../server/providers/blast.mjs';
+import {selectApexSeason} from '../server/providers/apex.mjs';
+import {normalizeRiot} from '../server/providers/riot.mjs';
+import {applyChineseNames} from '../server/providers/chinese-names.mjs';
+import {localizeEvent} from '../src/localization.js';
+const real=JSON.parse(await readFile(new URL('./fixtures/riot-official.json',import.meta.url),'utf8'));
+test('Official CS event discovery moves to newly published 2027 and 2028 tournaments without a fixed season',()=>{const list=[2026,2027,2028].map(year=>({id:'official-'+year,name:'Season '+year,startDate:year+'-10-01T00:00:00Z',endDate:year+'-10-11T00:00:00Z'}));for(const year of [2027,2028]){const selected=selectBlastTournaments(list,Date.parse(year+'-10-03T00:00:00Z'));assert.equal(selected[0].id,'official-'+year);}});
+test('ALGS chooses the officially designated new season when it starts, retaining the current table model',()=>{const structure={seasons:[6,7,8].map((n,i)=>({id:'season-'+n,name:'Year '+n,isMainSeason:true,startDate:(2026+i)+'-01-01T00:00:00Z'}))};for(const year of [2027,2028])assert.equal(selectApexSeason(structure,Date.parse(year+'-10-03T00:00:00Z')).name,'Year '+(year-2020));assert.equal(selectApexSeason(structure,Date.parse('2026-10-03T00:00:00Z')).name,'Year 6');});
+test('Riot newly published IDs and Chinese official names change with 2027 and 2028 catalog records',()=>{for(const year of [2027,2028]){const raw={...real[0],id:'published-'+year,startTime:year+'-10-03T09:00:00Z',tournament:{...real[0].tournament,id:'tournament-'+year,name:String(year)},league:{...real[0].league,name:'Champions'}};const initial=normalizeRiot([raw],'valorant'),catalog={name:'中国赛事官网',url:'https://vct.qq.com/',retrievedAt:year+'-10-03T00:00:00Z',status:'ready',entries:[{id:String(year),parentId:'10005',englishName:year+' VCT CHAMPIONS',name:year+'无畏契约全球冠军赛',year:String(year)}]},enriched=applyChineseNames(initial,catalog),event=localizeEvent(enriched.events[0]);assert.equal(event.name,year+'无畏契约全球冠军赛');assert.equal(event.id,'valorant:tournament-'+year);assert.equal(enriched.matches[0].id,'valorant:published-'+year);assert.equal(enriched.matches[0].date.slice(0,4),String(year));}});

@@ -1,0 +1,7 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {officialBracket,layoutBracket} from '../src/bracket.js';
+const official=[{id:'first',teams:['team-a','team-b'],winner:'team-a',status:'finished',nextMatch:'final',nextSlot:1},{id:'final',teams:['team-c',null],winner:null,status:'upcoming'}];
+test('An official winner advances only along its published destination and slot',()=>{const result=officialBracket(official);assert.deepEqual(result[1].teams,['team-c','team-a']);assert.deepEqual(official[1].teams,['team-c',null]);});
+test('Unfinished matches never generate a result or a participant',()=>{const result=officialBracket(official.map(m=>({...m,status:'upcoming'})));assert.equal(result[1].teams[1],null);});
+test('Already published target teams take precedence over propagated winners',()=>{const result=officialBracket([official[0],{...official[1],teams:['team-c','official-other']}]);assert.equal(result[1].teams[1],'official-other');});
+test('Missing next-round relationships do not generate imaginary edges',()=>{const model=layoutBracket(official.map(m=>({...m,nextMatch:null})));assert.equal(model.edges.length,0);assert.equal(model.columns.length,1);});
+test('Actual next-round relation determines connected layout',()=>{const model=layoutBracket(official);assert.equal(model.edges.length,1);assert.ok(model.positions.final.x>model.positions.first.x);assert.equal(model.edges[0].advanced,true);});

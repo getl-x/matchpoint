@@ -1,0 +1,902 @@
+{
+  "source": {
+    "name": "无畏契约中国赛事官网",
+    "url": "https://vct.qq.com/",
+    "coverage": "该赛事官方完整场次目录；晋级关系仅按官网已公布内容展示",
+    "retrievedAt": "2026-10-03T09:02:47.657Z"
+  },
+  "event": {
+    "id": "valorant:cn:1000066",
+    "game": "valorant",
+    "provider": "valorant-cn",
+    "nativeId": "1000066",
+    "name": "伦敦大师赛",
+    "startsAt": "2026-06-05T16:00:00.000Z",
+    "endsAt": "2026-06-20T16:00:00.000Z",
+    "year": "2026",
+    "originalName": "Masters London",
+    "sourceUrl": "https://vct.qq.com/",
+    "officialStatus": 3,
+    "archiveStatus": "saved",
+    "archivedAt": "2026-10-03T09:02:47.657Z",
+    "matchCount": 24
+  },
+  "feed": {
+    "game": "valorant",
+    "source": {
+      "name": "无畏契约中国赛事官网",
+      "url": "https://vct.qq.com/",
+      "coverage": "该赛事官方完整场次目录；晋级关系仅按官网已公布内容展示",
+      "retrievedAt": "2026-10-03T09:02:47.657Z"
+    },
+    "matches": [
+      {
+        "id": "valorant:cn:1002157",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛瑞士轮晋级图",
+        "matchName": "瑞士轮 第一轮",
+        "roundName": "第一轮",
+        "index": 0,
+        "format": "BO3",
+        "date": "2026-06-06",
+        "time": "22:00",
+        "startsAt": "2026-06-06T14:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:80",
+          "valorant:cn:57"
+        ],
+        "score": [
+          0,
+          2
+        ],
+        "winner": "valorant:cn:57",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002158",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛瑞士轮晋级图",
+        "matchName": "瑞士轮 第一轮",
+        "roundName": "第一轮",
+        "index": 1,
+        "format": "BO3",
+        "date": "2026-06-07",
+        "time": "01:00",
+        "startsAt": "2026-06-06T17:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:126",
+          "valorant:cn:25"
+        ],
+        "score": [
+          2,
+          0
+        ],
+        "winner": "valorant:cn:126",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002159",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛瑞士轮晋级图",
+        "matchName": "瑞士轮 第一轮",
+        "roundName": "第一轮",
+        "index": 2,
+        "format": "BO3",
+        "date": "2026-06-07",
+        "time": "22:00",
+        "startsAt": "2026-06-07T14:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:235",
+          "valorant:cn:53"
+        ],
+        "score": [
+          0,
+          2
+        ],
+        "winner": "valorant:cn:53",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002160",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛瑞士轮晋级图",
+        "matchName": "瑞士轮 第一轮",
+        "roundName": "第一轮",
+        "index": 3,
+        "format": "BO3",
+        "date": "2026-06-08",
+        "time": "01:00",
+        "startsAt": "2026-06-07T17:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:121",
+          "valorant:cn:236"
+        ],
+        "score": [
+          2,
+          1
+        ],
+        "winner": "valorant:cn:121",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002161",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛瑞士轮晋级图",
+        "matchName": "瑞士轮 第二轮 1-0 组",
+        "roundName": "第二轮1-0",
+        "index": 100,
+        "format": "BO3",
+        "date": "2026-06-08",
+        "time": "22:00",
+        "startsAt": "2026-06-08T14:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:126",
+          "valorant:cn:53"
+        ],
+        "score": [
+          2,
+          1
+        ],
+        "winner": "valorant:cn:126",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002162",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛瑞士轮晋级图",
+        "matchName": "瑞士轮 第二轮 1-0 组",
+        "roundName": "第二轮1-0",
+        "index": 101,
+        "format": "BO3",
+        "date": "2026-06-09",
+        "time": "01:00",
+        "startsAt": "2026-06-08T17:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:57",
+          "valorant:cn:121"
+        ],
+        "score": [
+          1,
+          2
+        ],
+        "winner": "valorant:cn:121",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002163",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛瑞士轮晋级图",
+        "matchName": "瑞士轮 第二轮 0-1 组",
+        "roundName": "第二轮0-1",
+        "index": 200,
+        "format": "BO3",
+        "date": "2026-06-09",
+        "time": "22:00",
+        "startsAt": "2026-06-09T14:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:25",
+          "valorant:cn:80"
+        ],
+        "score": [
+          1,
+          2
+        ],
+        "winner": "valorant:cn:80",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002164",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛瑞士轮晋级图",
+        "matchName": "瑞士轮 第二轮 0-1 组",
+        "roundName": "第二轮0-1",
+        "index": 201,
+        "format": "BO3",
+        "date": "2026-06-10",
+        "time": "01:00",
+        "startsAt": "2026-06-09T17:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:236",
+          "valorant:cn:235"
+        ],
+        "score": [
+          2,
+          1
+        ],
+        "winner": "valorant:cn:236",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002165",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛瑞士轮晋级图",
+        "matchName": "瑞士轮 第三轮",
+        "roundName": "第三轮1-1",
+        "index": 300,
+        "format": "BO3",
+        "date": "2026-06-10",
+        "time": "22:00",
+        "startsAt": "2026-06-10T14:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:53",
+          "valorant:cn:57"
+        ],
+        "score": [
+          2,
+          1
+        ],
+        "winner": "valorant:cn:53",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002166",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛瑞士轮晋级图",
+        "matchName": "瑞士轮 第三轮",
+        "roundName": "第三轮1-1",
+        "index": 301,
+        "format": "BO3",
+        "date": "2026-06-11",
+        "time": "01:00",
+        "startsAt": "2026-06-10T17:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:236",
+          "valorant:cn:80"
+        ],
+        "score": [
+          1,
+          2
+        ],
+        "winner": "valorant:cn:80",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002167",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛淘汰赛",
+        "matchName": "淘汰赛首轮",
+        "roundName": "首轮比赛",
+        "index": 0,
+        "format": "BO3",
+        "date": "2026-06-12",
+        "time": "22:00",
+        "startsAt": "2026-06-12T14:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:58",
+          "valorant:cn:121"
+        ],
+        "score": [
+          2,
+          0
+        ],
+        "winner": "valorant:cn:58",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002168",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛淘汰赛",
+        "matchName": "淘汰赛首轮",
+        "roundName": "首轮比赛",
+        "index": 1,
+        "format": "BO3",
+        "date": "2026-06-13",
+        "time": "01:00",
+        "startsAt": "2026-06-12T17:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:119",
+          "valorant:cn:126"
+        ],
+        "score": [
+          0,
+          2
+        ],
+        "winner": "valorant:cn:126",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002169",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛淘汰赛",
+        "matchName": "淘汰赛首轮",
+        "roundName": "首轮比赛",
+        "index": 2,
+        "format": "BO3",
+        "date": "2026-06-13",
+        "time": "22:00",
+        "startsAt": "2026-06-13T14:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:5",
+          "valorant:cn:53"
+        ],
+        "score": [
+          2,
+          1
+        ],
+        "winner": "valorant:cn:5",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002170",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛淘汰赛",
+        "matchName": "淘汰赛首轮",
+        "roundName": "首轮比赛",
+        "index": 3,
+        "format": "BO3",
+        "date": "2026-06-14",
+        "time": "01:00",
+        "startsAt": "2026-06-13T17:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:123",
+          "valorant:cn:80"
+        ],
+        "score": [
+          1,
+          2
+        ],
+        "winner": "valorant:cn:80",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002171",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛淘汰赛",
+        "matchName": "败者组第一轮",
+        "roundName": "败者组第一轮",
+        "index": 100,
+        "format": "BO3",
+        "date": "2026-06-14",
+        "time": "22:00",
+        "startsAt": "2026-06-14T14:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:121",
+          "valorant:cn:119"
+        ],
+        "score": [
+          2,
+          1
+        ],
+        "winner": "valorant:cn:121",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002172",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛淘汰赛",
+        "matchName": "败者组第一轮",
+        "roundName": "败者组第一轮",
+        "index": 101,
+        "format": "BO3",
+        "date": "2026-06-15",
+        "time": "01:00",
+        "startsAt": "2026-06-14T17:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:53",
+          "valorant:cn:123"
+        ],
+        "score": [
+          2,
+          0
+        ],
+        "winner": "valorant:cn:53",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002179",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛淘汰赛",
+        "matchName": "胜者组第二轮",
+        "roundName": "胜者组第一轮",
+        "index": 200,
+        "format": "BO3",
+        "date": "2026-06-15",
+        "time": "22:00",
+        "startsAt": "2026-06-15T14:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:5",
+          "valorant:cn:80"
+        ],
+        "score": [
+          2,
+          1
+        ],
+        "winner": "valorant:cn:5",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002180",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛淘汰赛",
+        "matchName": "胜者组第二轮",
+        "roundName": "胜者组第一轮",
+        "index": 201,
+        "format": "BO3",
+        "date": "2026-06-16",
+        "time": "01:00",
+        "startsAt": "2026-06-15T17:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:58",
+          "valorant:cn:126"
+        ],
+        "score": [
+          2,
+          1
+        ],
+        "winner": "valorant:cn:58",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002181",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛淘汰赛",
+        "matchName": "败者组第二轮",
+        "roundName": "败者组第二轮",
+        "index": 300,
+        "format": "BO3",
+        "date": "2026-06-16",
+        "time": "22:00",
+        "startsAt": "2026-06-16T14:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:80",
+          "valorant:cn:121"
+        ],
+        "score": [
+          0,
+          2
+        ],
+        "winner": "valorant:cn:121",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002182",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛淘汰赛",
+        "matchName": "败者组第二轮",
+        "roundName": "败者组第二轮",
+        "index": 301,
+        "format": "BO3",
+        "date": "2026-06-17",
+        "time": "01:00",
+        "startsAt": "2026-06-16T17:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:126",
+          "valorant:cn:53"
+        ],
+        "score": [
+          2,
+          0
+        ],
+        "winner": "valorant:cn:126",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002183",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛淘汰赛",
+        "matchName": "胜者组决赛",
+        "roundName": "胜者组决赛",
+        "index": 400,
+        "format": "BO3",
+        "date": "2026-06-19",
+        "time": "21:00",
+        "startsAt": "2026-06-19T13:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:5",
+          "valorant:cn:58"
+        ],
+        "score": [
+          1,
+          2
+        ],
+        "winner": "valorant:cn:58",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002184",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛淘汰赛",
+        "matchName": "败者组半决赛",
+        "roundName": "败者组半决赛",
+        "index": 500,
+        "format": "BO3",
+        "date": "2026-06-20",
+        "time": "00:00",
+        "startsAt": "2026-06-19T16:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:121",
+          "valorant:cn:126"
+        ],
+        "score": [
+          2,
+          0
+        ],
+        "winner": "valorant:cn:121",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002185",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛淘汰赛",
+        "matchName": "败者组决赛",
+        "roundName": "败者组决赛",
+        "index": 600,
+        "format": "BO5",
+        "date": "2026-06-20",
+        "time": "21:00",
+        "startsAt": "2026-06-20T13:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:5",
+          "valorant:cn:121"
+        ],
+        "score": [
+          0,
+          3
+        ],
+        "winner": "valorant:cn:121",
+        "sourceUrl": "https://vct.qq.com/"
+      },
+      {
+        "id": "valorant:cn:1002186",
+        "game": "valorant",
+        "eventId": "valorant:cn:1000066",
+        "event": "伦敦大师赛",
+        "stage": "伦敦大师赛淘汰赛",
+        "matchName": "决赛",
+        "roundName": "总决赛",
+        "index": 700,
+        "format": "BO5",
+        "date": "2026-06-21",
+        "time": "21:00",
+        "startsAt": "2026-06-21T13:00:00.000Z",
+        "status": "finished",
+        "teams": [
+          "valorant:cn:58",
+          "valorant:cn:121"
+        ],
+        "score": [
+          2,
+          3
+        ],
+        "winner": "valorant:cn:121",
+        "sourceUrl": "https://vct.qq.com/"
+      }
+    ],
+    "teams": {
+      "valorant:cn:58": {
+        "id": "valorant:cn:58",
+        "name": "Paper Rex",
+        "short": "PRX",
+        "mark": "PRX",
+        "color": "#e56e87"
+      },
+      "valorant:cn:121": {
+        "id": "valorant:cn:121",
+        "name": "Leviatán",
+        "short": "LEV",
+        "mark": "LEV",
+        "color": "#e56e87"
+      },
+      "valorant:cn:5": {
+        "id": "valorant:cn:5",
+        "name": "Edward Gaming",
+        "short": "EDG",
+        "mark": "EDG",
+        "color": "#e56e87"
+      },
+      "valorant:cn:126": {
+        "id": "valorant:cn:126",
+        "name": "Team Vitality",
+        "short": "VIT",
+        "mark": "VIT",
+        "color": "#e56e87"
+      },
+      "valorant:cn:53": {
+        "id": "valorant:cn:53",
+        "name": "FUT ESPORTS",
+        "short": "FUT",
+        "mark": "FUT",
+        "color": "#e56e87"
+      },
+      "valorant:cn:80": {
+        "id": "valorant:cn:80",
+        "name": "Xi Lai Gaming",
+        "short": "XLG",
+        "mark": "XLG",
+        "color": "#e56e87"
+      },
+      "valorant:cn:123": {
+        "id": "valorant:cn:123",
+        "name": "G2 Esports",
+        "short": "G2",
+        "mark": "G2",
+        "color": "#e56e87"
+      },
+      "valorant:cn:119": {
+        "id": "valorant:cn:119",
+        "name": "Team Heretics",
+        "short": "TH",
+        "mark": "TH",
+        "color": "#e56e87"
+      },
+      "valorant:cn:236": {
+        "id": "valorant:cn:236",
+        "name": "Global Esports",
+        "short": "GE",
+        "mark": "GE",
+        "color": "#e56e87"
+      },
+      "valorant:cn:57": {
+        "id": "valorant:cn:57",
+        "name": "NRG",
+        "short": "NRG",
+        "mark": "NRG",
+        "color": "#e56e87"
+      },
+      "valorant:cn:235": {
+        "id": "valorant:cn:235",
+        "name": "FULL SENSE",
+        "short": "FS",
+        "mark": "FS",
+        "color": "#e56e87"
+      },
+      "valorant:cn:25": {
+        "id": "valorant:cn:25",
+        "name": "DRAGON RANGER GAMING",
+        "short": "DRG",
+        "mark": "DRG",
+        "color": "#e56e87"
+      }
+    },
+    "events": [
+      {
+        "id": "valorant:cn:1000066",
+        "game": "valorant",
+        "provider": "valorant-cn",
+        "nativeId": "1000066",
+        "name": "伦敦大师赛",
+        "startsAt": "2026-06-05T16:00:00.000Z",
+        "endsAt": "2026-06-20T16:00:00.000Z",
+        "year": "2026",
+        "originalName": "Masters London",
+        "sourceUrl": "https://vct.qq.com/",
+        "officialStatus": 3,
+        "archiveStatus": "loading",
+        "nameZh": "伦敦大师赛",
+        "topologyPublished": false
+      }
+    ],
+    "promotions": [
+      {
+        "id": 34,
+        "promotionData": [
+          {
+            "num": 4,
+            "des": "第一轮",
+            "sessions": [
+              {
+                "bMatchId": 1002157
+              },
+              {
+                "bMatchId": 1002158
+              },
+              {
+                "bMatchId": 1002159
+              },
+              {
+                "bMatchId": 1002160
+              }
+            ]
+          },
+          {
+            "num": 2,
+            "des": "第二轮1-0",
+            "sessions": [
+              {
+                "bMatchId": 1002161
+              },
+              {
+                "bMatchId": 1002162
+              }
+            ]
+          },
+          {
+            "num": 2,
+            "des": "第二轮0-1",
+            "sessions": [
+              {
+                "bMatchId": 1002163
+              },
+              {
+                "bMatchId": 1002164
+              }
+            ]
+          },
+          {
+            "num": 2,
+            "des": "第三轮1-1",
+            "sessions": [
+              {
+                "bMatchId": 1002165
+              },
+              {
+                "bMatchId": 1002166
+              }
+            ]
+          }
+        ],
+        "promotionName": "伦敦大师赛瑞士轮晋级图",
+        "templateName": "瑞士轮（8支队伍3轮晋级4队）",
+        "templateId": 4
+      },
+      {
+        "promotionName": "伦敦大师赛淘汰赛",
+        "templateName": "八支队伍双败淘汰赛",
+        "templateId": 1,
+        "id": 35,
+        "promotionData": [
+          {
+            "num": 4,
+            "des": "首轮比赛",
+            "sessions": [
+              {
+                "bMatchId": 1002167
+              },
+              {
+                "bMatchId": 1002168
+              },
+              {
+                "bMatchId": 1002169
+              },
+              {
+                "bMatchId": 1002170
+              }
+            ]
+          },
+          {
+            "num": 2,
+            "des": "败者组第一轮",
+            "sessions": [
+              {
+                "bMatchId": 1002171
+              },
+              {
+                "bMatchId": 1002172
+              }
+            ]
+          },
+          {
+            "num": 2,
+            "des": "胜者组第一轮",
+            "sessions": [
+              {
+                "bMatchId": 1002179
+              },
+              {
+                "bMatchId": 1002180
+              }
+            ]
+          },
+          {
+            "num": 2,
+            "des": "败者组第二轮",
+            "sessions": [
+              {
+                "bMatchId": 1002181
+              },
+              {
+                "bMatchId": 1002182
+              }
+            ]
+          },
+          {
+            "num": 1,
+            "des": "胜者组决赛",
+            "sessions": [
+              {
+                "bMatchId": 1002183
+              }
+            ]
+          },
+          {
+            "num": 1,
+            "des": "败者组半决赛",
+            "sessions": [
+              {
+                "bMatchId": 1002184
+              }
+            ]
+          },
+          {
+            "num": 1,
+            "des": "败者组决赛",
+            "sessions": [
+              {
+                "bMatchId": 1002185
+              }
+            ]
+          },
+          {
+            "num": 1,
+            "des": "总决赛",
+            "sessions": [
+              {
+                "bMatchId": 1002186
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "coverage": "该赛事官方完整场次目录；晋级关系仅按官网已公布内容展示"
+  }
+}

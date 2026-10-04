@@ -1,0 +1,52 @@
+name: Test application and container
+on:
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install locked development metadata
+        run: npm ci --ignore-scripts
+      - name: Check JavaScript syntax
+        run: npm run check:syntax
+      - name: Test official data and deployment behavior
+        run: npm test
+      - uses: docker/setup-buildx-action@v3
+      - name: Build runnable container
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          platforms: linux/amd64
+          tags: matchpoint:ci
+          cache-from: type=gha,scope=matchpoint-amd64
+          cache-to: type=gha,scope=matchpoint-amd64,mode=max
+          build-args: |
+            VCS_REF=${{ github.sha }}
+      - name: Verify Compose, non-root, read-only and persistent data
+        env:
+          SMOKE_IMAGE: matchpoint:ci
+        run: bash scripts/container-smoke.sh
+      - name: Validate optional Compose examples
+        env:
+          MATCHPOINT_DOMAIN: esports.example.com
+        run: |
+          docker compose -f compose.yml -f compose.build.yml config --quiet
+          docker compose -f compose.yml -f compose.https.yml config --quiet
+      - name: Save tested image for download
+        run: docker save matchpoint:ci | gzip > matchpoint-docker-amd64.tar.gz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: matchpoint-docker-amd64
+          path: matchpoint-docker-amd64.tar.gz
+          retention-days: 7

@@ -1,0 +1,1430 @@
+{
+  "tournament": {
+    "id": "esl-pro-league-season-24-2026",
+    "name": "ESL Pro League Season 24 2026"
+  },
+  "tournamentMatchesPromise": [
+    {
+      "id": "7aeef17e-91f1-4bce-a53d-649174a15ac1",
+      "name": "0-0 Match 6",
+      "scheduledAt": "2026-10-03T16:30:00.000Z",
+      "type": "BO3",
+      "index": 5,
+      "circuit": {
+        "id": "cs-2026",
+        "name": "CS 2026"
+      },
+      "tournament": {
+        "id": "esl-pro-league-season-24-2026",
+        "name": "ESL Pro League Season 24 2026",
+        "startDate": "2026-10-03T12:00:00",
+        "endDate": "2026-10-11T12:00:00",
+        "location": "Katowice, Poland",
+        "prizePool": "$1,000,000",
+        "externalId": null
+      },
+      "stage": {
+        "id": "258ad4da-e36a-4d52-86a8-f67ce66855e6",
+        "name": "Group Stage",
+        "format": "swiss-16",
+        "startDate": "2026-10-03T08:00:00",
+        "endDate": "2026-10-07T21:00:00"
+      },
+      "teamA": {
+        "id": "f239109c-ffef-4e83-830e-5ca340ee432b",
+        "name": "FURIA",
+        "shortName": "furia",
+        "nationality": "BR",
+        "socialLinks": {},
+        "externalId": "85"
+      },
+      "teamB": {
+        "id": "809aa7c3-52fc-4936-a4ac-3b0be99b46ac",
+        "name": "BetBoom",
+        "shortName": "bb",
+        "nationality": "RU",
+        "socialLinks": {},
+        "externalId": "137"
+      },
+      "teamAScore": 0,
+      "teamBScore": 0,
+      "maps": [],
+      "metadata": {
+        "_t": "cs_match",
+        "externalStreamUrl": "https://www.twitch.tv/eslcsb"
+      }
+    },
+    {
+      "id": "45a93a72-61ee-47f9-bbd0-c0bd369865c4",
+      "name": "0-0 Match 8",
+      "scheduledAt": "2026-10-03T16:30:00.000Z",
+      "type": "BO3",
+      "index": 7,
+      "circuit": {
+        "id": "cs-2026",
+        "name": "CS 2026"
+      },
+      "tournament": {
+        "id": "esl-pro-league-season-24-2026",
+        "name": "ESL Pro League Season 24 2026",
+        "startDate": "2026-10-03T12:00:00",
+        "endDate": "2026-10-11T12:00:00",
+        "location": "Katowice, Poland",
+        "prizePool": "$1,000,000",
+        "externalId": null
+      },
+      "stage": {
+        "id": "258ad4da-e36a-4d52-86a8-f67ce66855e6",
+        "name": "Group Stage",
+        "format": "swiss-16",
+        "startDate": "2026-10-03T08:00:00",
+        "endDate": "2026-10-07T21:00:00"
+      },
+      "teamA": {
+        "id": "3f141cb2-6daa-432b-9413-62e1934d12ce",
+        "name": "G2",
+        "shortName": "g2",
+        "nationality": "EU",
+        "socialLinks": {},
+        "externalId": "59"
+      },
+      "teamB": {
+        "id": "a82bfac0-e32e-44ed-9f6c-9e18a652bae2",
+        "name": "Natus Vincere",
+        "shortName": "navi",
+        "nationality": "UA",
+        "socialLinks": {},
+        "externalId": "12"
+      },
+      "teamAScore": 0,
+      "teamBScore": 0,
+      "maps": [],
+      "metadata": {
+        "_t": "cs_match",
+        "externalStreamUrl": "https://www.twitch.tv/eslcs"
+      }
+    },
+    {
+      "id": "c752ade8-f59e-4634-98ef-e07954dc88e4",
+      "name": "0-0 Match 4",
+      "scheduledAt": "2026-10-03T14:00:00.000Z",
+      "type": "BO3",
+      "index": 3,
+      "circuit": {
+        "id": "cs-2026",
+        "name": "CS 2026"
+      },
+      "tournament": {
+        "id": "esl-pro-league-season-24-2026",
+        "name": "ESL Pro League Season 24 2026",
+        "startDate": "2026-10-03T12:00:00",
+        "endDate": "2026-10-11T12:00:00",
+        "location": "Katowice, Poland",
+        "prizePool": "$1,000,000",
+        "externalId": null
+      },
+      "stage": {
+        "id": "258ad4da-e36a-4d52-86a8-f67ce66855e6",
+        "name": "Group Stage",
+        "format": "swiss-16",
+        "startDate": "2026-10-03T08:00:00",
+        "endDate": "2026-10-07T21:00:00"
+      },
+      "teamA": {
+        "id": "05b375da-847d-48e8-8bc0-d3f957e35e25",
+        "name": "MOUZ",
+        "shortName": "mouz",
+        "nationality": "EU",
+        "socialLinks": {},
+        "externalId": "106"
+      },
+      "teamB": {
+        "id": "7c6216dd-d2c5-42e0-a475-8d18d3a7b02f",
+        "name": "M80",
+        "shortName": "m80",
+        "nationality": "US",
+        "socialLinks": {},
+        "externalId": "140"
+      },
+      "teamAScore": 0,
+      "teamBScore": 0,
+      "maps": [],
+      "metadata": {
+        "_t": "cs_match",
+        "externalStreamUrl": "https://www.twitch.tv/eslcsb"
+      }
+    },
+    {
+      "id": "065bbdcb-18a3-44b2-8cad-16d15aff9ce4",
+      "name": "0-0 Match 7",
+      "scheduledAt": "2026-10-03T14:00:00.000Z",
+      "type": "BO3",
+      "index": 6,
+      "circuit": {
+        "id": "cs-2026",
+        "name": "CS 2026"
+      },
+      "tournament": {
+        "id": "esl-pro-league-season-24-2026",
+        "name": "ESL Pro League Season 24 2026",
+        "startDate": "2026-10-03T12:00:00",
+        "endDate": "2026-10-11T12:00:00",
+        "location": "Katowice, Poland",
+        "prizePool": "$1,000,000",
+        "externalId": null
+      },
+      "stage": {
+        "id": "258ad4da-e36a-4d52-86a8-f67ce66855e6",
+        "name": "Group Stage",
+        "format": "swiss-16",
+        "startDate": "2026-10-03T08:00:00",
+        "endDate": "2026-10-07T21:00:00"
+      },
+      "teamA": {
+        "id": "28566aa3-3ede-48fd-87d7-2044e5de47a7",
+        "name": "Aurora",
+        "shortName": "aurora",
+        "nationality": "TR",
+        "socialLinks": {},
+        "externalId": "134"
+      },
+      "teamB": {
+        "id": "15189efb-fdf2-4691-a36c-953dbdad88aa",
+        "name": "9z",
+        "shortName": "9z",
+        "nationality": "BR",
+        "socialLinks": {},
+        "externalId": "112"
+      },
+      "teamAScore": 0,
+      "teamBScore": 0,
+      "maps": [],
+      "metadata": {
+        "_t": "cs_match",
+        "externalStreamUrl": "https://www.twitch.tv/eslcs"
+      }
+    },
+    {
+      "id": "0dc85772-feb8-4762-b357-57dee2bfb739",
+      "name": "0-0 Match 1",
+      "scheduledAt": "2026-10-03T11:30:00.000Z",
+      "type": "BO3",
+      "index": 0,
+      "circuit": {
+        "id": "cs-2026",
+        "name": "CS 2026"
+      },
+      "tournament": {
+        "id": "esl-pro-league-season-24-2026",
+        "name": "ESL Pro League Season 24 2026",
+        "startDate": "2026-10-03T12:00:00",
+        "endDate": "2026-10-11T12:00:00",
+        "location": "Katowice, Poland",
+        "prizePool": "$1,000,000",
+        "externalId": null
+      },
+      "stage": {
+        "id": "258ad4da-e36a-4d52-86a8-f67ce66855e6",
+        "name": "Group Stage",
+        "format": "swiss-16",
+        "startDate": "2026-10-03T08:00:00",
+        "endDate": "2026-10-07T21:00:00"
+      },
+      "teamA": {
+        "id": "80b609cb-707b-48f2-83ee-0f68b8ba8cca",
+        "name": "Spirit",
+        "shortName": "spirit",
+        "nationality": "RU",
+        "socialLinks": {},
+        "externalId": "81"
+      },
+      "teamB": {
+        "id": "bdf03d69-89aa-41b5-9162-a84148fc638e",
+        "name": "ShindeN",
+        "shortName": "shinden",
+        "nationality": "AR",
+        "socialLinks": {},
+        "externalId": null
+      },
+      "teamAScore": 0,
+      "teamBScore": 0,
+      "maps": [],
+      "metadata": {
+        "_t": "cs_match",
+        "externalStreamUrl": "https://www.twitch.tv/eslcsb"
+      }
+    },
+    {
+      "id": "b9ea8dac-b716-4bca-844e-cb6242e0d906",
+      "name": "0-0 Match 2",
+      "scheduledAt": "2026-10-03T11:30:00.000Z",
+      "type": "BO3",
+      "index": 1,
+      "circuit": {
+        "id": "cs-2026",
+        "name": "CS 2026"
+      },
+      "tournament": {
+        "id": "esl-pro-league-season-24-2026",
+        "name": "ESL Pro League Season 24 2026",
+        "startDate": "2026-10-03T12:00:00",
+        "endDate": "2026-10-11T12:00:00",
+        "location": "Katowice, Poland",
+        "prizePool": "$1,000,000",
+        "externalId": null
+      },
+      "stage": {
+        "id": "258ad4da-e36a-4d52-86a8-f67ce66855e6",
+        "name": "Group Stage",
+        "format": "swiss-16",
+        "startDate": "2026-10-03T08:00:00",
+        "endDate": "2026-10-07T21:00:00"
+      },
+      "teamA": {
+        "id": "9b29b611-6523-452d-9bc6-b93fbdb01796",
+        "name": "Vitality",
+        "shortName": "vitality",
+        "nationality": "FR",
+        "socialLinks": {},
+        "externalId": "89"
+      },
+      "teamB": {
+        "id": "dfeac984-29e0-4264-8bd4-4a8efabdb4a4",
+        "name": "1win",
+        "shortName": "1win",
+        "nationality": "RU",
+        "socialLinks": {},
+        "externalId": null
+      },
+      "teamAScore": 0,
+      "teamBScore": 0,
+      "maps": [],
+      "metadata": {
+        "_t": "cs_match",
+        "externalStreamUrl": "https://www.twitch.tv/eslcs"
+      }
+    },
+    {
+      "id": "6081be76-1059-4534-8dc2-7d725e9dc078",
+      "name": "0-0 Match 3",
+      "scheduledAt": "2026-10-03T09:00:00.000Z",
+      "type": "BO3",
+      "index": 2,
+      "circuit": {
+        "id": "cs-2026",
+        "name": "CS 2026"
+      },
+      "tournament": {
+        "id": "esl-pro-league-season-24-2026",
+        "name": "ESL Pro League Season 24 2026",
+        "startDate": "2026-10-03T12:00:00",
+        "endDate": "2026-10-11T12:00:00",
+        "location": "Katowice, Poland",
+        "prizePool": "$1,000,000",
+        "externalId": null
+      },
+      "stage": {
+        "id": "258ad4da-e36a-4d52-86a8-f67ce66855e6",
+        "name": "Group Stage",
+        "format": "swiss-16",
+        "startDate": "2026-10-03T08:00:00",
+        "endDate": "2026-10-07T21:00:00"
+      },
+      "teamA": {
+        "id": "30c9dd5b-95bb-4db2-a83f-26f672265cab",
+        "name": "Team Falcons",
+        "shortName": "falcons",
+        "nationality": "EU",
+        "socialLinks": {},
+        "externalId": "139"
+      },
+      "teamB": {
+        "id": "1cdfe400-4a5d-4c90-952b-979649cd980f",
+        "name": "TYLOO",
+        "shortName": "tyloo",
+        "nationality": "CN",
+        "socialLinks": {},
+        "externalId": "74"
+      },
+      "teamAScore": 0,
+      "teamBScore": 0,
+      "maps": [],
+      "metadata": {
+        "_t": "cs_match",
+        "externalStreamUrl": "https://www.twitch.tv/eslcs"
+      }
+    },
+    {
+      "id": "9fe8795d-8545-452a-9537-89914c0dcd6c",
+      "name": "0-0 Match 5",
+      "scheduledAt": "2026-10-03T09:00:00.000Z",
+      "type": "BO3",
+      "index": 4,
+      "circuit": {
+        "id": "cs-2026",
+        "name": "CS 2026"
+      },
+      "tournament": {
+        "id": "esl-pro-league-season-24-2026",
+        "name": "ESL Pro League Season 24 2026",
+        "startDate": "2026-10-03T12:00:00",
+        "endDate": "2026-10-11T12:00:00",
+        "location": "Katowice, Poland",
+        "prizePool": "$1,000,000",
+        "externalId": null
+      },
+      "stage": {
+        "id": "258ad4da-e36a-4d52-86a8-f67ce66855e6",
+        "name": "Group Stage",
+        "format": "swiss-16",
+        "startDate": "2026-10-03T08:00:00",
+        "endDate": "2026-10-07T21:00:00"
+      },
+      "teamA": {
+        "id": "7417378d-29a3-4376-85eb-05db707e784d",
+        "name": "Legacy",
+        "shortName": "legacy",
+        "nationality": "BR",
+        "socialLinks": {},
+        "externalId": "126"
+      },
+      "teamB": {
+        "id": "2af32ab7-6df2-40ad-83cb-7bc0a6cf5947",
+        "name": "Parivision",
+        "shortName": "parivision",
+        "nationality": "RU",
+        "socialLinks": {},
+        "externalId": "142"
+      },
+      "teamAScore": 0,
+      "teamBScore": 0,
+      "maps": [],
+      "metadata": {
+        "_t": "cs_match",
+        "externalStreamUrl": "https://www.twitch.tv/eslcsb"
+      }
+    }
+  ],
+  "tournamentBracketsPromise": [
+    {
+      "tournamentUuid": "258ad4da-e36a-4d52-86a8-f67ce66855e6",
+      "tournamentName": "Group Stage",
+      "parentTournamentFormat": "",
+      "parentTournamentName": "ESL Pro League Season 24 2026",
+      "circuitName": "CS 2026",
+      "startDate": "2026-10-03T08:00:00.000Z",
+      "endDate": "2026-10-07T21:00:00.000Z",
+      "label": "Group Stage",
+      "groups": [
+        {
+          "id": "0:0",
+          "format": "BO3",
+          "date": "2026-10-03T11:30:00.000Z",
+          "matches": [
+            {
+              "uuid": "0dc85772-feb8-4762-b357-57dee2bfb739",
+              "name": "0-0 Match 1",
+              "timeOfSeries": "2026-10-03T11:30:00.000Z",
+              "type": "BO3",
+              "index": 0,
+              "metadata": {
+                "_t": "cs_match",
+                "externalStreamUrl": "https://www.twitch.tv/eslcsb"
+              },
+              "teamA": {
+                "uuid": "80b609cb-707b-48f2-83ee-0f68b8ba8cca",
+                "name": "Spirit",
+                "shorthand": "spirit",
+                "location": "RU",
+                "isEliminated": false
+              },
+              "teamB": {
+                "uuid": "bdf03d69-89aa-41b5-9162-a84148fc638e",
+                "name": "ShindeN",
+                "shorthand": "shinden",
+                "location": "AR",
+                "isEliminated": false
+              },
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "b9ea8dac-b716-4bca-844e-cb6242e0d906",
+              "name": "0-0 Match 2",
+              "timeOfSeries": "2026-10-03T11:30:00.000Z",
+              "type": "BO3",
+              "index": 1,
+              "metadata": {
+                "_t": "cs_match",
+                "externalStreamUrl": "https://www.twitch.tv/eslcs"
+              },
+              "teamA": {
+                "uuid": "9b29b611-6523-452d-9bc6-b93fbdb01796",
+                "name": "Vitality",
+                "shorthand": "vitality",
+                "location": "FR",
+                "isEliminated": false
+              },
+              "teamB": {
+                "uuid": "dfeac984-29e0-4264-8bd4-4a8efabdb4a4",
+                "name": "1win",
+                "shorthand": "1win",
+                "location": "RU",
+                "isEliminated": false
+              },
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "6081be76-1059-4534-8dc2-7d725e9dc078",
+              "name": "0-0 Match 3",
+              "timeOfSeries": "2026-10-03T09:00:00.000Z",
+              "type": "BO3",
+              "index": 2,
+              "metadata": {
+                "_t": "cs_match",
+                "externalStreamUrl": "https://www.twitch.tv/eslcs"
+              },
+              "teamA": {
+                "uuid": "30c9dd5b-95bb-4db2-a83f-26f672265cab",
+                "name": "Team Falcons",
+                "shorthand": "falcons",
+                "location": "EU",
+                "isEliminated": false
+              },
+              "teamB": {
+                "uuid": "1cdfe400-4a5d-4c90-952b-979649cd980f",
+                "name": "TYLOO",
+                "shorthand": "tyloo",
+                "location": "CN",
+                "isEliminated": false
+              },
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "c752ade8-f59e-4634-98ef-e07954dc88e4",
+              "name": "0-0 Match 4",
+              "timeOfSeries": "2026-10-03T14:00:00.000Z",
+              "type": "BO3",
+              "index": 3,
+              "metadata": {
+                "_t": "cs_match",
+                "externalStreamUrl": "https://www.twitch.tv/eslcsb"
+              },
+              "teamA": {
+                "uuid": "05b375da-847d-48e8-8bc0-d3f957e35e25",
+                "name": "MOUZ",
+                "shorthand": "mouz",
+                "location": "EU",
+                "isEliminated": false
+              },
+              "teamB": {
+                "uuid": "7c6216dd-d2c5-42e0-a475-8d18d3a7b02f",
+                "name": "M80",
+                "shorthand": "m80",
+                "location": "US",
+                "isEliminated": false
+              },
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "9fe8795d-8545-452a-9537-89914c0dcd6c",
+              "name": "0-0 Match 5",
+              "timeOfSeries": "2026-10-03T09:00:00.000Z",
+              "type": "BO3",
+              "index": 4,
+              "metadata": {
+                "_t": "cs_match",
+                "externalStreamUrl": "https://www.twitch.tv/eslcsb"
+              },
+              "teamA": {
+                "uuid": "7417378d-29a3-4376-85eb-05db707e784d",
+                "name": "Legacy",
+                "shorthand": "legacy",
+                "location": "BR",
+                "isEliminated": false
+              },
+              "teamB": {
+                "uuid": "2af32ab7-6df2-40ad-83cb-7bc0a6cf5947",
+                "name": "Parivision",
+                "shorthand": "parivision",
+                "location": "RU",
+                "isEliminated": false
+              },
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "7aeef17e-91f1-4bce-a53d-649174a15ac1",
+              "name": "0-0 Match 6",
+              "timeOfSeries": "2026-10-03T16:30:00.000Z",
+              "type": "BO3",
+              "index": 5,
+              "metadata": {
+                "_t": "cs_match",
+                "externalStreamUrl": "https://www.twitch.tv/eslcsb"
+              },
+              "teamA": {
+                "uuid": "f239109c-ffef-4e83-830e-5ca340ee432b",
+                "name": "FURIA",
+                "shorthand": "furia",
+                "location": "BR",
+                "isEliminated": false
+              },
+              "teamB": {
+                "uuid": "809aa7c3-52fc-4936-a4ac-3b0be99b46ac",
+                "name": "BetBoom",
+                "shorthand": "bb",
+                "location": "RU",
+                "isEliminated": false
+              },
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "065bbdcb-18a3-44b2-8cad-16d15aff9ce4",
+              "name": "0-0 Match 7",
+              "timeOfSeries": "2026-10-03T14:00:00.000Z",
+              "type": "BO3",
+              "index": 6,
+              "metadata": {
+                "_t": "cs_match",
+                "externalStreamUrl": "https://www.twitch.tv/eslcs"
+              },
+              "teamA": {
+                "uuid": "28566aa3-3ede-48fd-87d7-2044e5de47a7",
+                "name": "Aurora",
+                "shorthand": "aurora",
+                "location": "TR",
+                "isEliminated": false
+              },
+              "teamB": {
+                "uuid": "15189efb-fdf2-4691-a36c-953dbdad88aa",
+                "name": "9z",
+                "shorthand": "9z",
+                "location": "BR",
+                "isEliminated": false
+              },
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "45a93a72-61ee-47f9-bbd0-c0bd369865c4",
+              "name": "0-0 Match 8",
+              "timeOfSeries": "2026-10-03T16:30:00.000Z",
+              "type": "BO3",
+              "index": 7,
+              "metadata": {
+                "_t": "cs_match",
+                "externalStreamUrl": "https://www.twitch.tv/eslcs"
+              },
+              "teamA": {
+                "uuid": "3f141cb2-6daa-432b-9413-62e1934d12ce",
+                "name": "G2",
+                "shorthand": "g2",
+                "location": "EU",
+                "isEliminated": false
+              },
+              "teamB": {
+                "uuid": "a82bfac0-e32e-44ed-9f6c-9e18a652bae2",
+                "name": "Natus Vincere",
+                "shorthand": "navi",
+                "location": "UA",
+                "isEliminated": false
+              },
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            }
+          ]
+        },
+        {
+          "id": "1:0",
+          "format": "BO3",
+          "date": "2026-10-04T08:00:00.000Z",
+          "matches": [
+            {
+              "uuid": "01a76c97-cac7-43cb-a0fa-39ef3b4e7940",
+              "name": "1-0 Match 1",
+              "timeOfSeries": "2026-10-04T08:00:00.000Z",
+              "type": "BO3",
+              "index": 8,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "7c4ecdeb-5be3-4841-af52-23b62389eeb5",
+              "name": "1-0 Match 2",
+              "timeOfSeries": "2026-10-04T08:00:00.000Z",
+              "type": "BO3",
+              "index": 9,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "5ebb5af4-35fa-40cf-a3e6-529b6ca40adc",
+              "name": "1-0 Match 3",
+              "timeOfSeries": "2026-10-04T08:00:00.000Z",
+              "type": "BO3",
+              "index": 10,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "5eaba942-9f49-4798-8799-4c2e68439d08",
+              "name": "1-0 Match 4",
+              "timeOfSeries": "2026-10-04T08:00:00.000Z",
+              "type": "BO3",
+              "index": 11,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            }
+          ]
+        },
+        {
+          "id": "0:1",
+          "format": "BO3",
+          "date": "2026-10-04T08:00:00.000Z",
+          "matches": [
+            {
+              "uuid": "9ed0baf4-6b49-4345-ae9c-6258fc25812c",
+              "name": "0-1 Match 1",
+              "timeOfSeries": "2026-10-04T08:00:00.000Z",
+              "type": "BO3",
+              "index": 12,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "bdbcb320-43b2-4dca-a3d1-92a137c0bb0d",
+              "name": "0-1 Match 2",
+              "timeOfSeries": "2026-10-04T08:00:00.000Z",
+              "type": "BO3",
+              "index": 13,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "46f3a885-2c4d-4258-9c6b-655b1ef6400c",
+              "name": "0-1 Match 3",
+              "timeOfSeries": "2026-10-04T08:00:00.000Z",
+              "type": "BO3",
+              "index": 14,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "4cfda3dd-6995-4469-8a61-b6e6e4488c06",
+              "name": "0-1 Match 4",
+              "timeOfSeries": "2026-10-04T08:00:00.000Z",
+              "type": "BO3",
+              "index": 15,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            }
+          ]
+        },
+        {
+          "id": "2:0",
+          "format": "BO3",
+          "date": "2026-10-05T08:00:00.000Z",
+          "matches": [
+            {
+              "uuid": "ba4798a1-da53-42cf-a858-c36559b4adf3",
+              "name": "2-0 Match 1",
+              "timeOfSeries": "2026-10-05T08:00:00.000Z",
+              "type": "BO3",
+              "index": 16,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "16db83fa-2b07-4739-ac9d-8931c0b8d0e2",
+              "name": "2-0 Match 2",
+              "timeOfSeries": "2026-10-05T08:00:00.000Z",
+              "type": "BO3",
+              "index": 17,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            }
+          ],
+          "numberQualifiedTeams": 2
+        },
+        {
+          "id": "1:1",
+          "format": "BO3",
+          "date": "2026-10-05T08:00:00.000Z",
+          "matches": [
+            {
+              "uuid": "5ae5a6bd-bac9-467f-afb8-ca2df675ea66",
+              "name": "1-1 Match 1",
+              "timeOfSeries": "2026-10-05T08:00:00.000Z",
+              "type": "BO3",
+              "index": 18,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "14b4f1d8-6534-4ab5-8007-aa0c88e43f79",
+              "name": "1-1 Match 2",
+              "timeOfSeries": "2026-10-05T08:00:00.000Z",
+              "type": "BO3",
+              "index": 19,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "0807a3ac-e1d4-4aba-9dcc-a00ad504e1b3",
+              "name": "1-1 Match 3",
+              "timeOfSeries": "2026-10-05T08:00:00.000Z",
+              "type": "BO3",
+              "index": 20,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "3ea032fc-1148-48d7-9e58-d26a5d57f187",
+              "name": "1-1 Match 4",
+              "timeOfSeries": "2026-10-05T08:00:00.000Z",
+              "type": "BO3",
+              "index": 21,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            }
+          ]
+        },
+        {
+          "id": "0:2",
+          "format": "BO3",
+          "date": "2026-10-05T08:00:00.000Z",
+          "matches": [
+            {
+              "uuid": "d00d6555-ad16-42ed-ba24-26ff19c06fc3",
+              "name": "0-2 Match 1",
+              "timeOfSeries": "2026-10-05T08:00:00.000Z",
+              "type": "BO3",
+              "index": 22,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "520d337a-9562-454d-88c1-a356d667740a",
+              "name": "0-2 Match 2",
+              "timeOfSeries": "2026-10-05T08:00:00.000Z",
+              "type": "BO3",
+              "index": 23,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            }
+          ],
+          "numberEliminatedTeams": 2
+        },
+        {
+          "id": "2:1",
+          "format": "BO3",
+          "date": "2026-10-06T08:00:00.000Z",
+          "matches": [
+            {
+              "uuid": "edf0c081-64a3-4f92-8b03-ce79c843f062",
+              "name": "2-1 Match 1",
+              "timeOfSeries": "2026-10-06T08:00:00.000Z",
+              "type": "BO3",
+              "index": 24,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "a50ba4c0-c7f9-4964-a1d2-4d9f4b831b7d",
+              "name": "2-1 Match 2",
+              "timeOfSeries": "2026-10-06T08:00:00.000Z",
+              "type": "BO3",
+              "index": 25,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "2c9e9081-c557-4af8-bbc8-215fb4f7891d",
+              "name": "2-1 Match 3",
+              "timeOfSeries": "2026-10-06T08:00:00.000Z",
+              "type": "BO3",
+              "index": 26,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            }
+          ],
+          "numberQualifiedTeams": 3
+        },
+        {
+          "id": "1:2",
+          "format": "BO3",
+          "date": "2026-10-06T08:00:00.000Z",
+          "matches": [
+            {
+              "uuid": "f9ef1897-54ee-447b-af7e-621be23744f2",
+              "name": "1-2 Match 1",
+              "timeOfSeries": "2026-10-06T08:00:00.000Z",
+              "type": "BO3",
+              "index": 27,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "8655f4d5-fdbd-4742-a45e-f7e6a6feee33",
+              "name": "1-2 Match 2",
+              "timeOfSeries": "2026-10-06T08:00:00.000Z",
+              "type": "BO3",
+              "index": 28,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "5b9deeca-5400-4e2d-9349-3141419a6f70",
+              "name": "1-2 Match 3",
+              "timeOfSeries": "2026-10-06T08:00:00.000Z",
+              "type": "BO3",
+              "index": 29,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            }
+          ],
+          "numberEliminatedTeams": 3
+        },
+        {
+          "id": "2:2",
+          "format": "BO3",
+          "date": "2026-10-07T08:00:00.000Z",
+          "matches": [
+            {
+              "uuid": "b32d3b8f-aac6-42ed-99a2-61130dfeb3ca",
+              "name": "2-2 Match 1",
+              "timeOfSeries": "2026-10-07T08:00:00.000Z",
+              "type": "BO3",
+              "index": 30,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "43aee9df-6e34-468a-95b4-3123a2c5876b",
+              "name": "2-2 Match 2",
+              "timeOfSeries": "2026-10-07T08:00:00.000Z",
+              "type": "BO3",
+              "index": 31,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            },
+            {
+              "uuid": "eafcda66-0d1e-48a4-9d7e-bfbe4b99b190",
+              "name": "2-2 Match 3",
+              "timeOfSeries": "2026-10-07T08:00:00.000Z",
+              "type": "BO3",
+              "index": 32,
+              "metadata": {
+                "_t": "cs_match"
+              },
+              "teamA": null,
+              "teamB": null,
+              "teamAScore": 0,
+              "teamBScore": 0,
+              "maps": [],
+              "winnerGoesTo": null,
+              "loserGoesTo": null,
+              "isLive": false,
+              "isCompleted": false
+            }
+          ],
+          "numberEliminatedTeams": 3,
+          "numberQualifiedTeams": 3
+        }
+      ],
+      "matches": [],
+      "numberOfTeams": null,
+      "index": 0,
+      "format": "swiss-16"
+    },
+    {
+      "tournamentUuid": "0ab73a1c-cb64-4517-88cc-0db3fc9223a8",
+      "tournamentName": "Playoffs",
+      "parentTournamentFormat": "",
+      "parentTournamentName": "ESL Pro League Season 24 2026",
+      "circuitName": "CS 2026",
+      "startDate": "2026-10-09T08:00:00.000Z",
+      "endDate": "2026-10-11T21:00:00.000Z",
+      "label": "Playoffs",
+      "matches": [
+        {
+          "uuid": "98dac9cd-ebb3-4978-8df9-5c5464e70f09",
+          "name": "Quarter Final 1",
+          "timeOfSeries": "2026-10-09T08:00:00.000Z",
+          "type": "BO3",
+          "index": 0,
+          "metadata": {
+            "_t": "cs_match"
+          },
+          "teamA": null,
+          "teamB": null,
+          "teamAScore": 0,
+          "teamBScore": 0,
+          "maps": [],
+          "winnerGoesTo": {
+            "tournamentUUID": "0ab73a1c-cb64-4517-88cc-0db3fc9223a8",
+            "seriesUUID": "36fcf650-c268-4c7e-a1a4-dc4bc1f732dc",
+            "bracketPosition": "POSITION_A"
+          },
+          "loserGoesTo": null,
+          "isLive": false,
+          "isCompleted": false
+        },
+        {
+          "uuid": "41dfdf3a-74d4-4e59-b4f1-a4a0bd5351a1",
+          "name": "Quarter Final 2",
+          "timeOfSeries": "2026-10-09T08:00:00.000Z",
+          "type": "BO3",
+          "index": 1,
+          "metadata": {
+            "_t": "cs_match"
+          },
+          "teamA": null,
+          "teamB": null,
+          "teamAScore": 0,
+          "teamBScore": 0,
+          "maps": [],
+          "winnerGoesTo": {
+            "tournamentUUID": "0ab73a1c-cb64-4517-88cc-0db3fc9223a8",
+            "seriesUUID": "36fcf650-c268-4c7e-a1a4-dc4bc1f732dc",
+            "bracketPosition": "POSITION_B"
+          },
+          "loserGoesTo": null,
+          "isLive": false,
+          "isCompleted": false
+        },
+        {
+          "uuid": "8783ea96-442d-4c5f-bb7f-4bb6a541cb17",
+          "name": "Quarter Final 3",
+          "timeOfSeries": "2026-10-09T08:00:00.000Z",
+          "type": "BO3",
+          "index": 2,
+          "metadata": {
+            "_t": "cs_match"
+          },
+          "teamA": null,
+          "teamB": null,
+          "teamAScore": 0,
+          "teamBScore": 0,
+          "maps": [],
+          "winnerGoesTo": {
+            "tournamentUUID": "0ab73a1c-cb64-4517-88cc-0db3fc9223a8",
+            "seriesUUID": "f8997969-8026-4813-baae-682233190dd7",
+            "bracketPosition": "POSITION_A"
+          },
+          "loserGoesTo": null,
+          "isLive": false,
+          "isCompleted": false
+        },
+        {
+          "uuid": "a14eab9c-1897-4d83-8cb4-aa674338d9c7",
+          "name": "Quarter Final 4",
+          "timeOfSeries": "2026-10-09T08:00:00.000Z",
+          "type": "BO3",
+          "index": 3,
+          "metadata": {
+            "_t": "cs_match"
+          },
+          "teamA": null,
+          "teamB": null,
+          "teamAScore": 0,
+          "teamBScore": 0,
+          "maps": [],
+          "winnerGoesTo": {
+            "tournamentUUID": "0ab73a1c-cb64-4517-88cc-0db3fc9223a8",
+            "seriesUUID": "f8997969-8026-4813-baae-682233190dd7",
+            "bracketPosition": "POSITION_B"
+          },
+          "loserGoesTo": null,
+          "isLive": false,
+          "isCompleted": false
+        },
+        {
+          "uuid": "36fcf650-c268-4c7e-a1a4-dc4bc1f732dc",
+          "name": "Semi Final 1",
+          "timeOfSeries": "2026-10-09T08:00:00.000Z",
+          "type": "BO3",
+          "index": 4,
+          "metadata": {
+            "_t": "cs_match"
+          },
+          "teamA": null,
+          "teamB": null,
+          "teamAScore": 0,
+          "teamBScore": 0,
+          "maps": [],
+          "winnerGoesTo": {
+            "tournamentUUID": "0ab73a1c-cb64-4517-88cc-0db3fc9223a8",
+            "seriesUUID": "74952e6e-e553-4d95-8290-cc12c1963606",
+            "bracketPosition": "POSITION_A"
+          },
+          "loserGoesTo": null,
+          "isLive": false,
+          "isCompleted": false
+        },
+        {
+          "uuid": "f8997969-8026-4813-baae-682233190dd7",
+          "name": "Semi Final 2",
+          "timeOfSeries": "2026-10-09T08:00:00.000Z",
+          "type": "BO3",
+          "index": 5,
+          "metadata": {
+            "_t": "cs_match"
+          },
+          "teamA": null,
+          "teamB": null,
+          "teamAScore": 0,
+          "teamBScore": 0,
+          "maps": [],
+          "winnerGoesTo": {
+            "tournamentUUID": "0ab73a1c-cb64-4517-88cc-0db3fc9223a8",
+            "seriesUUID": "74952e6e-e553-4d95-8290-cc12c1963606",
+            "bracketPosition": "POSITION_B"
+          },
+          "loserGoesTo": null,
+          "isLive": false,
+          "isCompleted": false
+        },
+        {
+          "uuid": "74952e6e-e553-4d95-8290-cc12c1963606",
+          "name": "Grand Final",
+          "timeOfSeries": "2026-10-09T08:00:00.000Z",
+          "type": "BO3",
+          "index": 6,
+          "metadata": {
+            "_t": "cs_match"
+          },
+          "teamA": null,
+          "teamB": null,
+          "teamAScore": 0,
+          "teamBScore": 0,
+          "maps": [],
+          "winnerGoesTo": null,
+          "loserGoesTo": null,
+          "isLive": false,
+          "isCompleted": false
+        }
+      ],
+      "numberOfTeams": null,
+      "index": 1,
+      "format": "single-elim-8"
+    },
+    {
+      "tournamentUuid": "d183dd4a-2b0d-472e-8925-4e0ef5a39349",
+      "tournamentName": "3rd Place Playoff",
+      "parentTournamentFormat": "",
+      "parentTournamentName": "ESL Pro League Season 24 2026",
+      "circuitName": "CS 2026",
+      "startDate": "2026-10-11T08:00:00.000Z",
+      "endDate": "2026-10-11T13:00:00.000Z",
+      "label": "3rd Place Playoff",
+      "matches": [
+        {
+          "uuid": "31bfbbe0-2f14-468c-b250-6c4f851df54d",
+          "name": "3rd Place Decider",
+          "timeOfSeries": "2026-10-11T08:00:40.594Z",
+          "type": "BO3",
+          "index": 0,
+          "metadata": null,
+          "teamA": null,
+          "teamB": null,
+          "teamAScore": 0,
+          "teamBScore": 0,
+          "maps": [],
+          "winnerGoesTo": null,
+          "loserGoesTo": null,
+          "isLive": false,
+          "isCompleted": false
+        }
+      ],
+      "numberOfTeams": null,
+      "index": 2,
+      "format": "custom"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+name: matchpoint
+services:
+  app:
+    image: ${MATCHPOINT_IMAGE:-getl/matchpoint:latest}
+    init: true
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: "4177"
+      TZ: Asia/Shanghai
+      MATCHPOINT_DATA_DIR: /app/data
+      MATCHPOINT_ARCHIVE_SYNC: ${MATCHPOINT_ARCHIVE_SYNC:-true}
+    ports:
+      - "${MATCHPOINT_BIND:-127.0.0.1}:${MATCHPOINT_PORT:-4177}:4177"
+    volumes:
+      - matchpoint_data:/app/data
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 15s
+    pids_limit: 128
+    mem_limit: 512m
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+volumes:
+  matchpoint_data:

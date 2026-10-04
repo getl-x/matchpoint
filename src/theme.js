@@ -1,0 +1,1 @@
+try{const saved=JSON.parse(localStorage.getItem('matchpoint:preferences:v2'));document.documentElement.dataset.theme=saved?.theme==='light'?'light':'dark';}catch{document.documentElement.dataset.theme='dark';}

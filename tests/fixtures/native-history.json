@@ -1,0 +1,1118 @@
+{
+  "lol": {
+    "record": {
+      "id": "lol:cn:13",
+      "nativeId": "13",
+      "game": "lol",
+      "name": "全明星赛正赛",
+      "provider": "lol-cn"
+    },
+    "rows": [
+      {
+        "bMatchId": "79",
+        "bMatchName": "ALL-STAR 2014英雄联盟全明星赛",
+        "GameId": "13",
+        "GameName": "全明星赛正赛",
+        "GameTypeName": "默认",
+        "GameProcName": "决赛",
+        "TeamA": "24",
+        "TeamB": "6",
+        "ScoreA": "3",
+        "ScoreB": "0",
+        "MatchDate": "2014-05-11 22:00:00",
+        "MatchStatus": "3",
+        "MatchWin": "1"
+      },
+      {
+        "bMatchId": "78",
+        "bMatchName": "ALL-STAR 2014英雄联盟全明星赛",
+        "GameId": "13",
+        "GameName": "全明星赛正赛",
+        "GameTypeName": "默认",
+        "GameProcName": "半决赛",
+        "TeamA": "24",
+        "TeamB": "17",
+        "ScoreA": "2",
+        "ScoreB": "0",
+        "MatchDate": "2014-05-10 23:00:00",
+        "MatchStatus": "3",
+        "MatchWin": "1"
+      },
+      {
+        "bMatchId": "77",
+        "bMatchName": "ALL-STAR 2014英雄联盟全明星赛",
+        "GameId": "13",
+        "GameName": "全明星赛正赛",
+        "GameTypeName": "默认",
+        "GameProcName": "半决赛",
+        "TeamA": "15",
+        "TeamB": "6",
+        "ScoreA": "0",
+        "ScoreB": "2",
+        "MatchDate": "2014-05-10 20:00:00",
+        "MatchStatus": "3",
+        "MatchWin": "2"
+      },
+      {
+        "bMatchId": "83",
+        "bMatchName": "ALL-STAR 2014英雄联盟全明星赛",
+        "GameId": "13",
+        "GameName": "全明星赛正赛",
+        "GameTypeName": "默认",
+        "GameProcName": "第一周",
+        "TeamA": "26",
+        "TeamB": "17",
+        "ScoreA": "0",
+        "ScoreB": "1",
+        "MatchDate": "2014-05-10 00:00:00",
+        "MatchStatus": "3",
+        "MatchWin": "2"
+      },
+      {
+        "bMatchId": "76",
+        "bMatchName": "ALL-STAR 2014英雄联盟全明星赛",
+        "GameId": "13",
+        "GameName": "全明星赛正赛",
+        "GameTypeName": "默认",
+        "GameProcName": "第一周",
+        "TeamA": "15",
+        "TeamB": "6",
+        "ScoreA": "1",
+        "ScoreB": "0",
+        "MatchDate": "2014-05-09 23:00:00",
+        "MatchStatus": "3",
+        "MatchWin": "1"
+      },
+      {
+        "bMatchId": "75",
+        "bMatchName": "ALL-STAR 2014英雄联盟全明星赛",
+        "GameId": "13",
+        "GameName": "全明星赛正赛",
+        "GameTypeName": "默认",
+        "GameProcName": "第一周",
+        "TeamA": "17",
+        "TeamB": "24",
+        "ScoreA": "0",
+        "ScoreB": "1",
+        "MatchDate": "2014-05-09 22:00:00",
+        "MatchStatus": "3",
+        "MatchWin": "2"
+      },
+      {
+        "bMatchId": "82",
+        "bMatchName": "ALL-STAR 2014英雄联盟全明星赛",
+        "GameId": "13",
+        "GameName": "全明星赛正赛",
+        "GameTypeName": "默认",
+        "GameProcName": "第一周",
+        "TeamA": "15",
+        "TeamB": "26",
+        "ScoreA": "1",
+        "ScoreB": "0",
+        "MatchDate": "2014-05-09 21:00:00",
+        "MatchStatus": "3",
+        "MatchWin": "1"
+      },
+      {
+        "bMatchId": "74",
+        "bMatchName": "ALL-STAR 2014英雄联盟全明星赛",
+        "GameId": "13",
+        "GameName": "全明星赛正赛",
+        "GameTypeName": "默认",
+        "GameProcName": "第一周",
+        "TeamA": "24",
+        "TeamB": "6",
+        "ScoreA": "1",
+        "ScoreB": "0",
+        "MatchDate": "2014-05-09 20:00:00",
+        "MatchStatus": "3",
+        "MatchWin": "1"
+      },
+      {
+        "bMatchId": "73",
+        "bMatchName": "ALL-STAR 2014英雄联盟全明星赛",
+        "GameId": "13",
+        "GameName": "全明星赛正赛",
+        "GameTypeName": "默认",
+        "GameProcName": "第一周",
+        "TeamA": "24",
+        "TeamB": "15",
+        "ScoreA": "1",
+        "ScoreB": "0",
+        "MatchDate": "2014-05-09 02:00:00",
+        "MatchStatus": "3",
+        "MatchWin": "1"
+      },
+      {
+        "bMatchId": "81",
+        "bMatchName": "ALL-STAR 2014英雄联盟全明星赛",
+        "GameId": "13",
+        "GameName": "全明星赛正赛",
+        "GameTypeName": "默认",
+        "GameProcName": "第一周",
+        "TeamA": "6",
+        "TeamB": "26",
+        "ScoreA": "1",
+        "ScoreB": "0",
+        "MatchDate": "2014-05-09 01:00:00",
+        "MatchStatus": "3",
+        "MatchWin": "1"
+      },
+      {
+        "bMatchId": "72",
+        "bMatchName": "ALL-STAR 2014英雄联盟全明星赛",
+        "GameId": "13",
+        "GameName": "全明星赛正赛",
+        "GameTypeName": "默认",
+        "GameProcName": "第一周",
+        "TeamA": "17",
+        "TeamB": "15",
+        "ScoreA": "0",
+        "ScoreB": "1",
+        "MatchDate": "2014-05-09 00:00:00",
+        "MatchStatus": "3",
+        "MatchWin": "2"
+      },
+      {
+        "bMatchId": "80",
+        "bMatchName": "ALL-STAR 2014英雄联盟全明星赛",
+        "GameId": "13",
+        "GameName": "全明星赛正赛",
+        "GameTypeName": "默认",
+        "GameProcName": "第一周",
+        "TeamA": "26",
+        "TeamB": "24",
+        "ScoreA": "0",
+        "ScoreB": "1",
+        "MatchDate": "2014-05-08 23:00:00",
+        "MatchStatus": "3",
+        "MatchWin": "2"
+      },
+      {
+        "bMatchId": "68",
+        "bMatchName": "ALL-STAR 2014英雄联盟全明星赛",
+        "GameId": "13",
+        "GameName": "全明星赛正赛",
+        "GameTypeName": "默认",
+        "GameProcName": "第一周",
+        "TeamA": "6",
+        "TeamB": "17",
+        "ScoreA": "1",
+        "ScoreB": "0",
+        "MatchDate": "2014-05-08 22:00:00",
+        "MatchStatus": "3",
+        "MatchWin": "1"
+      }
+    ],
+    "teams": {
+      "6": {
+        "TeamId": "6",
+        "TeamName": "OMG",
+        "TeamShortName": "OMG"
+      },
+      "15": {
+        "TeamId": "15",
+        "TeamName": "C9",
+        "TeamShortName": "C9"
+      },
+      "17": {
+        "TeamId": "17",
+        "TeamName": "FNC",
+        "TeamShortName": ""
+      },
+      "24": {
+        "TeamId": "24",
+        "TeamName": "SKT",
+        "TeamShortName": ""
+      },
+      "26": {
+        "TeamId": "26",
+        "TeamName": "TPA",
+        "TeamShortName": ""
+      }
+    }
+  },
+  "valorant": {
+    "record": {
+      "id": "valorant:cn:1000074",
+      "nativeId": "1000074",
+      "game": "valorant",
+      "name": "2026无畏契约全球冠军赛",
+      "provider": "valorant-cn"
+    },
+    "matches": {
+      "msg": [
+        {
+          "bMatchId": 1002752,
+          "secondLevelGameId": 1000074,
+          "teamAId": null,
+          "teamBId": null,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "淘汰赛",
+          "groupName": "",
+          "bMatchName": "总决赛",
+          "matchFormat": "BO5",
+          "matchDate": "2026-10-18T14:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002751,
+          "secondLevelGameId": 1000074,
+          "teamAId": null,
+          "teamBId": null,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "淘汰赛",
+          "groupName": "",
+          "bMatchName": "败者组决赛",
+          "matchFormat": "BO5",
+          "matchDate": "2026-10-17T14:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002750,
+          "secondLevelGameId": 1000074,
+          "teamAId": null,
+          "teamBId": null,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "淘汰赛",
+          "groupName": "",
+          "bMatchName": "败者组半决赛",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-16T17:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002749,
+          "secondLevelGameId": 1000074,
+          "teamAId": null,
+          "teamBId": null,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "淘汰赛",
+          "groupName": "",
+          "bMatchName": "胜者组决赛",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-16T14:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002748,
+          "secondLevelGameId": 1000074,
+          "teamAId": null,
+          "teamBId": null,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "淘汰赛",
+          "groupName": "",
+          "bMatchName": "败者组第二轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-11T20:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002747,
+          "secondLevelGameId": 1000074,
+          "teamAId": null,
+          "teamBId": null,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "淘汰赛",
+          "groupName": "",
+          "bMatchName": "败者组第二轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-11T17:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002746,
+          "secondLevelGameId": 1000074,
+          "teamAId": null,
+          "teamBId": null,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "淘汰赛",
+          "groupName": "",
+          "bMatchName": "胜者组第二轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-10T20:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002745,
+          "secondLevelGameId": 1000074,
+          "teamAId": null,
+          "teamBId": null,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "淘汰赛",
+          "groupName": "",
+          "bMatchName": "胜者组第二轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-10T17:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002744,
+          "secondLevelGameId": 1000074,
+          "teamAId": null,
+          "teamBId": null,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "淘汰赛",
+          "groupName": "",
+          "bMatchName": "败者组第一轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-09T20:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002743,
+          "secondLevelGameId": 1000074,
+          "teamAId": null,
+          "teamBId": null,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "淘汰赛",
+          "groupName": "",
+          "bMatchName": "败者组第一轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-09T17:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002742,
+          "secondLevelGameId": 1000074,
+          "teamAId": null,
+          "teamBId": null,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "淘汰赛",
+          "groupName": "",
+          "bMatchName": "淘汰赛首轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-08T20:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002741,
+          "secondLevelGameId": 1000074,
+          "teamAId": null,
+          "teamBId": null,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "淘汰赛",
+          "groupName": "",
+          "bMatchName": "淘汰赛首轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-08T17:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002740,
+          "secondLevelGameId": 1000074,
+          "teamAId": null,
+          "teamBId": null,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "淘汰赛",
+          "groupName": "",
+          "bMatchName": "淘汰赛首轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-07T20:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002739,
+          "secondLevelGameId": 1000074,
+          "teamAId": null,
+          "teamBId": null,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "淘汰赛",
+          "groupName": "",
+          "bMatchName": "淘汰赛首轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-07T17:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002738,
+          "secondLevelGameId": 1000074,
+          "teamAId": 53,
+          "teamBId": 60,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "小组赛",
+          "groupName": "A组",
+          "bMatchName": "A组败者组决赛",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-04T20:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002737,
+          "secondLevelGameId": 1000074,
+          "teamAId": 55,
+          "teamBId": 236,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "小组赛",
+          "groupName": "B组",
+          "bMatchName": "B组败者组决赛",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-04T17:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002736,
+          "secondLevelGameId": 1000074,
+          "teamAId": 118,
+          "teamBId": 223,
+          "matchStatusId": 1,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "小组赛",
+          "groupName": "D组",
+          "bMatchName": "D组败者组决赛",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-03T20:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002735,
+          "secondLevelGameId": 1000074,
+          "teamAId": 123,
+          "teamBId": 52,
+          "matchStatusId": 2,
+          "scoreA": 0,
+          "scoreB": 0,
+          "matchType": "小组赛",
+          "groupName": "C组",
+          "bMatchName": "C组败者组决赛",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-03T17:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002734,
+          "secondLevelGameId": 1000074,
+          "teamAId": 60,
+          "teamBId": 74,
+          "matchStatusId": 3,
+          "scoreA": 2,
+          "scoreB": 1,
+          "matchType": "小组赛",
+          "groupName": "A组",
+          "bMatchName": "A组败者组第一轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-02T20:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002733,
+          "secondLevelGameId": 1000074,
+          "teamAId": 236,
+          "teamBId": 5,
+          "matchStatusId": 3,
+          "scoreA": 2,
+          "scoreB": 0,
+          "matchType": "小组赛",
+          "groupName": "B组",
+          "bMatchName": "B组败者组第一轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-02T17:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002732,
+          "secondLevelGameId": 1000074,
+          "teamAId": 80,
+          "teamBId": 223,
+          "matchStatusId": 3,
+          "scoreA": 0,
+          "scoreB": 2,
+          "matchType": "小组赛",
+          "groupName": "D组",
+          "bMatchName": "D组败者组第一轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-01T20:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002731,
+          "secondLevelGameId": 1000074,
+          "teamAId": 8,
+          "teamBId": 52,
+          "matchStatusId": 3,
+          "scoreA": 1,
+          "scoreB": 2,
+          "matchType": "小组赛",
+          "groupName": "C组",
+          "bMatchName": "C组败者组第一轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-10-01T17:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002730,
+          "secondLevelGameId": 1000074,
+          "teamAId": 122,
+          "teamBId": 53,
+          "matchStatusId": 3,
+          "scoreA": 2,
+          "scoreB": 0,
+          "matchType": "小组赛",
+          "groupName": "A组",
+          "bMatchName": "A组胜者组决赛",
+          "matchFormat": "BO3",
+          "matchDate": "2026-09-30T20:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002729,
+          "secondLevelGameId": 1000074,
+          "teamAId": 126,
+          "teamBId": 55,
+          "matchStatusId": 3,
+          "scoreA": 2,
+          "scoreB": 0,
+          "matchType": "小组赛",
+          "groupName": "B组",
+          "bMatchName": "B组胜者组决赛",
+          "matchFormat": "BO3",
+          "matchDate": "2026-09-30T17:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002728,
+          "secondLevelGameId": 1000074,
+          "teamAId": 118,
+          "teamBId": 57,
+          "matchStatusId": 3,
+          "scoreA": 1,
+          "scoreB": 2,
+          "matchType": "小组赛",
+          "groupName": "D组",
+          "bMatchName": "D组胜者组决赛",
+          "matchFormat": "BO3",
+          "matchDate": "2026-09-29T20:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002727,
+          "secondLevelGameId": 1000074,
+          "teamAId": 123,
+          "teamBId": 58,
+          "matchStatusId": 3,
+          "scoreA": 1,
+          "scoreB": 2,
+          "matchType": "小组赛",
+          "groupName": "C组",
+          "bMatchName": "C组胜者组决赛",
+          "matchFormat": "BO3",
+          "matchDate": "2026-09-29T17:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002726,
+          "secondLevelGameId": 1000074,
+          "teamAId": 74,
+          "teamBId": 53,
+          "matchStatusId": 3,
+          "scoreA": 0,
+          "scoreB": 2,
+          "matchType": "小组赛",
+          "groupName": "A组",
+          "bMatchName": "A组第一轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-09-27T20:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002725,
+          "secondLevelGameId": 1000074,
+          "teamAId": 122,
+          "teamBId": 60,
+          "matchStatusId": 3,
+          "scoreA": 2,
+          "scoreB": 0,
+          "matchType": "小组赛",
+          "groupName": "A组",
+          "bMatchName": "A组第一轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-09-27T17:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002724,
+          "secondLevelGameId": 1000074,
+          "teamAId": 55,
+          "teamBId": 5,
+          "matchStatusId": 3,
+          "scoreA": 2,
+          "scoreB": 0,
+          "matchType": "小组赛",
+          "groupName": "B组",
+          "bMatchName": "B组第一轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-09-26T20:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002723,
+          "secondLevelGameId": 1000074,
+          "teamAId": 236,
+          "teamBId": 126,
+          "matchStatusId": 3,
+          "scoreA": 1,
+          "scoreB": 2,
+          "matchType": "小组赛",
+          "groupName": "B组",
+          "bMatchName": "B组第一轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-09-26T17:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002722,
+          "secondLevelGameId": 1000074,
+          "teamAId": 118,
+          "teamBId": 80,
+          "matchStatusId": 3,
+          "scoreA": 2,
+          "scoreB": 0,
+          "matchType": "小组赛",
+          "groupName": "D组",
+          "bMatchName": "D组第一轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-09-25T20:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002721,
+          "secondLevelGameId": 1000074,
+          "teamAId": 223,
+          "teamBId": 57,
+          "matchStatusId": 3,
+          "scoreA": 0,
+          "scoreB": 2,
+          "matchType": "小组赛",
+          "groupName": "D组",
+          "bMatchName": "D组第一轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-09-25T17:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002720,
+          "secondLevelGameId": 1000074,
+          "teamAId": 8,
+          "teamBId": 123,
+          "matchStatusId": 3,
+          "scoreA": 0,
+          "scoreB": 2,
+          "matchType": "小组赛",
+          "groupName": "C组",
+          "bMatchName": "C组第一轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-09-24T20:00:00+08:00"
+        },
+        {
+          "bMatchId": 1002719,
+          "secondLevelGameId": 1000074,
+          "teamAId": 52,
+          "teamBId": 58,
+          "matchStatusId": 3,
+          "scoreA": 1,
+          "scoreB": 2,
+          "matchType": "小组赛",
+          "groupName": "C组",
+          "bMatchName": "C组第一轮",
+          "matchFormat": "BO3",
+          "matchDate": "2026-09-24T17:00:00+08:00"
+        }
+      ]
+    },
+    "info": {
+      "msg": {
+        "teams": [
+          {
+            "teamId": 5,
+            "teamName": "Edward Gaming",
+            "teamShortName": "EDG",
+            "teamSpName": "EDG"
+          },
+          {
+            "teamId": 8,
+            "teamName": "TYLOO GAMING",
+            "teamShortName": "TYL",
+            "teamSpName": "TYL"
+          },
+          {
+            "teamId": 52,
+            "teamName": "Team Liquid",
+            "teamShortName": "TL",
+            "teamSpName": "TL"
+          },
+          {
+            "teamId": 53,
+            "teamName": "FUT ESPORTS",
+            "teamShortName": "FUT",
+            "teamSpName": "FUT"
+          },
+          {
+            "teamId": 55,
+            "teamName": "LOUD",
+            "teamShortName": "LOUD",
+            "teamSpName": "LOUD"
+          },
+          {
+            "teamId": 57,
+            "teamName": "NRG",
+            "teamShortName": "NRG",
+            "teamSpName": "NRG"
+          },
+          {
+            "teamId": 58,
+            "teamName": "Paper Rex",
+            "teamShortName": "PRX",
+            "teamSpName": "PRX"
+          },
+          {
+            "teamId": 60,
+            "teamName": "T1",
+            "teamShortName": "T1",
+            "teamSpName": "T1"
+          },
+          {
+            "teamId": 74,
+            "teamName": "JD GAMING",
+            "teamShortName": "JDG",
+            "teamSpName": "JDG"
+          },
+          {
+            "teamId": 80,
+            "teamName": "Xi Lai Gaming",
+            "teamShortName": "XLG",
+            "teamSpName": "XLG"
+          },
+          {
+            "teamId": 118,
+            "teamName": "Karmine Corp",
+            "teamShortName": "KC",
+            "teamSpName": "KC"
+          },
+          {
+            "teamId": 122,
+            "teamName": "100 Thieves",
+            "teamShortName": "100T",
+            "teamSpName": "100T"
+          },
+          {
+            "teamId": 123,
+            "teamName": "G2 Esports",
+            "teamShortName": "G2",
+            "teamSpName": "G2"
+          },
+          {
+            "teamId": 126,
+            "teamName": "Team Vitality",
+            "teamShortName": "VIT",
+            "teamSpName": "VIT"
+          },
+          {
+            "teamId": 223,
+            "teamName": "NS RedForce",
+            "teamShortName": "NS",
+            "teamSpName": "NS"
+          },
+          {
+            "teamId": 236,
+            "teamName": "Global Esports",
+            "teamShortName": "GE",
+            "teamSpName": "GE"
+          }
+        ]
+      }
+    },
+    "promotions": {
+      "status": 0,
+      "msg": [
+        {
+          "id": 40,
+          "promotionData": [
+            {
+              "num": 4,
+              "des": "首轮比赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002739
+                },
+                {
+                  "bMatchId": 1002740
+                },
+                {
+                  "bMatchId": 1002741
+                },
+                {
+                  "bMatchId": 1002742
+                }
+              ]
+            },
+            {
+              "num": 2,
+              "des": "败者组第一轮",
+              "sessions": [
+                {
+                  "bMatchId": 1002743
+                },
+                {
+                  "bMatchId": 1002744
+                }
+              ]
+            },
+            {
+              "num": 2,
+              "des": "胜者组第一轮",
+              "sessions": [
+                {
+                  "bMatchId": 1002745
+                },
+                {
+                  "bMatchId": 1002746
+                }
+              ]
+            },
+            {
+              "num": 2,
+              "des": "败者组第二轮",
+              "sessions": [
+                {
+                  "bMatchId": 1002747
+                },
+                {
+                  "bMatchId": 1002748
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "胜者组决赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002749
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "败者组半决赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002750
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "败者组决赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002751
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "总决赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002752
+                }
+              ]
+            }
+          ],
+          "promotionName": "上海冠军赛淘汰赛",
+          "templateName": "八支队伍双败淘汰赛",
+          "templateId": 1
+        },
+        {
+          "id": 41,
+          "promotionData": [
+            {
+              "num": 2,
+              "des": "首轮比赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002719
+                },
+                {
+                  "bMatchId": 1002720
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "胜者组决赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002727
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "败者组第一轮",
+              "sessions": [
+                {
+                  "bMatchId": 1002733
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "败者组决赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002737
+                }
+              ]
+            }
+          ],
+          "promotionName": "c组小组赛",
+          "templateName": "4进2双败淘汰赛",
+          "templateId": 9
+        },
+        {
+          "id": 42,
+          "promotionData": [
+            {
+              "num": 2,
+              "des": "首轮比赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002725
+                },
+                {
+                  "bMatchId": 1002726
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "胜者组决赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002730
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "败者组第一轮",
+              "sessions": [
+                {
+                  "bMatchId": 1002731
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "败者组决赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002735
+                }
+              ]
+            }
+          ],
+          "promotionName": "a组小组赛",
+          "templateName": "4进2双败淘汰赛",
+          "templateId": 9
+        },
+        {
+          "id": 43,
+          "promotionData": [
+            {
+              "num": 2,
+              "des": "首轮比赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002723
+                },
+                {
+                  "bMatchId": 1002724
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "胜者组决赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002729
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "败者组第一轮",
+              "sessions": [
+                {
+                  "bMatchId": 1002732
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "败者组决赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002736
+                }
+              ]
+            }
+          ],
+          "promotionName": "b组小组赛",
+          "templateName": "4进2双败淘汰赛",
+          "templateId": 9
+        },
+        {
+          "id": 44,
+          "promotionData": [
+            {
+              "num": 2,
+              "des": "首轮比赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002721
+                },
+                {
+                  "bMatchId": 1002722
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "胜者组决赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002728
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "败者组第一轮",
+              "sessions": [
+                {
+                  "bMatchId": 1002734
+                }
+              ]
+            },
+            {
+              "num": 1,
+              "des": "败者组决赛",
+              "sessions": [
+                {
+                  "bMatchId": 1002738
+                }
+              ]
+            }
+          ],
+          "promotionName": "d组小组赛",
+          "templateName": "4进2双败淘汰赛",
+          "templateId": 9
+        }
+      ],
+      "lastUpdateTime": "2026-10-03T08:33:02.366Z"
+    }
+  }
+}

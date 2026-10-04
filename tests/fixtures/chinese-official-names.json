@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-10-03",
+  "valorant": {
+    "status": "0",
+    "msg": [
+      {
+        "secondLevelGameId": 1000074,
+        "firstLevelGameId": 10005,
+        "secondLevelGameName": "2026无畏契约全球冠军赛",
+        "secondLevelGameEnName": "2026 VCT CHAMPIONS",
+        "gameYear": 2026,
+        "sDate": "2026-09-24T00:00:00+08:00",
+        "eDate": "2026-10-18T00:00:00+08:00",
+        "display": {
+          "officialSite": true
+        }
+      }
+    ]
+  },
+  "lol": {
+    "status": "0",
+    "msg": {
+      "sGameList": {
+        "4": [
+          {
+            "GameId": "245",
+            "bGameId": "4",
+            "GameName": "2026德玛西亚杯",
+            "GameYear": "2026",
+            "sDate": "2026-10-03",
+            "eDate": "2026-10-17"
+          }
+        ],
+        "178": [
+          {
+            "GameId": "244",
+            "bGameId": "178",
+            "GameName": "全球挑战者之星邀请赛",
+            "GameYear": "2026",
+            "sDate": "2026-09-20",
+            "eDate": "2026-09-30"
+          }
+        ]
+      }
+    }
+  }
+}
