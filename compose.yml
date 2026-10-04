@@ -10,6 +10,7 @@ services:
       TZ: Asia/Shanghai
       MATCHPOINT_DATA_DIR: /app/data
       MATCHPOINT_ARCHIVE_SYNC: ${MATCHPOINT_ARCHIVE_SYNC:-true}
+      MATCHPOINT_PUSH_SUBJECT: ${MATCHPOINT_PUSH_SUBJECT:-https://github.com/getl-x/matchpoint}
     ports:
       - "${MATCHPOINT_BIND:-127.0.0.1}:${MATCHPOINT_PORT:-4177}:4177"
     volumes:

@@ -12,6 +12,7 @@ trap cleanup EXIT
 "${compose[@]}" config --quiet
 "${compose[@]}" up -d --wait --wait-timeout 90
 TEST_URL="http://127.0.0.1:$MATCHPOINT_PORT" node scripts/smoke.mjs
+push_key=$(curl --fail --silent "http://127.0.0.1:$MATCHPOINT_PORT/api/reminders/config" | node -pe 'JSON.parse(require("fs").readFileSync(0,"utf8")).publicKey')
 uid=$("${compose[@]}" exec -T app id -u)
 [ "$uid" = "1000" ] || { echo "Expected non-root uid 1000, got $uid"; exit 1; }
 if "${compose[@]}" exec -T app sh -c 'touch /app/root-write-test' 2>/dev/null; then echo 'Root filesystem should be read-only'; exit 1; fi
@@ -32,4 +33,6 @@ if "${compose[@]}" exec -T app sh -c 'touch /app/root-write-test' 2>/dev/null; t
  assert.deepEqual(Buffer.from(await image.arrayBuffer()),await readFile("/app/assets/icon-192.png"));
 '
 TEST_URL="http://127.0.0.1:$MATCHPOINT_PORT" node scripts/smoke.mjs
+new_push_key=$(curl --fail --silent "http://127.0.0.1:$MATCHPOINT_PORT/api/reminders/config" | node -pe 'JSON.parse(require("fs").readFileSync(0,"utf8")).publicKey')
+[ "$push_key" = "$new_push_key" ] || { echo 'Push application key changed across container replacement'; exit 1; }
 printf 'PASS non-root, read-only filesystem, named-volume persistence after container replacement\n'

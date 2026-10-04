@@ -57,3 +57,9 @@
 2026-10-04 1.0.0 生产部署准备：新增 Dockerfile、只读非 root Compose、HTTPS 示例和 Actions。90 项 Node 测试、55 个 JavaScript 文件语法检查、actionlint 和 Bash 脚本语法通过。新增测试覆盖独立持久化目录、空卷不遮蔽 PWA 静态资源、真实缓存重启回退、解码路径穿越、完整历史不被不完整刷新覆盖、后台写盘关闭等待。当前本机没有 Docker CLI，真实镜像构建/容器验收将由 GitHub Actions 执行，结果需单独确认，不能用本机测试代替。
 
 真实 GitHub Actions 验收已通过：运行 https://github.com/getl-x/matchpoint/actions/runs/37182810185 。linux/amd64 镜像实际构建；Compose wait、非 root UID 1000、只读根目录、健康接口、PWA 全资源、数据卷及图片重建持久化检查全部通过；可选本地构建和 HTTPS Compose 配置验证通过。镜像包 matchpoint-docker-amd64 已上传为 Actions artifact。发布 Job 因 DOCKERHUB_TOKEN 缺失明确 skipped，未声称镜像已上传 Docker Hub；arm64 发布需配置 Token 后通过正式 build/publish Job 验证。修复后本机 27 项页面检查、9 项图标检查、6 种宽度决赛路径检查均通过。PWA 缓存 v10-production。
+
+1.0.0 后续正式发布已成功：用户添加 Token 后，https://github.com/getl-x/matchpoint/actions/runs/37182952630/attempts/2 的 verify、registry、publish 全部成功，`getl/matchpoint:1.0.0` 和 `latest` 包含 amd64 / arm64。上段缺少 Token 的记录是首次运行的历史状态。
+
+2026-10-04 1.1.0 本地验收：116 项 Node 测试、65 个 JavaScript 文件语法检查、Bash 脚本语法、27 项原有整体浏览器检查、6 项提醒浏览器检查及生产路由冒烟通过。通知默认关闭、日历默认关闭、权限只由按钮触发、自定义分钟数、明确导入 ICS、320 / 390 / 768 手机设置布局、iPhone 未安装提示均经过浏览器验证。浏览器推送订阅使用受控替身，不能据此声称已完成真实 iPhone 锁屏送达。
+
+新增回归覆盖官方改期/陈旧缓存、取消关注、临时推送失败重试、失效订阅、密钥和去重记录重启保留、关闭等待、多设备独立限额、多标签页旧偏好与取消请求、锁内失败回滚、厂商隔离并发推送、分块请求解析、通知点击地址限制、中文 ICS 的 UTF-8 折行/转义/UTC/VALARM。PWA 缓存更新为 `matchpoint-v11-reminders`。部署后用真实 HTTPS 和 iOS 16.4+ 主屏幕应用的“发送测试通知”完成设备验收。

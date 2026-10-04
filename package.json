@@ -1,6 +1,6 @@
 {
   "name": "matchpoint",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "description": "赛点：官方电竞赛程、只读晋级图与观看入口 PWA",
@@ -12,10 +12,14 @@
     "test:diagram": "node tests/diagram-layout-check.cjs",
     "test:elimination": "node tests/elimination-browser-check.cjs",
     "test:logos": "node tests/team-logo-browser-check.cjs",
+    "test:reminders": "node tests/reminder-browser-check.cjs",
     "smoke": "node scripts/smoke.mjs",
     "check:syntax": "node scripts/check-syntax.mjs"
   },
   "engines": {
     "node": ">=22"
+  },
+  "dependencies": {
+    "web-push": "3.6.7"
   }
 }

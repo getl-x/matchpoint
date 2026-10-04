@@ -28,13 +28,13 @@ gh secret set DOCKERHUB_TOKEN --repo getl-x/matchpoint
 配置后运行 Actions → **Build and publish Docker Hub image** → Run workflow。正式版本使用 Git 标签：
 
 ```bash
-git tag v1.0.0
-git push origin v1.0.0
+git tag v1.1.0
+git push origin v1.1.0
 ```
 
 流水线先运行 Node 测试、语法检查、真实 Docker 构建和 Compose 冒烟，验证非 root、只读文件系统、健康检查、前端/PWA 文件、缓存图标、容器重建后卷数据保留，之后构建 `linux/amd64,linux/arm64` 并发布。
 
-标签规则：推送 main 发布 latest；版本标签 v1.0.0 发布 1.0.0 与 1.0；所有发布带 sha- 标签，手动运行可指定 edge 等自定义标签。版本应固定到具体标签或摘要，避免不可预期更新。
+标签规则：推送 main 发布 latest；版本标签 v1.1.0 发布 1.1.0 与 1.1；所有发布带 sha- 标签，手动运行可指定 edge 等自定义标签。版本应固定到具体标签或摘要，避免不可预期更新。
 
 缺少 Token 时，Registry 检查会明确说明 **not published**，publish Job 跳过，测试/真实镜像构建仍运行。Actions 的绿色检查不能单独作为已经推到 Docker Hub 的证据：应查看 publish Job 和步骤摘要中的镜像标签/摘要。
 
@@ -95,6 +95,7 @@ Caddy 自动申请证书、反向代理到 `app:4177` 并压缩响应。Safari �
 - `archive/`：官方历史索引、赛事、积分和图模型。
 - `feeds/`：近期赛程与积分的真实官方快照，服务器重启后外部来源失败时仍可回退，读取时间保持原值。
 - `logos/`：下载的官方 Logo 和 `team-logos.json`。公开图片 URL 继续是 `/assets/team-logo-*.png` 等。
+- `reminders/`：VAPID 密钥、匿名设备推送订阅、关注 ID 和发送去重记录。此目录包含私密设备信息，应随卷备份，不公开、不提交到 Git。
 
 镜像只包含代码与产品静态资源，不包含开发电脑上下载的官网数据、图标或截图。首次启动会从官方目录逐步补齐存档，并显示进度。官方没保留或不可读的记录只做明确标记，不生成模拟数据。
 
@@ -128,6 +129,7 @@ docker compose start app
 需要 Node 22+，推荐 24 LTS：
 
 ```bash
+npm ci --omit=dev --ignore-scripts
 HOST=0.0.0.0 PORT=4177 MATCHPOINT_DATA_DIR=/var/lib/matchpoint npm start
 ```
 
@@ -139,5 +141,33 @@ HOST=0.0.0.0 PORT=4177 MATCHPOINT_DATA_DIR=/var/lib/matchpoint npm start
 | PORT | 4177 | 1—65535 的整数 |
 | MATCHPOINT_DATA_DIR | 项目 data 目录 | 自定义持久化根目录；镜像为 /app/data |
 | MATCHPOINT_ARCHIVE_SYNC | true | 是否启动定期官方历史发现；false 用于隔离的容器验收 |
+| MATCHPOINT_PUSH_SUBJECT | https://github.com/getl-x/matchpoint | Web Push VAPID 联系地址，可填写自己的 HTTPS 网站或 mailto:邮箱；无需申请收费服务 |
 
 原本不设置数据目录的本地预览仍沿用 assets 图标缓存，兼容既有文件。容器显式设置数据目录，图标统一写 logos/。`false` 只停止自动历史发现，不禁止用户访问官方实时来源或按按钮同步。
+
+## 8. 开赛提醒和日历（1.1.0 起）
+
+使用原来的 Compose 和数据卷即可升级，首次启动自动生成 VAPID 密钥并持久化。无需添加 GitHub Secret、申请推送 API Key 或购买服务。不要删除 `reminders/keys.json`，否则原设备需要重新开启通知。一个数据卷只由一个应用实例写入。
+
+服务器必须能通过 HTTPS 访问浏览器厂商推送端点：Apple 的 `web.push.apple.com` / `*.push.apple.com`、Chrome 的 `fcm.googleapis.com`、Firefox 的 `updates.push.services.mozilla.com`、Edge 可能使用的 `*.notify.windows.com`。这些是浏览器的免费传输服务；某些地区或网络可能无法连通，测试失败时先检查容器出站网络。
+
+反向代理请保留原始 `Host`，同域代理 `/api/reminders/*`，允许 GET、PUT、DELETE、POST，不缓存这些接口。提醒订阅绑定用户当前设备的随机凭证；没有账户，也不跨设备同步关注。服务器每 30 秒检查一次有关注的游戏，官方数据缓存为 1 分钟。通知尽力发送，不能承诺在精确秒数送达；官方来源不可读或缓存过期时不按旧时间误发。每台设备最多关注 200 场提醒，单实例最多 1000 台提醒设备；90 天不更新的设备会被清理，返回应用即可重新同步。
+
+用户使用步骤：
+
+1. iPhone / iPad 更新到 iOS / iPadOS 16.4 或更新版本，用 Safari 访问 HTTPS 站点 → 分享 → 添加到主屏幕。
+2. 从主屏幕打开赛点，星标关注未来比赛，点击顶部铃铛或“我的关注”的“提醒设置”。
+3. 选择 5 / 10 / 15 / 30 / 60 分钟，或输入 1～1440 的整数，点击“开启通知提醒”并允许系统权限。通知和日历默认关闭。
+4. 点击“发送测试通知”，确认设备收到明确标为测试的通知。再检查系统“设置 → 通知”及专注模式。
+5. 可选勾选“显示添加到日历选项”并保存，再主动点击某场比赛的“添加到日历”。也可直接从未来比赛详情点击“添加日历提醒（可选）”。系统需要确认导入，网页不会静默写日历。
+
+ICS 使用官方开赛 UTC 时间，日历应用转换为设备时区；VALARM 使用选定提前分钟数。没有官方结束时间就不填写结束时间。已导入的日历是快照，官方改期后需重新导入或修改；稳定事件 UID 有助于识别同一场比赛，但不同日历应用对重复导入行为不同。通知的时间仍自动跟随官方更新。服务器、设备网络、系统权限和专注模式都会影响通知；此仓库的浏览器测试不替代真实 iPhone 锁屏验收。
+
+自定义服务名为 `matchpoint` 的部署升级：
+
+```bash
+docker compose pull matchpoint
+docker compose up -d matchpoint
+```
+
+浏览器再次打开时更新 PWA，旧关注和主题保留。若关闭提醒时暂时离线，应用会先取消本机订阅，联网后重试删除服务端记录。

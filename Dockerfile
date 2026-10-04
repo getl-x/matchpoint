@@ -1,5 +1,5 @@
 FROM node:24-alpine
-ARG VERSION=1.0.0
+ARG VERSION=1.1.0
 ARG VCS_REF=unknown
 LABEL org.opencontainers.image.title="Matchpoint" \
       org.opencontainers.image.description="Official esports schedules, brackets and archives" \
@@ -13,6 +13,7 @@ ENV NODE_ENV=production \
     TZ=Asia/Shanghai
 WORKDIR /app
 COPY --chown=node:node package*.json server.mjs index.html styles.css sw.js manifest.webmanifest ./
+RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force
 COPY --chown=node:node server/ ./server/
 COPY --chown=node:node src/ ./src/
 COPY --chown=node:node assets/ ./assets/

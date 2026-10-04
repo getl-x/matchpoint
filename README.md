@@ -1,8 +1,8 @@
 # 赛点 Matchpoint
 
-CS2、无畏契约、英雄联盟和 Apex 电竞赛程、晋级图与历史查询网页，支持深浅主题、手机和 iOS PWA。当前版本 **1.0.0**。
+CS2、无畏契约、英雄联盟和 Apex 电竞赛程、晋级图与历史查询网页，支持深浅主题、手机和 iOS PWA。当前版本 **1.1.0**。
 
-比赛、比分、积分和战队 Logo 来自游戏官方公开来源；不提供模拟赛果或手动填队伍。产品无 npm 依赖，不调用付费数据或模型接口。
+比赛、比分、积分和战队 Logo 来自游戏官方公开来源；不提供模拟赛果或手动填队伍。通知使用开源 `web-push` 和浏览器提供的免费标准推送，不调用付费数据或模型接口。
 
 ## Docker 部署
 
@@ -42,13 +42,16 @@ docker compose -f compose.yml -f compose.https.yml up -d --wait
 - 官方历史目录逐步同步，按游戏、年份、关键词查询、导出图数据；官方未保留的历史明确标注。
 - 官方战队图标自动下载、主题适配和缓存；官方未提供图片时显示队名缩写。
 - 可见页面每分钟更新官方赛程；来源故障隔离，显示带读取时间的缓存。
+- 关注比赛开赛前通知：用户主动授权，提前 1～1440 分钟可选，服务器按官方改期调整，关闭网页也可接收。
+- 日历默认关闭；可手动导入带提醒的 ICS 事件，比赛改期后需要重新导入或修改日历。
 - 默认深色、手机适配、离线快照、iOS 添加到主屏幕；暂未制作安卓原生客户端。
 
 ## 本机开发
 
-Node.js 22 或更新版本，建议 Node 24 LTS。无需安装产品依赖。
+Node.js 22 或更新版本，建议 Node 24 LTS。
 
 ```bash
+npm ci --ignore-scripts
 npm start
 # http://localhost:4177/schedule
 npm test
@@ -62,11 +65,11 @@ npm run smoke
 
 - 推送 `main`、创建 `v*` 标签、手动运行：测试 → 构建实际镜像 → Compose 验收 → Docker Hub 发布。
 - PR：仅测试和容器验收，不登录或发布镜像。
-- `latest` 表示默认分支；`v1.0.0` 发布 `1.0.0`、`1.0`；每次发布都有 `sha-<commit>`。
+- `latest` 表示默认分支；`v1.1.0` 发布 `1.1.0`、`1.1`；每次发布都有 `sha-<commit>`。
 - Actions 构建产物 `matchpoint-docker-amd64` 可以下载并 `docker load -i matchpoint-docker-amd64.tar.gz`，即使没有 Registry 凭据。
 
 ## 数据边界
 
 无畏契约和英雄联盟读取 Riot 近期赛程及中国官方历史目录；CS2 读取 BLAST 收录的赛事；Apex 读取 EA ALGS 公开赛程和积分。并非全部游戏、全部赛区或所有杯赛，也不保证官网已删除的数据可补齐。原始数据与图标归其权利人所有。具体渠道见 [docs/SOURCES.md](docs/SOURCES.md)，历史覆盖见 [docs/ARCHIVE.md](docs/ARCHIVE.md)。
 
-浏览器验收脚本需要本机 Playwright/Edge，可通过 `PLAYWRIGHT_MODULE` 指定包路径；不属于产品运行依赖。iPhone 安装仍需实机验证。
+浏览器验收脚本需要本机 Playwright/Edge，可通过 `PLAYWRIGHT_MODULE` 指定包路径；不属于产品运行依赖。iPhone 安装与锁屏通知仍需实机验证。iOS / iPadOS 16.4+、HTTPS、从主屏幕打开应用后，点击铃铛 → 开启通知提醒；系统勿扰或专注模式、网络可能影响送达时间。

@@ -1,12 +1,14 @@
 import {archiveDiagrams} from './diagrams.js';
 import {localizeEvent,localizeMatch} from './localization.js';
 import {GAMES,TEAMS,TODAY} from './data.js';
+import {reminderPreferences} from './reminders.js';
 const KEY='matchpoint:preferences:v2',FEED_KEY='matchpoint:official-cache:v1',ARCHIVE_KEY='matchpoint:archive:v1';
 let saved={};try{saved=JSON.parse(localStorage.getItem(KEY))||{};}catch{}
 let archiveSaved={};try{archiveSaved=JSON.parse(localStorage.getItem(ARCHIVE_KEY))||{};}catch{}
 export const state={route:location.pathname.startsWith('/bracket')?'bracket':location.pathname.startsWith('/archive')?'archive':location.pathname.startsWith('/following')?'following':'schedule',game:['all',...GAMES.map(g=>g.id)].includes(saved.game)?saved.game:'all',bracketGame:GAMES.some(g=>g.id===saved.bracketGame)?saved.bracketGame:'cs2',event:'all',bracketEvent:null,date:TODAY,status:'all',search:'',zoom:1,zoomFit:true,follows:new Set(Array.isArray(saved.follows)?saved.follows.filter(id=>typeof id==='string'):[]),feeds:{},sources:Object.fromEntries(GAMES.map(g=>[g.id,{status:'loading'}])),standings:{},theme:saved.theme==='light'?'light':'dark',refreshing:false,archive:{status:'idle',error:null,game:'all',year:'all',catalogs:{},index:archiveSaved.index||null,page:0,filter:'all',selected:null,loadingId:null,loaded:archiveSaved.loaded&&typeof archiveSaved.loaded==='object'?archiveSaved.loaded:{}}};
 try{const cached=JSON.parse(localStorage.getItem(FEED_KEY));if(cached?.version===1)for(const g of GAMES){const f=cached.feeds?.[g.id];if(f?.source?.retrievedAt&&Array.isArray(f.matches)&&Array.isArray(f.events)&&f.teams){state.feeds[g.id]=f;Object.assign(TEAMS,f.teams);state.sources[g.id]={status:'cached',...f.source};}}}catch{}
-export function save(){try{localStorage.setItem(KEY,JSON.stringify({version:2,game:state.game,bracketGame:state.bracketGame,follows:[...state.follows],theme:state.theme}));return true;}catch{return false;}}
+state.reminders=reminderPreferences(saved.reminders);
+export function save(){try{localStorage.setItem(KEY,JSON.stringify({version:2,game:state.game,bracketGame:state.bracketGame,follows:[...state.follows],theme:state.theme,reminders:reminderPreferences(state.reminders)}));return true;}catch{return false;}}
 export function saveFeeds(){try{localStorage.setItem(FEED_KEY,JSON.stringify({version:1,feeds:state.feeds}));}catch{}}
 export function acceptFeed(game,feed){if(!feed?.source?.retrievedAt||!Array.isArray(feed.matches)||!Array.isArray(feed.events))throw new Error('官方数据格式无法识别');state.feeds[game]=feed;Object.assign(TEAMS,feed.teams);state.sources[game]={...feed.source,status:feed.stale?'cached':'ready',error:feed.error,warning:feed.warning};saveFeeds();}
 export function getMatches(feeds=state.feeds){return Object.values(feeds).flatMap(f=>{const events=new Map(f.events.map(e=>[e.id,localizeEvent(e,f.matches.find(m=>m.eventId===e.id)?.date?.slice(0,4))]));return f.matches.map(m=>localizeMatch(m,events.get(m.eventId)));}).sort((a,b)=>a.startsAt.localeCompare(b.startsAt));}

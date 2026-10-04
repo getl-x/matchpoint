@@ -6,11 +6,23 @@ import {runtimeConfig,initializeStorage} from './server/config.mjs';
 import {readFile,stat} from 'node:fs/promises';
 import {resolve,sep,extname,join} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {createReminderService} from './server/reminders.mjs';
+import {createHash} from 'node:crypto';
 const version=JSON.parse(await readFile(new URL('./package.json',import.meta.url),'utf8')).version;
 const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.webmanifest':'application/manifest+json; charset=utf-8','.json':'application/json; charset=utf-8'};
 const csp="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; frame-ancestors 'none'";
-export function createAppServer({config=runtimeConfig,readFeed=officialFeed,readStandings=officialStandings,history=archive,logos=logoCache,now=Date.now}={}){
+export const reminderService=createReminderService({directory:join(runtimeConfig.dataDirectory,'reminders'),readFeed:officialFeed,subject:process.env.MATCHPOINT_PUSH_SUBJECT||'https://github.com/getl-x/matchpoint'});
+function readJSONBody(req){
+ return new Promise((resolve,reject)=>{
+  let size=0,chunks=[],ended=false;
+  req.on('data',chunk=>{if(ended)return;size+=chunk.length;if(size>32768){ended=true;chunks=[];reject(Object.assign(new Error('请求内容过大'),{statusCode:413}));return;}chunks.push(chunk);});
+  req.on('end',()=>{if(ended)return;try{resolve(JSON.parse(Buffer.concat(chunks).toString('utf8')));}catch{reject(Object.assign(new Error('JSON 格式无效'),{statusCode:400}));}});
+  req.on('error',reject);
+ });
+}
+export function createAppServer({config=runtimeConfig,readFeed=officialFeed,readStandings=officialStandings,history=archive,logos=logoCache,reminders=reminderService,now=Date.now}={}){
  let nextSyncAt=0;
+ const rates=new Map();
  const json=(res,status,payload)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(payload));};
  const app=createServer(async(req,res)=>{
   res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('X-Frame-Options','DENY');res.setHeader('Referrer-Policy','strict-origin-when-cross-origin');res.setHeader('Content-Security-Policy',csp);
@@ -21,6 +33,30 @@ export function createAppServer({config=runtimeConfig,readFeed=officialFeed,read
     res.writeHead(200,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(req.method==='HEAD'?undefined:JSON.stringify({status:'ok',version,uptime:Math.floor(process.uptime())}));return;
    }
    if(url.pathname.startsWith('/api/')){
+    if(url.pathname.startsWith('/api/reminders/')){
+     const methods={'/api/reminders/config':['GET'],'/api/reminders/subscription':['GET','PUT','DELETE'],'/api/reminders/test':['POST']},allowed=methods[url.pathname];
+     if(!allowed){json(res,404,{error:'接口不存在'});return;}
+     if(!allowed.includes(req.method)){res.setHeader('Allow',allowed.join(', '));json(res,405,{error:'请求方法不支持'});return;}
+     try{
+      const token=/^Bearer ([a-f0-9]{64})$/.exec(req.headers.authorization||'')?.[1];
+      const publicRequest=url.pathname==='/api/reminders/config';
+      if(!publicRequest&&!token){json(res,401,{error:'设备凭证无效'});return;}
+      const rateKey=publicRequest?'public:'+req.socket.remoteAddress:'device:'+createHash('sha256').update(token).digest('hex'),clock=now(),limit=publicRequest?300:60;
+      for(const [key,r] of rates)if(r.until<clock)rates.delete(key);
+      const rate=rates.get(rateKey)||{until:clock+60000,count:0};if(rate.count++>=limit||rates.size>=5000&&!rates.has(rateKey)){res.setHeader('Retry-After','60');json(res,429,{error:'请求过于频繁，请稍后重试'});return;}rates.set(rateKey,rate);
+      if(publicRequest){json(res,200,await reminders.config());return;}
+      if(req.method!=='GET'){
+       const origin=req.headers.origin;
+       if(req.headers['sec-fetch-site']==='cross-site'||origin&&new URL(origin).host!==req.headers.host){json(res,403,{error:'只允许在赛点内修改提醒'});return;}
+       if(['PUT','POST'].includes(req.method)&&!/^application\/json(?:;|$)/i.test(req.headers['content-type']||'')){json(res,415,{error:'请使用 JSON 请求'});return;}
+      }
+      const removal=req.method==='DELETE'&&(Number(req.headers['content-length'])>0||req.headers['transfer-encoding'])?await readJSONBody(req):null;
+      if(removal&&typeof removal.endpoint!=='string'){json(res,400,{error:'取消提醒的设备地址无效'});return;}
+      const payload=req.method==='DELETE'?await reminders.remove(token,removal?.endpoint):req.method==='GET'?await reminders.status(token):req.method==='PUT'?await reminders.upsert(token,await readJSONBody(req)):(await readJSONBody(req),await reminders.test(token));
+      json(res,200,payload);
+     }catch(error){json(res,[400,401,403,404,409,413,429,503].includes(error.statusCode)?error.statusCode:503,{error:error.statusCode?error.message:'提醒服务暂时不可用'});}
+     return;
+    }
     const sync=url.pathname==='/api/archive/sync';
     if((sync&&req.method!=='POST')||(!sync&&req.method!=='GET')){res.setHeader('Allow',sync?'POST':'GET');json(res,405,{error:'请求方法不支持'});return;}
     try{
@@ -70,15 +106,16 @@ export function createAppServer({config=runtimeConfig,readFeed=officialFeed,read
  return app;
 }
 export const server=createAppServer();
-export async function drainServer(app,{history=archive,logos=logoCache}={}){
+export async function drainServer(app,{history=archive,logos=logoCache,reminders=reminderService}={}){
  stopArchiveSync();
  await new Promise((resolve,reject)=>app.close(error=>error?reject(error):resolve()));
- await Promise.all([history.close(),logos.close()]);
+ await Promise.all([history.close(),logos.close(),reminders.close()]);
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{
   await initializeStorage();
-  server.listen(runtimeConfig.port,runtimeConfig.host,()=>{console.log('赛点 '+version+' 已启动：http://'+runtimeConfig.host+':'+runtimeConfig.port+'/schedule');if(runtimeConfig.archiveSync)startArchiveSync();});
+  await reminderService.config();
+  server.listen(runtimeConfig.port,runtimeConfig.host,()=>{console.log('赛点 '+version+' 已启动：http://'+runtimeConfig.host+':'+runtimeConfig.port+'/schedule');if(runtimeConfig.archiveSync)startArchiveSync();reminderService.start();});
   server.on('error',error=>{console.error(error.message);process.exitCode=1;});
   let stopping=false;
   for(const signal of ['SIGINT','SIGTERM'])process.on(signal,()=>{if(stopping)return;stopping=true;console.log('正在停止服务并等待存档写入…');const timeout=setTimeout(()=>process.exit(1),10000);timeout.unref();drainServer(server).then(()=>{clearTimeout(timeout);process.exit(0);},error=>{console.error('关闭失败：',error.message);clearTimeout(timeout);process.exit(1);});});
