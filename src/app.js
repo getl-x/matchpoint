@@ -1,5 +1,5 @@
 import {refreshTeamLogos,markTeamLogoLoaded} from './team-logos.js';
-import {GAMES,GAME,TEAMS,TODAY} from './data.js';
+import {GAMES,GAME,TEAMS,today} from './data.js';
 import {state,getMatches,getEvents,nearestEvent,save,acceptFeed,saveArchive,acceptArchiveIndex,acceptArchiveEvent} from './state.js';
 import {icon,gameIcon,escape} from './ui.js';
 import {badge,teamName,statusLabel,dateAdd} from './components.js';
@@ -11,9 +11,23 @@ import {createReminderController,reminderSettingsView} from './reminders.js';
 import {downloadCalendar} from './calendar.js';
 const root=document.querySelector('#app'),dialog=document.querySelector('#modal');
 let installEvent=null,lastFocus=null,detailId=null,archiveRequest=null,archiveReadAt=0,archiveUrlOpened=false;
-let reminderModal=false,pendingMatch=location.pathname==='/following'?new URL(location.href).searchParams.get('match'):null;
-const reminders=createReminderController({state,save,onChange:()=>{if(reminderModal&&dialog.open)openModal(reminderSettingsView(state,reminders.support()));if(state.route==='following')renderContent();}});
-function showReminderSettings(){detailId=null;reminderModal=true;openModal(reminderSettingsView(state,reminders.support()));}
+let reminderModal=false,pendingMatch=location.pathname==='/following'?new URL(location.href).searchParams.get('match'):null,currentDay=today();
+const reminders=createReminderController({state,save,onChange:()=>{if(reminderModal&&dialog.open)renderReminderSettings(true);if(state.route==='following')renderContent();}});
+function renderReminderSettings(preserveDraft=false){
+ const minutes=preserveDraft&&dialog.querySelector('#reminder-minutes'),calendar=dialog.querySelector('#reminder-calendar');
+ const focused=dialog.contains(document.activeElement)?document.activeElement:null;
+ const draft=minutes?{minutes:minutes.value,calendar:calendar.checked,focus:focused?{id:focused.id,action:focused.dataset.action,minutes:focused.dataset.minutes}:null}:null;
+ openModal(reminderSettingsView(state,reminders.support()));
+ if(draft){
+  dialog.querySelector('#reminder-minutes').value=draft.minutes;dialog.querySelector('#reminder-calendar').checked=draft.calendar;
+  dialog.querySelectorAll('.reminder-presets button').forEach(button=>button.setAttribute('aria-pressed',String(Number(button.dataset.minutes)===Number(draft.minutes))));
+  if(draft.focus){
+   const target=draft.focus.id?document.getElementById(draft.focus.id):[...dialog.querySelectorAll('[data-action]')].find(button=>button.dataset.action===draft.focus.action&&button.dataset.minutes===draft.focus.minutes);
+   target?.focus({preventScroll:true});
+  }
+ }
+}
+function showReminderSettings(){detailId=null;reminderModal=true;renderReminderSettings();}
 function reminderForm(){const minutes=Number(document.querySelector('#reminder-minutes').value);if(!Number.isInteger(minutes)||minutes<1||minutes>1440)throw new Error('请输入 1～1440 的整数分钟数');return {minutes,calendar:document.querySelector('#reminder-calendar').checked};}
 async function reminderAction(action){
  try{
@@ -28,8 +42,9 @@ function nav(route,name,i) {return `<a class="nav-link ${state.route===route?'ac
 function shell() {
  return `<aside class="sidebar"><a href="/schedule" class="brand" data-action="navigate" data-route="schedule"><span class="brand-symbol"><img src="/assets/mark.svg" alt=""/></span><span><b>赛点<span>.</span></b><small>MATCHPOINT</small></span></a><div class="sidebar-section-label">你的赛事主场</div><nav class="main-nav">${nav('schedule','赛程中心','calendar')}${nav('bracket','晋级之路','bracket')}${nav('archive','赛事存档','trophy')}${nav('following','我的关注','star')}</nav><div class="sidebar-divider"></div><div class="sidebar-section-label game-heading">热门游戏 <span>4</span></div><nav class="game-nav">${GAMES.map(g=>`<button class="game-nav-item ${state.game===g.id?'selected':''}" data-action="sidebar-game" data-game="${g.id}"><span class="sidebar-game-icon" style="--game:${g.color};--soft:${g.soft}">${gameIcon(g.id)}</span><span>${escape(g.name)}</span>${getMatches().some(m=>m.game===g.id&&m.status==='live')?'<i class="live-indicator"></i>':''}</button>`).join('')}</nav><div class="sidebar-bottom"><div class="install-card"><span class="install-card-icon">${icon('download')}</span><b>热爱，随时在线</b><p>将赛点添加到桌面<br>下一场，一触即达。</p><button data-action="install">安装赛点 ${icon('arrow')}</button></div><button class="sidebar-settings" data-action="about">${icon('globe')}关于赛点<span>v1.1</span></button></div></aside><div class="app-main"><header class="topbar"><div class="breadcrumb"><span class="mobile-brand"><img src="/assets/mark.svg" alt="赛点"/></span><span>赛事空间</span>${icon('right')}<b>${state.route==='bracket'?'晋级之路':state.route==='archive'?'赛事存档':state.route==='following'?'我的关注':'赛程中心'}</b></div><div class="topbar-right"><label class="search-box">${icon('search')}<input id="search" type="search" autocomplete="off" placeholder="搜索队伍、赛事…" aria-label="搜索队伍或赛事" value="${escape(state.search)}"/><kbd>/</kbd></label><span class="connection-state" id="connection"><i></i>${navigator.onLine?'官方公开数据':'离线 · 已缓存'}</span><button class="theme-toggle" data-action="theme" aria-label="${state.theme==='dark'?'切换浅色模式':'切换深色模式'}" title="${state.theme==='dark'?'切换浅色模式':'切换深色模式'}">${icon(state.theme==='dark'?'sun':'moon')}</button><button class="notification-button" data-action="notifications" aria-label="开赛提醒设置">${icon('bell')}${state.follows.size?'<i></i>':''}</button><span class="user-avatar" title="本地访客">M</span></div></header><main id="content">${contentView()}</main><nav class="mobile-nav">${nav('schedule','赛程','calendar')}${nav('bracket','晋级图','bracket')}${nav('archive','存档','trophy')}${nav('following','关注','star')}</nav></div>`;
 }
-function render() {root.innerHTML=shell();syncBracketZoom();ensureStandings();ensureArchive();document.title=`${state.route==='bracket'?'晋级之路':state.route==='archive'?'赛事存档':state.route==='following'?'我的关注':'赛程中心'} · 赛点 Matchpoint`;}
-function renderContent() {document.querySelector('#content').innerHTML=contentView();syncBracketZoom();ensureStandings();}
+function updateDay(){const next=today();if(next!==currentDay){if(state.date===currentDay)state.date=next;currentDay=next;}}
+function render() {updateDay();root.innerHTML=shell();syncBracketZoom();ensureStandings();ensureArchive();document.title=`${state.route==='bracket'?'晋级之路':state.route==='archive'?'赛事存档':state.route==='following'?'我的关注':'赛程中心'} · 赛点 Matchpoint`;}
+function renderContent() {updateDay();document.querySelector('#content').innerHTML=contentView();syncBracketZoom();ensureStandings();}
 
 function toast(message){const el=document.createElement('div');el.className='toast';el.innerHTML=icon('check')+'<span>'+escape(message)+'</span>';document.querySelector('#toasts').append(el);setTimeout(()=>el.remove(),3600);}
 function openModal(html){if(!dialog.open)lastFocus=document.activeElement;dialog.innerHTML='<button class="modal-close" data-action="close" aria-label="关闭弹窗">'+icon('close')+'</button>'+html;if(!dialog.open)dialog.showModal();}
@@ -51,7 +66,7 @@ async function install() {
  openModal(`<div class="install-modal-icon"><img src="/assets/mark.svg" alt=""/></div><div class="modal-eyebrow">TAKE THE GAME WITH YOU</div><h2>${standalone?'赛点已经在你的桌面':'把热爱，带到桌面。'}</h2><p class="modal-subtitle">像应用一样打开赛点，随时查看下一场比赛。</p>${standalone?'<p class="detail-note">你正在独立应用窗口中使用赛点。</p>':`<div class="install-steps"><div><span>01</span><p>在 iPhone 的 <b>Safari</b> 中打开赛点</p></div><div><span>02</span><p>点按${icon('share')}<b>分享</b>按钮</p></div><div><span>03</span><p>选择 <b>添加到主屏幕</b>，然后点按添加</p></div></div><p class="detail-note">电脑端可在支持安装的浏览器菜单中选择「安装赛点」或「将页面安装为应用」。手机安装需要通过 HTTPS 地址访问；当前为本机预览。</p>`}<button class="button primary full" data-action="close">知道了 ${icon('check')}</button>`);
 }
 
-async function handleAction(button){const d=button.dataset;
+async function handleAction(button){const d=button.dataset;updateDay();
  switch(d.action){
  case 'navigate':navigate(d.route);break;
  case 'archive-game':state.archive.game=d.game;state.archive.year='all';state.archive.page=0;renderContent();break;
@@ -69,7 +84,7 @@ async function handleAction(button){const d=button.dataset;
  case 'select-date':state.date=d.date;renderContent();break;
  case 'pick-date':break;
  case 'shift-week':state.date=dateAdd(state.date,Number(d.offset));renderContent();break;
- case 'today':state.date=TODAY;renderContent();break;
+ case 'today':state.date=today();renderContent();break;
  case 'nearest-date':{const matches=getMatches().filter(m=>(state.game==='all'||m.game===state.game)&&(state.event==='all'||m.eventId===state.event));matches.sort((a,b)=>Math.abs(Date.parse(a.startsAt)-Date.parse(state.date+'T12:00:00+08:00'))-Math.abs(Date.parse(b.startsAt)-Date.parse(state.date+'T12:00:00+08:00')));if(matches.length){state.date=matches[0].date;state.status='all';state.search='';render();}else toast('当前来源尚未提供可查看的赛程');break;}
  case 'status':state.status=d.status;renderContent();break;
  case 'reset-filters':state.game='all';state.event='all';state.status='all';state.search='';render();break;
@@ -94,7 +109,7 @@ async function handleAction(button){const d=button.dataset;
 }
 document.addEventListener('click',event=>{const menu=event.target.closest('.select-menu');document.querySelectorAll('.select-menu[open]').forEach(m=>{if(m!==menu)m.removeAttribute('open');});const button=event.target.closest('[data-action]');if(!button||button.tagName==='INPUT'||button.disabled)return;event.preventDefault();handleAction(button);});
 document.addEventListener('input',event=>{if(event.target.id==='search'){state.search=event.target.value;if(state.route==='bracket'){navigate('schedule');state.search=event.target.value;}if(state.route==='archive')state.archive.page=0;renderContent();}});
-document.addEventListener('change',event=>{if(event.target.dataset.archiveFilter==='year'){state.archive.year=event.target.value;state.archive.page=0;renderContent();return;}if(event.target.dataset.action==='pick-date'&&event.target.value){state.date=event.target.value;renderContent();}});
+document.addEventListener('change',event=>{if(event.target.dataset.archiveFilter==='year'){state.archive.year=event.target.value;state.archive.page=0;renderContent();return;}if(event.target.dataset.action==='pick-date'&&event.target.value){updateDay();state.date=event.target.value;renderContent();}});
 document.addEventListener('keydown',event=>{if(event.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)&&!dialog.open){event.preventDefault();document.querySelector('#search').focus();}if((event.key==='Enter'||event.key===' ')&&event.target.classList.contains('match-row')){event.preventDefault();showDetail(event.target.dataset.id);}});
 dialog.addEventListener('close',()=>{detailId=null;reminderModal=false;});
 dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)closeModal();}});
@@ -103,7 +118,7 @@ window.addEventListener('online',()=>{render();refreshFeeds();});window.addEvent
 document.addEventListener('load',event=>{const img=event.target;if(img instanceof HTMLImageElement&&img.dataset.teamLogo)markTeamLogoLoaded(img);},true);
 document.addEventListener('error',event=>{const img=event.target;if(img instanceof HTMLImageElement&&img.dataset.teamLogo){img.classList.add('is-broken');img.closest('.team-badge')?.classList.remove('logo-ready-'+img.dataset.teamLogo);}},true);
 async function syncOfficialLogos(){if(!await refreshTeamLogos())return;for(const node of document.querySelectorAll('[data-team-badge]')){const size=['medium','large','xl'].filter(c=>node.classList.contains(c)).join(' ');node.outerHTML=badge(node.dataset.teamBadge,size);}}
-applyTheme();render();refreshFeeds();syncOfficialLogos();setInterval(()=>{if(!document.hidden&&navigator.onLine)syncOfficialLogos();},10000);setInterval(()=>{if(!document.hidden&&navigator.onLine){if(state.route==='bracket'&&state.bracketGame==='apex')delete state.standings[state.bracketEvent];refreshFeeds();}},60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden&&navigator.onLine)refreshFeeds();});
+applyTheme();render();refreshFeeds();syncOfficialLogos();setInterval(()=>{if(!document.hidden&&navigator.onLine)syncOfficialLogos();},10000);setInterval(()=>{if(!document.hidden&&navigator.onLine){if(state.route==='bracket'&&state.bracketGame==='apex')delete state.standings[state.bracketEvent];refreshFeeds();if(!state.reminders.busy&&(state.reminders.enabled||state.reminders.pendingRemoval))reminders.sync().catch(()=>{});}},60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden&&navigator.onLine)refreshFeeds();});
 reminders.prepare().then(()=>reminders.sync()).catch(error=>{if(state.reminders.enabled){state.reminders.syncError=error.message;renderContent();}});
 window.addEventListener('online',()=>reminders.sync().catch(()=>{}));
 window.addEventListener('storage',event=>{if(event.key==='matchpoint:preferences:v2'){reminders.reconcile();render();if(reminderModal&&dialog.open)showReminderSettings();}});

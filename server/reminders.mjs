@@ -6,6 +6,7 @@ import {localizeEvent} from '../src/localization.js';
 
 const fail=(message,statusCode=400)=>Object.assign(new Error(message),{statusCode});
 const games=['cs2','valorant','lol','apex'];
+const sameSubscription=(a,b)=>a&&b&&a.endpoint===b.endpoint&&['p256dh','auth'].every(k=>a.keys[k]===b.keys[k]);
 export function validateSubscription(subscription){
  let url;try{url=new URL(subscription?.endpoint);}catch{throw fail('推送地址无效');}
  const host=url.hostname,allowed=['fcm.googleapis.com','updates.push.services.mozilla.com','web.push.apple.com'].includes(host)||host.endsWith('.notify.windows.com')||host.endsWith('.push.apple.com');
@@ -21,15 +22,25 @@ function identity(token){
  if(typeof token!=='string'||!/^[a-f0-9]{64}$/.test(token))throw fail('设备凭证无效',401);
  return createHash('sha256').update(token).digest('hex');
 }
-export function createReminderService({directory,readFeed,send,now=Date.now,subject='https://github.com/getl-x/matchpoint'}){
- let store,keys,loading,writes=Promise.resolve(),timer,active,closed=false;
- const tests=new Map();
+export function createReminderService({directory,readFeed,send,now=Date.now,subject='https://github.com/getl-x/matchpoint',feedTimeoutMs=45000}){
+ let store,keys,loading,writes=Promise.resolve(),timer,active,closed=false,revision=0,savedRevision=0;
+ const tests=new Map(),stopReads=new Set();
  async function atomic(name,payload){
   const target=join(directory,name),temp=target+'.tmp';
   await writeFile(temp,JSON.stringify(payload),{mode:0o600});await rename(temp,target);
  }
  function persist(){
-  const snapshot=structuredClone(store);const work=writes.then(()=>atomic('state.json',snapshot));writes=work.catch(()=>{});return work;
+  const snapshot=structuredClone(store),version=++revision;
+  const work=writes.then(()=>atomic('state.json',snapshot)).then(()=>{savedRevision=version;});writes=work.catch(()=>{});return work;
+ }
+ function readSchedule(game){
+  let timeout,stop;
+  return new Promise((resolve,reject)=>{
+   stop=()=>reject(new Error('提醒服务正在关闭'));stopReads.add(stop);
+   if(closed){stop();return;}
+   timeout=setTimeout(()=>reject(new Error('官方赛程读取超时')),feedTimeoutMs);
+   Promise.resolve().then(()=>readFeed(game)).then(resolve,reject);
+  }).finally(()=>{clearTimeout(timeout);stopReads.delete(stop);});
  }
  async function load(){
   if(loading)return loading;
@@ -48,7 +59,7 @@ export function createReminderService({directory,readFeed,send,now=Date.now,subj
  async function deliver(id,device,payload,ttl){
   try{await transmit(device,payload,ttl);return true;}
   catch(error){
-   if([404,410].includes(error.statusCode)){if(store.devices[id]===device){delete store.devices[id];await persist();}return false;}
+   if([404,410].includes(error.statusCode)){if(sameSubscription(store.devices[id]?.subscription,device.subscription)){delete store.devices[id];await persist();}return false;}
    // Never log capability URLs, encryption keys or push provider response bodies.
    console.warn('[Reminders] 推送暂时失败，稍后重试',Number(error.statusCode)||'network');return false;
   }
@@ -80,39 +91,42 @@ export function createReminderService({directory,readFeed,send,now=Date.now,subj
     await load();const expiry=now()-90*86400000;let dirty=false;
     for(const [id,d] of Object.entries(store.devices)){if(d.updatedAt<expiry){delete store.devices[id];dirty=true;}for(const [key,time] of Object.entries(d.sent)){if(time<now()-30*86400000){delete d.sent[key];dirty=true;}}}
     const required=games.filter(g=>Object.values(store.devices).some(d=>d.matchIds.some(id=>id.startsWith(g+':'))));
-    const results=await Promise.allSettled(required.map(game=>readFeed(game)));
-    const queues=new Map();
-    for(const result of results){
-     if(closed)break;if(result.status!=='fulfilled')continue;const feed=result.value;
-     if(feed.stale||!feed.source?.retrievedAt||now()-Date.parse(feed.source.retrievedAt)>5*60000||!Number.isFinite(Date.parse(feed.source.retrievedAt)))continue;
+    const queues=new Map(),workers=[],errors=[];
+    function enqueue(provider,task){
+     if(!queues.has(provider))queues.set(provider,{pending:[],running:0});
+     const queue=queues.get(provider);queue.pending.push(task);
+     if(queue.running>=8)return;queue.running++;
+     workers.push((async()=>{try{while(queue.pending.length){try{await queue.pending.shift()();}catch(error){errors.push(error);}}}finally{queue.running--;}})());
+    }
+    await Promise.allSettled(required.map(async game=>{
+     const feed=await readSchedule(game);
+     if(closed||feed.stale||!feed.source?.retrievedAt||now()-Date.parse(feed.source.retrievedAt)>5*60000||!Number.isFinite(Date.parse(feed.source.retrievedAt)))return;
      for(const match of feed.matches||[]){
       const start=Date.parse(match.startsAt);if(match.status!=='upcoming'||!Number.isFinite(start)||start<=now())continue;
       const key=match.id+'|'+new Date(start).toISOString();
       for(const [id,device] of Object.entries(store.devices)){
        if(closed)break;if(store.devices[id]!==device||!device.matchIds.includes(match.id)||device.sent[key]||now()<start-device.minutes*60000||now()>=start)continue;
        const host=new URL(device.subscription.endpoint).hostname,provider=host.endsWith('.push.apple.com')?'apple':host.endsWith('.notify.windows.com')?'windows':host;
-       if(!queues.has(provider))queues.set(provider,[]);
-       queues.get(provider).push(async()=>{
-       if(closed||store.devices[id]!==device||now()>=start)return;
+       enqueue(provider,async()=>{
+       const latest=store.devices[id];
+       if(closed||!sameSubscription(latest?.subscription,device.subscription)||!latest.matchIds.includes(match.id)||latest.sent[key]||now()<start-latest.minutes*60000||now()>=start)return;
        const event=feed.events?.find(e=>e.id===match.eventId),name=event?localizeEvent(event,new Date(start).getUTCFullYear()).name:'官方赛事';
        const teams=(match.teams||[]).map(team=>feed.teams?.[team]?.short||feed.teams?.[team]?.name||'待官方公布').join(' VS ');
        const time=new Date(start).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false});
-       const delivered=await deliver(id,device,{title:'赛点 · 比赛即将开始',body:`${name} · ${match.game==='apex'?'多队积分赛':teams}\n${time}（北京时间），距开赛约 ${Math.max(1,Math.ceil((start-now())/60000))} 分钟。`,tag:'matchpoint-'+createHash('sha256').update(key).digest('hex').slice(0,24),url:'/following?match='+encodeURIComponent(match.id)},Math.ceil((start-now())/1000));
-       const current=store.devices[id],sameSubscription=current&&['endpoint'].every(k=>current.subscription[k]===device.subscription[k])&&['p256dh','auth'].every(k=>current.subscription.keys[k]===device.subscription.keys[k]);
-       if(delivered&&sameSubscription){current.sent[key]=now();await persist();}
+       const delivered=await deliver(id,latest,{title:'赛点 · 比赛即将开始',body:`${name} · ${match.game==='apex'?'多队积分赛':teams}\n${time}（北京时间），距开赛约 ${Math.max(1,Math.ceil((start-now())/60000))} 分钟。`,tag:'matchpoint-'+createHash('sha256').update(key).digest('hex').slice(0,24),url:'/following?match='+encodeURIComponent(match.id)},Math.ceil((start-now())/1000));
+       const current=store.devices[id];
+       if(delivered&&sameSubscription(current?.subscription,device.subscription)){current.sent[key]=now();await persist();}
        });
       }
      }
-    }
-    await Promise.all([...queues.values()].map(async tasks=>{
-     let cursor=0;
-     await Promise.all(Array.from({length:Math.min(8,tasks.length)},async()=>{while(cursor<tasks.length){const task=tasks[cursor++];await task();}}));
     }));
-    if(dirty)await persist();
+    await Promise.all(workers);
+    if(dirty||savedRevision<revision)await persist();
+    if(errors.length)throw errors[0];
    })().finally(()=>{active=null;});return active;
   },
   start(){if(timer||closed)return;service.tick().catch(()=>console.warn('[Reminders] 暂时无法检查赛程'));timer=setInterval(()=>service.tick().catch(()=>console.warn('[Reminders] 暂时无法检查赛程')),30000);timer.unref();},
-  async close(){closed=true;clearInterval(timer);if(active)await active;if(loading)await loading;await writes;}
+  async close(){closed=true;clearInterval(timer);for(const stop of stopReads)stop();try{if(active)await active;}finally{if(loading)await loading;await writes;if(store&&savedRevision<revision)await persist();}}
  };
  return service;
 }

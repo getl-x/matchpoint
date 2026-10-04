@@ -1,9 +1,9 @@
 const assert=require('node:assert/strict'),fs=require('node:fs/promises');
-const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'C:/Users/getl/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const base=process.env.TEST_URL||'http://localhost:4179';
 (async()=>{
  const {normalizeRiot}=await import('../server/providers/riot.mjs'),fixture=JSON.parse(await fs.readFile(new URL('./fixtures/riot-official.json','file://'+__filename.replaceAll('\\','/')),'utf8')),feed=normalizeRiot(fixture,'valorant');
- const browser=await chromium.launch({headless:true,channel:'msedge'}),passed=[];
+ const browser=await chromium.launch({headless:true,channel:process.env.PLAYWRIGHT_CHANNEL||'msedge'}),passed=[];
  try{
   const context=await browser.newContext({viewport:{width:1440,height:1000}}),page=await context.newPage(),errors=[],updates=[];
   let subscriptionMode='success',releaseSubscription,subscriptionStarted,removalRejected=false,removals=0;

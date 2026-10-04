@@ -21,6 +21,22 @@ jobs:
         run: npm run check:syntax
       - name: Test official data and deployment behavior
         run: npm test
+      - name: Install browser for deterministic UI checks
+        run: npx --no-install playwright install --with-deps chromium
+      - name: Verify reminder UI and open PWA lifecycle
+        env:
+          HOST: 127.0.0.1
+          PORT: "4179"
+          MATCHPOINT_DATA_DIR: ${{ runner.temp }}/matchpoint-browser-data
+          MATCHPOINT_ARCHIVE_SYNC: "false"
+          TEST_URL: http://127.0.0.1:4179
+          PLAYWRIGHT_CHANNEL: chromium
+        run: |
+          node server.mjs > "$RUNNER_TEMP/matchpoint-browser.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          npm run smoke
+          npm run test:ui
       - uses: docker/setup-buildx-action@v3
       - name: Build runnable container
         uses: docker/build-push-action@v6

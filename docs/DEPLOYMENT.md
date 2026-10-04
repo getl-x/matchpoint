@@ -28,13 +28,13 @@ gh secret set DOCKERHUB_TOKEN --repo getl-x/matchpoint
 配置后运行 Actions → **Build and publish Docker Hub image** → Run workflow。正式版本使用 Git 标签：
 
 ```bash
-git tag v1.1.1
-git push origin v1.1.1
+git tag v1.1.2
+git push origin v1.1.2
 ```
 
-流水线先运行 Node 测试、语法检查、真实 Docker 构建和 Compose 冒烟，验证非 root、只读文件系统、健康检查、前端/PWA 文件、缓存图标、容器重建后卷数据保留，之后构建 `linux/amd64,linux/arm64` 并发布。
+流水线先运行 Node 测试、语法检查、隔离服务的通知与 PWA 生命周期浏览器检查、真实 Docker 构建和 Compose 冒烟，验证非 root、只读文件系统、健康检查、前端/PWA 文件、缓存图标、容器重建后卷数据保留，之后构建 `linux/amd64,linux/arm64` 并发布。
 
-标签规则：推送 main 发布 latest；版本标签 v1.1.1 发布 1.1.1 与 1.1；所有发布带 sha- 标签，手动运行可指定 edge 等自定义标签。版本应固定到具体标签或摘要，避免不可预期更新。
+标签规则：推送 main 发布 latest；版本标签 v1.1.2 发布 1.1.2 与 1.1；所有发布带 sha- 标签，手动运行可指定 edge 等自定义标签。版本应固定到具体标签或摘要，避免不可预期更新。
 
 缺少 Token 时，Registry 检查会明确说明 **not published**，publish Job 跳过，测试/真实镜像构建仍运行。Actions 的绿色检查不能单独作为已经推到 Docker Hub 的证据：应查看 publish Job 和步骤摘要中的镜像标签/摘要。
 
@@ -175,3 +175,5 @@ docker compose up -d matchpoint
 ```
 
 浏览器再次打开时更新 PWA，旧关注和主题保留。若关闭提醒时暂时离线，应用会先取消本机订阅，联网后重试删除服务端记录。
+
+1.1.2 起，可见页面每分钟也会重试提醒同步，临时失败后不需要重新打开网页。后台同步保留正在输入的分钟数和日历选项，只有保存或开启时才提交。通知调度按游戏来源独立处理已返回的数据，读取有超时限制；失效订阅按推送地址和密钥清理，避免同时保存设置时遗漏。发送去重记录写盘失败后会在后续检查或正常关闭时重试；持久化目录长期不可写或强制断电仍可能导致重复提醒。应用启动前检查存档、赛程快照、提醒和图标实际写入目录。

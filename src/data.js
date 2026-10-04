@@ -6,4 +6,4 @@ export const GAMES=[
 ];
 export const GAME=id=>GAMES.find(g=>g.id===id);
 export const TEAMS={};
-export const TODAY=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+export function today(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());}

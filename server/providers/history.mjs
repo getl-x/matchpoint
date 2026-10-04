@@ -32,8 +32,27 @@ export async function fetchHistory(record){
  let feed,standings=null;
  if(record.provider==='blast'){const data=decodeBlast(await publicFetch('https://blast.tv/cs/tournaments/'+record.nativeId)),detail=data.loaderData?.['routes/$gameId.tournaments.$tournamentId'];if(!detail?.tournamentBracketsPromise)throw new Error('官方已移除该赛事对阵');feed=normalizeBlast([detail]);}
  else if(record.provider==='valorant-cn'){const data=await Promise.allSettled([publicFetch(VAL+'VAL_Match_'+record.nativeId+'.json',true),publicFetch(VAL+'VAL_Game_'+record.nativeId+'.json',true),publicFetch(VAL+'VAL_GAME_'+record.nativeId+'_promotion.json',true)]);if(data[0].status==='rejected')throw new Error('官方暂未提供该赛事历史对阵');const info=data[1].status==='fulfilled'?data[1].value:{msg:{teams:[]}};const known=new Set((info.msg?.teams||[]).map(t=>String(t.teamId))),missing=[...new Set(data[0].value.msg.flatMap(m=>[m.teamAId,m.teamBId]).filter(Boolean).map(String))].filter(id=>!known.has(id)&&!data[0].value.msg.some(m=>String(m.teamAId)===id&&m.teamA||String(m.teamBId)===id&&m.teamB));for(let i=0;i<missing.length;i+=3){const found=await Promise.allSettled(missing.slice(i,i+3).map(async id=>{const p=await publicFetch(VAL+'VAL_Team_'+id+'.json',true);return p.msg;}));for(const r of found)if(r.status==='fulfilled'&&r.value?.teamId)(info.msg.teams||=[]).push(r.value);}feed=normalizeNativeValorant(record,data[0].value,info,data[2].status==='fulfilled'?data[2].value:{msg:[]});}
- else if(record.provider==='lol-cn'){const pageUrl=page=>LOL_QUERY+'?p1='+record.nativeId+'&p6=1&page='+page+'&pagesize=250&r1=retObj';const first=parseAssignment(await publicFetch(pageUrl(1)),'retObj');if(String(first.status)!=='0'||!Array.isArray(first.msg?.result))throw new Error('官方未提供该赛事历史比赛');const rows=[...first.msg.result],pages=Number(first.msg.totalpage||1),total=Number(first.msg.total),warnings=[];if(!Number.isInteger(pages)||pages<1||pages>500)throw new Error('官方分页数量无法核实');for(let p=2;p<=pages;p++){try{const page=parseAssignment(await publicFetch(pageUrl(p)),'retObj');if(!Array.isArray(page.msg?.result))throw new Error('官方历史分页暂不可读');rows.push(...page.msg.result);}catch{warnings.push('第'+p+'页暂不可读');}}const unique=[...new Map(rows.map(m=>[String(m.bMatchId),m])).values()];if(unique.length!==total)warnings.push('官方报告 '+total+' 场，实际可读 '+unique.length+' 场');feed=normalizeNativeLol(record,unique,await readLolTeams());if(warnings.length){feed.partial=true;feed.warning=warnings.join('；');feed.expectedMatchCount=total;feed.source.coverage='已保存可读取的官方历史场次；'+feed.warning+'，不补写缺失赛果';}}
- else if(record.provider==='algs'){let pending=seasonFeeds.get(record.seasonId);if(!pending){pending=publicFetch(API+'/series/seasons/'+record.seasonId,true).then(p=>normalizeApex(p.series,{name:record.seasonName}));seasonFeeds.set(record.seasonId,pending);pending.catch(()=>seasonFeeds.delete(record.seasonId));}const whole=await pending,event=whole.events.find(e=>e.id===record.id);if(!event)throw new Error('官方未提供该赛事');feed={...whole,events:[event],matches:whole.matches.filter(m=>m.eventId===record.id)};standings=await apexStandings(event);}
+ else if(record.provider==='lol-cn'){
+  const pageUrl=page=>LOL_QUERY+'?p1='+record.nativeId+'&p6=1&page='+page+'&pagesize=250&r1=retObj',first=parseAssignment(await publicFetch(pageUrl(1)),'retObj');
+  if(String(first.status)!=='0'||!Array.isArray(first.msg?.result))throw new Error('官方未提供该赛事历史比赛');
+  const rows=[...first.msg.result],pages=Number(first.msg.totalpage||1),total=Number(first.msg.total),warnings=[];
+  if(!Number.isInteger(pages)||pages<1||pages>500)throw new Error('官方分页数量无法核实');
+  for(let p=2;p<=pages;p++){try{const page=parseAssignment(await publicFetch(pageUrl(p)),'retObj');if(!Array.isArray(page.msg?.result))throw new Error('官方历史分页暂不可读');rows.push(...page.msg.result);}catch{warnings.push('第'+p+'页暂不可读');}}
+  const unique=[...new Map(rows.map(m=>[String(m.bMatchId),m])).values()];
+  if(unique.length!==total)warnings.push('官方报告 '+total+' 场，实际可读 '+unique.length+' 场');
+  feed=normalizeNativeLol(record,unique,await readLolTeams());
+  if(feed.matches.length!==unique.length)warnings.push('部分场次缺少有效日期，实际可展示 '+feed.matches.length+' 场');
+  if(warnings.length){feed.partial=true;feed.warning=warnings.join('；');feed.expectedMatchCount=total;feed.source.coverage='已保存可读取的官方历史场次；'+feed.warning+'，不补写缺失赛果';}
+ }
+ else if(record.provider==='algs'){
+  let cached=seasonFeeds.get(record.seasonId);
+  if(!cached||cached.fetchedAt!=null&&Date.now()-cached.fetchedAt>=60000){
+   const entry={fetchedAt:null};
+   entry.promise=publicFetch(API+'/series/seasons/'+record.seasonId,true).then(p=>{const feed=normalizeApex(p.series,{name:record.seasonName});entry.fetchedAt=Date.now();return feed;}).catch(error=>{if(seasonFeeds.get(record.seasonId)===entry)seasonFeeds.delete(record.seasonId);throw error;});
+   seasonFeeds.set(record.seasonId,entry);cached=entry;
+  }
+  const whole=await cached.promise,event=whole.events.find(e=>e.id===record.id);if(!event)throw new Error('官方未提供该赛事');feed={...whole,events:[event],matches:whole.matches.filter(m=>m.eventId===record.id)};standings=await apexStandings(event);
+ }
  else throw new Error('官方历史渠道未识别');
  if(!feed.matches.length)throw new Error('官方目录有赛事名称，暂无可读取比赛');return {feed,standings};
 }

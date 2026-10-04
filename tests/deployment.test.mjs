@@ -20,6 +20,14 @@ test('Runtime validates ports and booleans, and isolates writable generated file
  for(const port of ['0','65536','4177x','-1','1.5'])assert.throws(()=>loadConfig({PORT:port}),/PORT/);
  assert.throws(()=>loadConfig({MATCHPOINT_ARCHIVE_SYNC:'nope'}),/MATCHPOINT_ARCHIVE_SYNC/);
 });
+test('Startup rejects unusable nested directories used by archive and snapshot writers',async t=>{
+ const config=await setup(t);
+ for(const path of [join(config.archiveDirectory,'events'),join(config.dataDirectory,'feeds')]){
+  await rm(path,{recursive:true,force:true});await writeFile(path,'not a directory');
+  await assert.rejects(initializeStorage(config));
+  await rm(path);await initializeStorage(config);
+ }
+});
 test('Fresh persistent volumes serve health, PWA assets and an empty logo index without official networking',async t=>{
  const config=await setup(t),base=await serve(t,config,{readFeed:()=>{throw new Error('No official network in health');}});
  const health=await fetch(base+'/healthz');assert.equal(health.status,200);assert.equal(health.headers.get('cache-control'),'no-store');assert.equal((await health.json()).status,'ok');

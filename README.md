@@ -1,6 +1,6 @@
 # 赛点 Matchpoint
 
-CS2、无畏契约、英雄联盟和 Apex 电竞赛程、晋级图与历史查询网页，支持深浅主题、手机和 iOS PWA。当前版本 **1.1.1**。
+CS2、无畏契约、英雄联盟和 Apex 电竞赛程、晋级图与历史查询网页，支持深浅主题、手机和 iOS PWA。当前版本 **1.1.2**。
 
 比赛、比分、积分和战队 Logo 来自游戏官方公开来源；不提供模拟赛果或手动填队伍。通知使用开源 `web-push` 和浏览器提供的免费标准推送，不调用付费数据或模型接口。
 
@@ -55,6 +55,8 @@ npm ci --ignore-scripts
 npm start
 # http://localhost:4177/schedule
 npm test
+# 浏览器检查默认连接 4179，可用 TEST_URL 指定现有服务地址
+npm run test:ui
 npm run check:syntax
 npm run smoke
 ```
@@ -65,11 +67,11 @@ npm run smoke
 
 - 推送 `main`、创建 `v*` 标签、手动运行：测试 → 构建实际镜像 → Compose 验收 → Docker Hub 发布。
 - PR：仅测试和容器验收，不登录或发布镜像。
-- `latest` 表示默认分支；`v1.1.1` 发布 `1.1.1`、`1.1`；每次发布都有 `sha-<commit>`。
+- `latest` 表示默认分支；`v1.1.2` 发布 `1.1.2`、`1.1`；每次发布都有 `sha-<commit>`。
 - Actions 构建产物 `matchpoint-docker-amd64` 可以下载并 `docker load -i matchpoint-docker-amd64.tar.gz`，即使没有 Registry 凭据。
 
 ## 数据边界
 
 无畏契约和英雄联盟读取 Riot 近期赛程及中国官方历史目录；CS2 读取 BLAST 收录的赛事；Apex 读取 EA ALGS 公开赛程和积分。并非全部游戏、全部赛区或所有杯赛，也不保证官网已删除的数据可补齐。原始数据与图标归其权利人所有。具体渠道见 [docs/SOURCES.md](docs/SOURCES.md)，历史覆盖见 [docs/ARCHIVE.md](docs/ARCHIVE.md)。
 
-浏览器验收脚本需要本机 Playwright/Edge，可通过 `PLAYWRIGHT_MODULE` 指定包路径；不属于产品运行依赖。iPhone 安装与锁屏通知仍需实机验证。iOS / iPadOS 16.4+、HTTPS、从主屏幕打开应用后，点击铃铛 → 开启通知提醒；系统勿扰或专注模式、网络可能影响送达时间。
+通知和页面生命周期浏览器检查使用锁定的 Playwright 开发依赖，默认运行本机 Edge；设置 `PLAYWRIGHT_CHANNEL=chromium` 并运行 `npx playwright install chromium` 可使用 Chromium。默认测试服务地址为 `http://localhost:4179`，可通过 `TEST_URL` 指定运行中的服务。Actions 自动启动隔离服务并执行这些检查；测试工具不进入生产镜像。其他整体浏览器脚本可通过 `PLAYWRIGHT_MODULE` 指定包路径。iPhone 安装与锁屏通知仍需实机验证。iOS / iPadOS 16.4+、HTTPS、从主屏幕打开应用后，点击铃铛 → 开启通知提醒；系统勿扰或专注模式、网络可能影响送达时间。

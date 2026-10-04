@@ -1,5 +1,5 @@
 FROM node:24-alpine
-ARG VERSION=1.1.1
+ARG VERSION=1.1.2
 ARG VCS_REF=unknown
 LABEL org.opencontainers.image.title="Matchpoint" \
       org.opencontainers.image.description="Official esports schedules, brackets and archives" \

@@ -11,7 +11,7 @@ export function loadConfig(env=process.env){
 }
 export const runtimeConfig=loadConfig();
 export async function initializeStorage(config=runtimeConfig){
- for(const directory of new Set([config.dataDirectory,config.archiveDirectory,config.logoDirectory])){
+ for(const directory of new Set([config.dataDirectory,config.archiveDirectory,join(config.archiveDirectory,'events'),join(config.dataDirectory,'feeds'),join(config.dataDirectory,'reminders'),config.logoDirectory])){
   await mkdir(directory,{recursive:true});const probe=join(directory,'.write-probe-'+randomUUID());let file;
   try{file=await open(probe,'wx');await file.close();file=null;await unlink(probe);}catch(error){if(file)await file.close().catch(()=>{});await unlink(probe).catch(()=>{});throw new Error('数据目录无法写入：'+directory,{cause:error});}
  }
