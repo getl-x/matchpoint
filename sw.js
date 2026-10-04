@@ -1,4 +1,4 @@
-const CACHE='matchpoint-v9-official-team-logos';
+const CACHE='matchpoint-v10-production';
 const SHELL=['/index.html','/styles.css','/manifest.webmanifest','/assets/favicon.svg','/assets/mark.svg','/assets/hero.svg','/assets/icon-192.png','/assets/icon-512.png','/assets/icon-maskable.png','/src/app.js','/src/ui.js','/src/data.js','/src/state.js','/src/localization.js','/src/theme.js','/src/sources.js','/src/watch.js','/src/bracket.js','/src/mindmap.js','/src/elimination.js','/src/diagrams.js','/src/components.js','/src/logo-sources.js','/src/team-logos.js','/src/views/schedule.js','/src/views/bracket.js','/src/views/archive.js'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('matchpoint-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
