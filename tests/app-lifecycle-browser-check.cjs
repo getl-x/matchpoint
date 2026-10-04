@@ -65,10 +65,13 @@ const base=process.env.TEST_URL||'http://localhost:4179';
    await installedNotifications(context);await page.clock.install({time:new Date('2026-10-03T08:00:00Z')});
    await context.route('**/api/reminders/subscription',route=>route.fulfill({json:{subscribed:true}}));
    await page.goto(base+'/following');await page.locator('.notification-button').click();await page.locator('.reminder-status.enabled').waitFor();
+   await page.evaluate(()=>{window.__reminderRenders=0;new MutationObserver(()=>window.__reminderRenders++).observe(document.querySelector('#modal'),{childList:true});});
    for(const selector of ['[data-action="reminder-preset"][data-minutes="30"]','[data-action="reminder-save"]']){
-    await page.locator(selector).focus();const synced=page.waitForResponse(response=>response.url().endsWith('/api/reminders/subscription'));
+    await page.locator(selector).focus();const before=await page.evaluate(()=>window.__reminderRenders),synced=page.waitForResponse(response=>response.url().endsWith('/api/reminders/subscription'));
     await page.clock.fastForward(65000);await synced;
-    assert.equal(await page.locator(selector).evaluate(button=>button===document.activeElement),true);
+    // A response arrives before JSON parsing and the modal update complete.
+    // Query the current DOM atomically, rather than a handle replaced during that update.
+    await page.waitForFunction(({selector,before})=>window.__reminderRenders>before&&document.querySelector(selector)===document.activeElement,{selector,before},{timeout:2000});
    }
   });
   assert.deepEqual(failed,[]);console.log('App lifecycle browser checks: '+passed.length+' passed.');
