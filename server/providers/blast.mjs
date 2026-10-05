@@ -30,7 +30,7 @@ export async function blastFeed(){
  const all=[...Object.values(list.groupedFinishedTournaments||{}),...Object.values(list.groupedUpcomingTournaments||{})].flat().filter(t=>/^[a-z0-9-]+$/.test(t.id)),now=Date.now();
  const selected=selectBlastTournaments(all,now);
  const responses=await Promise.allSettled(selected.map(async t=>{const d=decodeBlast(await publicFetch('https://blast.tv/cs/tournaments/'+t.id));const detail=d.loaderData?.['routes/$gameId.tournaments.$tournamentId'];if(!detail?.tournamentBracketsPromise)throw new Error('赛事对阵尚未公布');return detail;}));
- const details=responses.filter(r=>r.status==='fulfilled').map(r=>r.value);if(!details.length)throw new Error('BLAST 赛事详情暂时无法读取');const feed=normalizeBlast(details);if(details.length<selected.length)feed.warning='部分相邻赛事暂未读取到；已展示可读取的官方赛事';return feed;
+ const details=responses.filter(r=>r.status==='fulfilled').map(r=>r.value);if(!details.length)throw new Error('BLAST 赛事详情暂时无法读取');const feed=normalizeBlast(details);feed.partial=details.length<selected.length;if(feed.partial)feed.warning='部分相邻赛事暂未读取到；已展示可读取的官方赛事';return feed;
 }
 
 export function selectBlastTournaments(all,now=Date.now()){const active=all.filter(t=>Date.parse(t.startDate)<=now&&Date.parse(t.endDate)>=now),upcoming=all.filter(t=>Date.parse(t.startDate)>now).sort((a,b)=>Date.parse(a.startDate)-Date.parse(b.startDate)),recent=all.filter(t=>Date.parse(t.endDate)<now).sort((a,b)=>Date.parse(b.endDate)-Date.parse(a.endDate));return [...new Map([...active,...upcoming.slice(0,1),...recent.slice(0,1)].map(t=>[t.id,t])).values()].slice(0,3);}

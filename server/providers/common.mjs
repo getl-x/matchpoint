@@ -1,8 +1,8 @@
 import {teamLogoSources} from '../../src/logo-sources.js';
-export async function publicFetch(url, json=false) {
+export async function publicFetch(url, json=false, headers={}) {
  const controller=new AbortController(); const timer=setTimeout(()=>controller.abort(),15000);
  try {
-  const response=await fetch(url,{signal:controller.signal,headers:{'User-Agent':'Matchpoint/0.2 (public esports schedule reader)','Accept':json?'application/json':'text/html'}});
+  const response=await fetch(url,{signal:controller.signal,headers:{'User-Agent':'Matchpoint/0.2 (public esports schedule reader)','Accept':json?'application/json':'text/html',...headers}});
   if(!response.ok)throw new Error('官方来源返回 '+response.status);
   const reader=response.body.getReader();const parts=[];let size=0;
   while(true){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>14*1024*1024){await reader.cancel();throw new Error('官方响应超出读取限制');}parts.push(Buffer.from(value));}

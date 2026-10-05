@@ -12,7 +12,9 @@ export function createSnapshotCache({directory=null,now=()=>Date.now()}={}){
    const stale=()=>({...old.value,stale:true,error:'官方来源暂时无法更新，显示上次读取结果'});
    if(failures.get(key)>now()-15000){if(old)return stale();throw new Error('官方来源暂时无法读取，请稍后重试');}
    try{
-    const value=await loader();cache.set(key,{value,checkedAt:now()});failures.delete(key);
+    const value=await loader();
+    if(value.partial&&old)throw new Error('官方仅返回部分数据，保留上次快照');
+    cache.set(key,{value,checkedAt:now()});failures.delete(key);
     if(directory){try{await mkdir(directory,{recursive:true});const target=file(key),tmp=target+'.tmp';await writeFile(tmp,JSON.stringify({version:1,key,value}),'utf8');await rename(tmp,target);}catch(error){console.warn('[Official cache] persistence:',error.message);}}
     return {...value,stale:false};
    }catch(error){failures.set(key,now());console.warn('[Official feed]',key,error.message);if(old)return stale();throw new Error('官方来源暂时无法读取，请稍后重试');}

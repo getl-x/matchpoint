@@ -21,6 +21,21 @@ const base=process.env.TEST_URL||'http://localhost:4179';
   });
  }
  try{
+  await check('An official live match stays visible after Beijing midnight and retains its original start date',async({context,page})=>{
+   const raw={...structuredClone(fixture.find(e=>e.state==='unstarted')),id:'overnight-official',state:'inProgress',startTime:'2026-10-03T15:30:00Z'},liveFeed=normalizeRiot([raw],'valorant');
+   await context.route('**/api/feed?game=*',route=>{const game=new URL(route.request().url()).searchParams.get('game');return route.fulfill({json:game==='valorant'?liveFeed:{game,source:liveFeed.source,matches:[],events:[],teams:{}}});});
+   await page.clock.install({time:new Date('2026-10-03T15:59:30Z')});
+   await page.goto(base+'/schedule');await page.locator('.live-card-body[data-id="valorant:overnight-official"]').waitFor();
+   await page.clock.fastForward(120000);
+   assert.equal(await page.locator('.calendar-picker input').inputValue(),'2026-10-04');
+   await page.locator('[data-action="status"][data-status="live"]').click();
+   assert.equal(await page.locator('.live-card').count(),1);
+   await page.locator('.live-card-body').click();await page.locator('dialog[open]').waitFor();
+   assert.match(await page.locator('.detail-info').innerText(),/2026-10-03 23:30/);
+   await page.locator('[data-action="close"]').click();
+   await page.locator('.calendar-picker input').fill('2026-10-02');assert.equal(await page.locator('.live-card').count(),0);
+   await page.locator('[data-action="today"]').click();assert.equal(await page.locator('.live-card').count(),1);
+  });
   await check('An open PWA moves today to the new Beijing day but preserves a manually chosen historical date',async({page})=>{
    await page.clock.install({time:new Date('2026-10-03T15:59:30Z')});
    await page.goto(base+'/schedule');await page.locator('.source-chip.ready').first().waitFor();

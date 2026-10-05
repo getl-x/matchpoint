@@ -6,12 +6,16 @@
 
 | 游戏 | 官网 / 官方 API | 当前读取方式与边界 |
 | --- | --- | --- |
-| 无畏契约 | https://valorantesports.com/en-US | 解析页面内 Apollo SSR EventMatch JSON；保留官方状态、BO 赛制、比分与胜负。官网只返回近期记录；未提供下一轮关系时不推算连线。 |
+| 无畏契约 | https://valorantesports.com/en-US | 解析页面内 Apollo SSR EventMatch JSON，并查询官网 /api/gql 的 homeEvents 公开持久化操作补齐进行中比赛；保留官方状态、BO 赛制、比分与胜负。官网只返回近期记录；未提供下一轮关系时不推算连线。 |
 | 英雄联盟 | https://lolesports.com/en-US | 同上，按官方赛事与阶段分组。 |
 | CS2 | https://blast.tv/cs/tournaments | 解析官网 React Router turbo-stream，安全解码索引、Date 与延迟数据；选择当前、最近及下一场赛事（最多三个）。读取官网瑞士轮分组、淘汰图及 winnerGoesTo，不猜测分组。BLAST 收录的其他主办方赛事不等于全部 CS2 比赛。 |
 | Apex | https://algs.ea.com/en / https://prod-api.algstools.com/v1 | API 基址直接见 EA 官方前端；读取 seasons/structure、series/seasons/:id、stats/phases/:id/standings。选择最新主赛季，按官方赛区、阶段、position 和 qualified 展示；不硬编码前十晋级。 |
 
 比分与比赛状态以来源返回为准，不凭开赛时间推断正在直播。来源未公布的队伍显示“待官方公布”；未开始时不把默认 0:0 当赛果。官方排名不自行重排。
+
+2026-10-05 核实：Riot 首页 SSR 仅查询 completed 和 unstarted，进行中比赛需另外以 eventState=["inProgress"] 读取 homeEvents。该请求使用官网公开查询清单中的操作 ID，无需登录或密钥，仍是 HTTPS GET；携带 JSON Content-Type 与 Apollo 客户端标识。进行中查询不限制开赛日期，以免漏掉跨午夜的比赛；合并时按官方比赛 ID 去重，以进行中接口记录更新旧 SSR 副本。接口失败或 GraphQL 返回错误时沿用已有快照的 stale 机制，不将缺少进行中数据的结果标为完整更新。
+
+今日赛程也显示昨天或更早开赛、官方仍标为进行中的比赛，保留原始开赛日期；历史和未来日期仍按开赛日期筛选。跨午夜不会依照时间猜测直播状态。BLAST 某个赛事或 ALGS 某个积分阶段读取失败时，若已有快照则保留该快照及其原读取时间，并明确标为更新失败的缓存，包括旧快照本身不完整的情况；首次读取没有旧快照时，仍可展示带部分数据标记的官方结果。
 
 请求超时 15 秒、响应上限 14 MiB；一分钟内复用服务器快照，并合并并发读取。某个来源失败时不阻塞其他来源。缓存保留原始 retrievedAt，失败后明确 stale。服务端重启后内存缓存重新读取；浏览器已读官方快照可供离线查看。
 

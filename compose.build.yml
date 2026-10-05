@@ -3,5 +3,3 @@ services:
     image: ${MATCHPOINT_IMAGE:-matchpoint:local}
     build:
       context: .
-      args:
-        VERSION: "1.0.0"
