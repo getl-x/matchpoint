@@ -8,6 +8,7 @@ import {resolve,sep,extname,join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createReminderService} from './server/reminders.mjs';
 import {createHash} from 'node:crypto';
+import {readAppVersion} from './server/app-version.mjs';
 const version=JSON.parse(await readFile(new URL('./package.json',import.meta.url),'utf8')).version;
 const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.webmanifest':'application/manifest+json; charset=utf-8','.json':'application/json; charset=utf-8'};
 const csp="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; frame-ancestors 'none'";
@@ -33,6 +34,8 @@ function sameOriginReminderRequest(req){
 }
 export function createAppServer({config=runtimeConfig,readFeed=officialFeed,readStandings=officialStandings,history=archive,logos=logoCache,reminders=reminderService,now=Date.now}={}){
  let nextSyncAt=0;
+ let appVersion;
+ const getAppVersion=()=>appVersion||(appVersion=readAppVersion(config.root));
  const rates=new Map();
  const json=(res,status,payload)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(payload));};
  const app=createServer(async(req,res)=>{
@@ -72,6 +75,7 @@ export function createAppServer({config=runtimeConfig,readFeed=officialFeed,read
     try{
      let payload;
      switch(url.pathname){
+      case '/api/app-version':payload=await getAppVersion();break;
       case '/api/feed':{
        const game=url.searchParams.get('game');if(!['cs2','valorant','lol','apex'].includes(game)){json(res,400,{error:'请选择支持的游戏'});return;}
        payload=await logos.decorateFeed(await readFeed(game));break;
@@ -109,7 +113,9 @@ export function createAppServer({config=runtimeConfig,readFeed=officialFeed,read
    }else if(path.startsWith('/assets/team-logo-')){res.writeHead(404);res.end('Not found');return;}
    else{file=resolve(config.root,'.'+path);const publicRoot=path.startsWith('/src/')?join(config.root,'src'):path.startsWith('/assets/')?join(config.root,'assets'):config.root;if(!file.startsWith(publicRoot+sep)){res.writeHead(404);res.end('Not found');return;}}
    if(!(await stat(file)).isFile()){res.writeHead(404);res.end('Not found');return;}
-   const bytes=await readFile(file);res.writeHead(200,{'Content-Type':types[extname(file)]||'application/octet-stream','Cache-Control':'no-cache'});res.end(req.method==='HEAD'?undefined:bytes);
+   let bytes=await readFile(file);
+   if(path==='/index.html')bytes=Buffer.from(bytes.toString('utf8').replace('__MATCHPOINT_BUILD__',(await getAppVersion()).build));
+   res.writeHead(200,{'Content-Type':types[extname(file)]||'application/octet-stream','Cache-Control':'no-cache'});res.end(req.method==='HEAD'?undefined:bytes);
   }catch(error){res.writeHead(error.code==='ENOENT'?404:400);res.end('Not found');}
  });
  app.headersTimeout=10000;app.requestTimeout=30000;app.keepAliveTimeout=5000;app.maxRequestsPerSocket=100;

@@ -14,7 +14,8 @@
     "test:logos": "node tests/team-logo-browser-check.cjs",
     "test:reminders": "node tests/reminder-browser-check.cjs",
     "test:lifecycle": "node tests/app-lifecycle-browser-check.cjs",
-    "test:ui": "npm run test:reminders && npm run test:lifecycle",
+    "test:updates": "node tests/pwa-update-browser-check.cjs",
+    "test:ui": "npm run test:reminders && npm run test:lifecycle && npm run test:updates",
     "smoke": "node scripts/smoke.mjs",
     "check:syntax": "node scripts/check-syntax.mjs"
   },
