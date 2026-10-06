@@ -142,7 +142,8 @@ const scrollPosition=page=>page.evaluate(()=>({x:scrollX,y:scrollY}));
    for(const game of games){
     const row=page.locator('.match-row[data-id="'+game+':finished"]');
     await row.evaluate(el=>el.scrollIntoView({block:'center'}));const before=await scrollPosition(page),rowBox=await row.boundingBox();assert.ok(before.y>300);
-    await row.click();await modalInViewport(page);assert.deepEqual(await scrollPosition(page),before);
+    await row.evaluate(el=>el.addEventListener('pointerdown',()=>window.__modalPointerDown={x:scrollX,y:scrollY},{once:true}));
+    await row.click();await modalInViewport(page);assert.deepEqual(await scrollPosition(page),before,game+' opening: '+JSON.stringify({before,rowBox,pointer:await page.evaluate(()=>window.__modalPointerDown)}));
     assert.deepEqual(await row.boundingBox(),rowBox,'Locking page scroll must not reflow the selected match');
     await page.locator('dialog').evaluate(el=>el.scrollTop=el.scrollHeight);
     assert.deepEqual(await scrollPosition(page),before,'Scrolling match details must not move the page');

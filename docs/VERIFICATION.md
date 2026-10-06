@@ -213,4 +213,6 @@ WebKit 验证使用桌面自动化浏览器引擎，未代替真实 iPhone/Safar
 
 验证：Edge/Chromium 与 WebKit 各 28 项手机布局/弹窗检查通过，包含 320 / 390 / 428px 及桌面长页面中四款游戏的详情开关、直播卡片、连续打开、改变视口高度、弹窗内部滚动、背景滚动锁定、屏幕外输入框焦点恢复、三种关闭方式及详情跳转。174 项 Node 测试、79 个文件语法检查、28 项整体浏览器检查及 24 项提醒/PWA 生命周期检查通过。真实官方赛事在 428px、3 倍像素密度下从 scrollY=1588 打开及关闭，滚动位置一致，弹窗标题与关闭按钮均在当前屏幕内。
 
+GitHub 的 Linux Chromium 随后发现连续关闭/滚动时，异步 `close` 事件会在下一次滚动之后再次恢复上一场位置。本机 Linux Chromium 复现了旧位置覆盖，修复为显式关闭及 Escape 同步完成滚动恢复与状态清理，原生 `close` 只保留兜底。完整 Linux Chromium 28 项及 Edge/WebKit 的 8 项弹窗回归重新通过。输入框原生焦点的滚动需完成后才设定测试阅读位置，避免自动化操作本身仍有待执行的焦点滚动；此检查仍验证弹窗打开和关闭位置一致。
+
 证据：`docs/mobile-layout-verification.json`、`docs/mobile-layout-webkit-verification.json`、`docs/screenshots/mobile-real-match-dialog.png`。本机 4177 服务已重启；PWA 缓存更新为 `matchpoint-v21-viewport-match-dialog`。WebKit 自动化仍不替代真实 iPhone 实机验收。
