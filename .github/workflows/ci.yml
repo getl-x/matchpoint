@@ -23,7 +23,7 @@ jobs:
         run: npm test
       - name: Install browser for deterministic UI checks
         run: npx --no-install playwright install --with-deps chromium
-      - name: Verify reminder UI and open PWA lifecycle
+      - name: Verify reminders, PWA lifecycle and mobile text layout
         env:
           HOST: 127.0.0.1
           PORT: "4179"

@@ -15,7 +15,8 @@
     "test:reminders": "node tests/reminder-browser-check.cjs",
     "test:lifecycle": "node tests/app-lifecycle-browser-check.cjs",
     "test:updates": "node tests/pwa-update-browser-check.cjs",
-    "test:ui": "npm run test:reminders && npm run test:lifecycle && npm run test:updates",
+    "test:mobile-layout": "node tests/mobile-layout-browser-check.cjs",
+    "test:ui": "npm run test:reminders && npm run test:lifecycle && npm run test:updates && npm run test:mobile-layout",
     "smoke": "node scripts/smoke.mjs",
     "check:syntax": "node scripts/check-syntax.mjs"
   },

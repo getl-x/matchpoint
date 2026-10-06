@@ -187,3 +187,20 @@ PWA 缓存更新为 `matchpoint-v18-compact-day-panels`。
 浏览器实测证据为 `docs/live-status-verification.json`，桌面和手机截图为 `docs/screenshots/live-status-fixed.png`、`docs/screenshots/live-status-mobile.png`。首次独立验收使用 4181 端口；按用户要求将原 `matchpoint` 保留为 `matchpoint-backup`、`matchpoint2` 改名为 `matchpoint` 后，已从新的主目录重启 4177 服务。浏览器验收同时支持对阵图自身已更新为 live 的情况，单场补读只在仍需修正时发生。
 
 限制：状态和比分仍取决于 BLAST、Riot 与 EA 上游更新；BLAST 对外部主办方比赛不保证提供实时逐局数据。无畏契约与 Apex 当时没有进行中实赛，本轮不能声称验证了它们当天不存在的直播。比赛超时提示仍表示来源状态待更新，不能凭时间提升为 live。
+
+## 2026-10-06 手机赛程文字裁切修复
+
+用户手机截图中的直播卡片使用固定 250px 宽度，游戏标题、关注按钮与 LIVE 标签的总宽度超过卡片；底部赛事名称与观看入口同样没有换行空间。赛程行只有 51px 时间列，宽字距的「北京时间」被拆成两行；左侧游戏色条覆盖时间，绝对定位的状态标签与赛事名称互相遮挡。此前只检查正文 scrollWidth，无法发现卡片内部被 overflow:hidden 隐藏的文字。
+
+修复：
+
+- 手机直播卡片使用随容器宽度展开的单列布局；平板使用两列、宽屏保留三列。标题、队伍名称与赛事名称允许换行，LIVE、比分、关注按钮与观看入口各自保留空间。
+- 手机赛程行按时间/状态/关注、赛事、对阵三行布局。状态参与网格排版，左侧留出色条间距；时间说明不在汉字中间断行，长队名在各自区域内完整换行。
+- 选中赛事名称完整换行，窄屏状态筛选及较大比赛数量不越界。首页横幅高度随内容增长，说明与跳转按钮不会被固定高度裁掉。
+- 新增 `npm run test:mobile-layout`，并纳入 `test:ui` 与 GitHub 构建。检查文本 Range 的实际坐标、卡片与文字边界、同级控件重叠、时间标签断行，以及详情/关注/筛选行为；不再只依赖正文是否横向溢出。
+
+验证：Edge/Chromium 与 WebKit 各 20 项，共 40 项通过。每个引擎覆盖深浅主题下的 320 / 360 / 375 / 390 / 414 / 428 / 640px，四款游戏的长赛事名、长队名、未知对手、多个进行中卡片、Apex 多队比赛、关注页面与已选赛事；另检查 768 / 1024 / 1440 / 1920px 的直播卡片。174 项 Node 测试、79 个文件语法检查、28 项整体浏览器检查、9 项战队图标检查、7 项真实来源状态检查及 24 项提醒/PWA 生命周期检查通过。
+
+真实官方赛事的 428px、3 倍像素密度截图与文本边界检查通过；证据为 `docs/mobile-layout-verification.json`、`docs/mobile-layout-webkit-verification.json` 与 `docs/screenshots/mobile-match-text-428.png`。PWA 缓存更新为 `matchpoint-v20-mobile-match-layout`，并从主目录重启本机 4177 服务。
+
+WebKit 验证使用桌面自动化浏览器引擎，未代替真实 iPhone/Safari 实机验收。本轮只调整展示，比赛状态和数据仍取官方赛事来源。
