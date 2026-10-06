@@ -1,4 +1,4 @@
-import {archiveDiagrams} from './diagrams.js';
+import {archiveDiagrams,DIAGRAM_VERSION} from './diagrams.js';
 import {localizeEvent,localizeMatch} from './localization.js';
 import {GAMES,TEAMS,today} from './data.js';
 import {reminderPreferences} from './reminders.js';
@@ -17,4 +17,4 @@ export function nearestEvent(game){const matches=getMatches().filter(m=>m.game==
 
 export function saveArchive(){try{const entries=Object.entries(state.archive.loaded).slice(-12);let payload={version:1,index:state.archive.index,loaded:Object.fromEntries(entries)};while(JSON.stringify(payload).length>3000000&&entries.length){entries.shift();payload.loaded=Object.fromEntries(entries);}localStorage.setItem(ARCHIVE_KEY,JSON.stringify(payload));}catch{}}
 export function acceptArchiveIndex(payload){if(!Array.isArray(payload.records)||!payload.sources)throw new Error('存档目录格式无法识别');state.archive.index=payload;state.archive.status='ready';state.archive.error=null;saveArchive();}
-export function acceptArchiveEvent(id,payload){if(!payload.feed?.source?.retrievedAt||!payload.feed.events.some(e=>e.id===id))throw new Error('存档赛事身份无法识别');if(payload.diagrams?.version!==3)payload={...payload,diagrams:archiveDiagrams(payload.feed)};state.archive.loaded[id]=payload;state.archive.selected=id;state.archive.loadingId=null;Object.assign(TEAMS,payload.feed.teams);for(const phase of payload.standings?.phases||[])Object.assign(TEAMS,phase.teams);saveArchive();}
+export function acceptArchiveEvent(id,payload){if(!payload.feed?.source?.retrievedAt||!payload.feed.events.some(e=>e.id===id))throw new Error('存档赛事身份无法识别');if(payload.diagrams?.version!==DIAGRAM_VERSION)payload={...payload,diagrams:archiveDiagrams(payload.feed)};state.archive.loaded[id]=payload;state.archive.selected=id;state.archive.loadingId=null;Object.assign(TEAMS,payload.feed.teams);for(const phase of payload.standings?.phases||[])Object.assign(TEAMS,phase.teams);saveArchive();}

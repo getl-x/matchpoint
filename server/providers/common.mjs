@@ -13,4 +13,10 @@ export const phaseStatus=s=>({completed:'finished',finished:'finished',inProgres
 export function clock(iso){const d=iso?new Date(iso):new Date(NaN);if(!Number.isFinite(+d))return {date:null,time:'待公布',startsAt:null};const x=new Date(+d+8*3600000).toISOString();return {date:x.slice(0,10),time:x.slice(11,16),startsAt:d.toISOString()};}
 export function team(id,t,game,teams){if(!t||!(t.id||t.uuid||id)||!t.name)return null;const key=game+':'+(t.id||t.uuid||id);teams[key]={id:key,name:t.name,short:t.code||t.shortName||t.shorthand||t.name,mark:(t.code||t.shortName||t.shorthand||t.name).slice(0,3).toUpperCase(),color:game==='cs2'?'#c99b54':game==='apex'?'#d96c69':game==='lol'?'#59a9aa':'#e56e87',logos:teamLogoSources(t,game)};return key;}
 export function safeLink(value){try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password?u.href:null;}catch{return null;}}
-export function finish(game,name,url,matches,teams,events,extra={}){return {game,source:{name,url,coverage:extra.coverage||'官网公开的近期赛程',retrievedAt:new Date().toISOString()},matches:matches.filter(m=>m.date).sort((a,b)=>a.startsAt.localeCompare(b.startsAt)),teams,events,...extra};}
+// A match whose published start time has passed while the source still reports it as not
+// started is a statement about the source's freshness, not about the match. It never changes
+// status and never produces live: Riot publishes live through its own in-progress read, BLAST
+// through bracket isLive or the official match page's matchState, and missing states stay unknown.
+export const OVERDUE_GRACE_MS=5*60000;
+export const markStartOverdue=(matches,now)=>matches.map(m=>({...m,startOverdue:Boolean(m.startsAt)&&!['finished','cancelled','postponed','live'].includes(m.status)&&Date.parse(m.startsAt)<=now-OVERDUE_GRACE_MS}));
+export function finish(game,name,url,matches,teams,events,extra={}){const {now=Date.now(),...rest}=extra;return {game,source:{name,url,coverage:rest.coverage||'官网公开的近期赛程',retrievedAt:new Date().toISOString()},matches:markStartOverdue(matches.filter(m=>m.date),now).sort((a,b)=>a.startsAt.localeCompare(b.startsAt)),teams,events,...rest};}

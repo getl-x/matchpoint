@@ -53,10 +53,10 @@ const event='cs2:iem-cologne-major-2026';
   await page.locator('.swiss').first().screenshot({path:'docs/screenshots/swiss-complete-dark.png'});
   await page.locator('.swiss .map-outcome').first().screenshot({path:'docs/screenshots/swiss-outcome-complete.png'});
   await page.locator('.swiss .map-group').nth(1).screenshot({path:'docs/screenshots/swiss-group-complete.png'});
-  await page.locator('.theme-toggle').click();const light=await read();
+  await page.locator('.theme-toggle[data-action="theme"]').click();const light=await read();
   assert.ok(light.groups.every(g=>!g.subtitleClipped&&!g.titleClipped&&!g.footerClipped));assert.ok(light.outcomes.every(x=>!x.clipped.length));
   await page.locator('.swiss').first().screenshot({path:'docs/screenshots/swiss-complete-light.png'});
-  await page.locator('.theme-toggle').click();
+  await page.locator('.theme-toggle[data-action="theme"]').click();
   await page.setViewportSize({width:390,height:844});await page.locator('.swiss .map-group').first().scrollIntoViewIfNeeded();
   await page.screenshot({path:'docs/screenshots/swiss-complete-mobile.png'});
 

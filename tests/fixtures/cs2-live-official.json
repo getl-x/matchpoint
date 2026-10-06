@@ -1,0 +1,254 @@
+{
+  "capturedAt": "2026-10-06T12:39:26Z",
+  "sourceUrls": [
+    "https://blast.tv/cs/tournaments/esl-pro-league-season-24-2026",
+    "https://blast.tv/cs/tournaments/esl-pro-league-season-24-2026/match/edf0c081",
+    "https://blast.tv/cs/tournaments/esl-pro-league-season-24-2026/match/f9ef1897"
+  ],
+  "detail": {
+    "tournament": {
+      "id": "esl-pro-league-season-24-2026",
+      "name": "ESL Pro League Season 24 2026",
+      "startDate": "2026-10-03T12:00:00.000Z",
+      "endDate": "2026-10-11T12:00:00.000Z",
+      "circuit": {
+        "id": "cs-2026",
+        "name": "CS 2026",
+        "gameId": "cs"
+      },
+      "prizePool": "$1,000,000",
+      "numberOfTeams": 16,
+      "location": "Katowice, Poland",
+      "externalId": null,
+      "region": "",
+      "grouping": "",
+      "description": "The 24th Season of the ESL Pro League (EPL) takes place in Katowice, Poland. 16 teams will battle it between the 3rd and 11th of October, for a $300,000 prizepool.",
+      "metadata": {
+        "simulation": {
+          "enabled": false
+        }
+      }
+    },
+    "tournamentBracketsPromise": [
+      {
+        "tournamentUuid": "258ad4da-e36a-4d52-86a8-f67ce66855e6",
+        "tournamentName": "Group Stage",
+        "parentTournamentFormat": "",
+        "parentTournamentName": "ESL Pro League Season 24 2026",
+        "circuitName": "CS 2026",
+        "startDate": "2026-10-03T08:00:00.000Z",
+        "endDate": "2026-10-07T21:00:00.000Z",
+        "label": "Group Stage",
+        "groups": [
+          {
+            "id": "2:1",
+            "format": "BO3",
+            "date": "2026-10-06T12:00:00.000Z",
+            "matches": [
+              {
+                "uuid": "edf0c081-64a3-4f92-8b03-ce79c843f062",
+                "name": "2-1 Match 1",
+                "timeOfSeries": "2026-10-06T12:00:00.000Z",
+                "type": "BO3",
+                "index": 24,
+                "metadata": {
+                  "_t": "cs_match",
+                  "externalStreamUrl": "https://www.twitch.tv/eslcsb"
+                },
+                "teamA": {
+                  "uuid": "80b609cb-707b-48f2-83ee-0f68b8ba8cca",
+                  "name": "Spirit",
+                  "shorthand": "spirit",
+                  "location": "RU",
+                  "isEliminated": false
+                },
+                "teamB": {
+                  "uuid": "dfeac984-29e0-4264-8bd4-4a8efabdb4a4",
+                  "name": "1win",
+                  "shorthand": "1win",
+                  "location": "RU",
+                  "isEliminated": false
+                },
+                "teamAScore": 0,
+                "teamBScore": 0,
+                "maps": [],
+                "winnerGoesTo": null,
+                "loserGoesTo": null,
+                "isLive": false,
+                "isCompleted": false
+              }
+            ],
+            "numberQualifiedTeams": 3
+          },
+          {
+            "id": "1:2",
+            "format": "BO3",
+            "date": "2026-10-06T12:00:00.000Z",
+            "matches": [
+              {
+                "uuid": "f9ef1897-54ee-447b-af7e-621be23744f2",
+                "name": "1-2 Match 1",
+                "timeOfSeries": "2026-10-06T12:00:00.000Z",
+                "type": "BO3",
+                "index": 27,
+                "metadata": {
+                  "_t": "cs_match",
+                  "externalStreamUrl": "https://www.twitch.tv/eslcs"
+                },
+                "teamA": {
+                  "uuid": "3f141cb2-6daa-432b-9413-62e1934d12ce",
+                  "name": "G2",
+                  "shorthand": "g2",
+                  "location": "EU",
+                  "isEliminated": false
+                },
+                "teamB": {
+                  "uuid": "2af32ab7-6df2-40ad-83cb-7bc0a6cf5947",
+                  "name": "Parivision",
+                  "shorthand": "parivision",
+                  "location": "RU",
+                  "isEliminated": false
+                },
+                "teamAScore": 0,
+                "teamBScore": 0,
+                "maps": [],
+                "winnerGoesTo": null,
+                "loserGoesTo": null,
+                "isLive": false,
+                "isCompleted": false
+              }
+            ],
+            "numberEliminatedTeams": 3
+          }
+        ],
+        "matches": [],
+        "numberOfTeams": null,
+        "index": 0,
+        "format": "swiss-16"
+      }
+    ],
+    "tournamentMatchesPromise": []
+  },
+  "pages": [
+    {
+      "tournamentMatch": {
+        "id": "edf0c081-64a3-4f92-8b03-ce79c843f062",
+        "name": "2-1 Match 1",
+        "scheduledAt": "2026-10-06T12:00:00.000Z",
+        "type": "BO3",
+        "index": 24,
+        "externalId": null,
+        "circuit": {
+          "gameId": "cs",
+          "id": "cs-2026",
+          "name": "CS 2026"
+        },
+        "tournament": {
+          "id": "esl-pro-league-season-24-2026",
+          "name": "ESL Pro League Season 24 2026",
+          "startDate": "2026-10-03T12:00:00",
+          "endDate": "2026-10-11T12:00:00",
+          "prizePool": "$1,000,000",
+          "externalId": null,
+          "location": "Katowice, Poland"
+        },
+        "stage": {
+          "id": "258ad4da-e36a-4d52-86a8-f67ce66855e6",
+          "name": "Group Stage",
+          "format": "swiss-16",
+          "numberOfTeams": null,
+          "metadata": null,
+          "startDate": "2026-10-03T08:00:00",
+          "endDate": "2026-10-07T21:00:00",
+          "index": 0
+        },
+        "teamA": {
+          "id": "80b609cb-707b-48f2-83ee-0f68b8ba8cca",
+          "name": "Spirit",
+          "shortName": "spirit",
+          "nationality": "RU",
+          "externalId": "81",
+          "socialLinks": {}
+        },
+        "teamB": {
+          "id": "dfeac984-29e0-4264-8bd4-4a8efabdb4a4",
+          "name": "1win",
+          "shortName": "1win",
+          "nationality": "RU",
+          "externalId": null,
+          "socialLinks": {}
+        },
+        "teamAScore": 0,
+        "teamBScore": 0,
+        "maps": [],
+        "metadata": {
+          "_t": "cs_match",
+          "externalStreamUrl": "https://www.twitch.tv/eslcsb"
+        }
+      },
+      "isMatchExternal": true,
+      "matchState": "live",
+      "matchScores": []
+    },
+    {
+      "tournamentMatch": {
+        "id": "f9ef1897-54ee-447b-af7e-621be23744f2",
+        "name": "1-2 Match 1",
+        "scheduledAt": "2026-10-06T12:00:00.000Z",
+        "type": "BO3",
+        "index": 27,
+        "externalId": null,
+        "circuit": {
+          "gameId": "cs",
+          "id": "cs-2026",
+          "name": "CS 2026"
+        },
+        "tournament": {
+          "id": "esl-pro-league-season-24-2026",
+          "name": "ESL Pro League Season 24 2026",
+          "startDate": "2026-10-03T12:00:00",
+          "endDate": "2026-10-11T12:00:00",
+          "prizePool": "$1,000,000",
+          "externalId": null,
+          "location": "Katowice, Poland"
+        },
+        "stage": {
+          "id": "258ad4da-e36a-4d52-86a8-f67ce66855e6",
+          "name": "Group Stage",
+          "format": "swiss-16",
+          "numberOfTeams": null,
+          "metadata": null,
+          "startDate": "2026-10-03T08:00:00",
+          "endDate": "2026-10-07T21:00:00",
+          "index": 0
+        },
+        "teamA": {
+          "id": "3f141cb2-6daa-432b-9413-62e1934d12ce",
+          "name": "G2",
+          "shortName": "g2",
+          "nationality": "EU",
+          "externalId": "59",
+          "socialLinks": {}
+        },
+        "teamB": {
+          "id": "2af32ab7-6df2-40ad-83cb-7bc0a6cf5947",
+          "name": "Parivision",
+          "shortName": "parivision",
+          "nationality": "RU",
+          "externalId": "142",
+          "socialLinks": {}
+        },
+        "teamAScore": 0,
+        "teamBScore": 0,
+        "maps": [],
+        "metadata": {
+          "_t": "cs_match",
+          "externalStreamUrl": "https://www.twitch.tv/eslcs"
+        }
+      },
+      "isMatchExternal": true,
+      "matchState": "live",
+      "matchScores": []
+    }
+  ]
+}

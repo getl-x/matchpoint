@@ -31,7 +31,7 @@ const base=process.env.TEST_URL||'http://localhost:4177',event='valorant:cn:1000
   await preview.setContent('<!doctype html><html data-theme="dark"><head><link rel="stylesheet" href="'+base+'/styles.css"></head><body>'+markup+'</body></html>');
   await preview.locator('.elimination-canvas').evaluate(n=>n.style.transform='none');
   await preview.locator('.elimination-canvas').screenshot({path:'docs/screenshots/london-progressive-bracket.png'});await preview.close();
-  await page.locator('.theme-toggle').click();assert.ok((await read()).nodes.every(n=>!n.clipped));await page.locator('.theme-toggle').click();
+  await page.locator('.theme-toggle[data-action="theme"]').click();assert.ok((await read()).nodes.every(n=>!n.clipped));await page.locator('.theme-toggle[data-action="theme"]').click();
   const download=page.waitForEvent('download');await page.locator('[data-action="archive-export"]').click();const file=await download,exported=JSON.parse(await fs.readFile(await file.path(),'utf8'));
   assert.deepEqual(exported.feed.matches,saved.feed.matches);const stage=exported.diagrams.events.flatMap(e=>e.stages).find(s=>s.layout.type==='elimination');assert.ok(stage);assert.equal(stage.layout.edges.filter(e=>e.to===final).length,2);
   await page.waitForFunction(()=>navigator.serviceWorker.controller);

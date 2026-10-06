@@ -8,10 +8,14 @@
 | --- | --- | --- |
 | 无畏契约 | https://valorantesports.com/en-US | 解析页面内 Apollo SSR EventMatch JSON，并查询官网 /api/gql 的 homeEvents 公开持久化操作补齐进行中比赛；保留官方状态、BO 赛制、比分与胜负。官网只返回近期记录；未提供下一轮关系时不推算连线。 |
 | 英雄联盟 | https://lolesports.com/en-US | 同上，按官方赛事与阶段分组。 |
-| CS2 | https://blast.tv/cs/tournaments | 解析官网 React Router turbo-stream，安全解码索引、Date 与延迟数据；选择当前、最近及下一场赛事（最多三个）。读取官网瑞士轮分组、淘汰图及 winnerGoesTo，不猜测分组。BLAST 收录的其他主办方赛事不等于全部 CS2 比赛。 |
+| CS2 | https://blast.tv/cs/tournaments | 解析官网 React Router turbo-stream，安全解码索引、Date 与延迟数据；选择当前、最近及下一场赛事（最多三个）。读取官网瑞士轮分组、淘汰图及 winnerGoesTo；当前赛事临近或已到开赛时间、但对阵图仍未开始的比赛，补读官方单场页的 matchState。BLAST 收录的其他主办方赛事不等于全部 CS2 比赛。 |
 | Apex | https://algs.ea.com/en / https://prod-api.algstools.com/v1 | API 基址直接见 EA 官方前端；读取 seasons/structure、series/seasons/:id、stats/phases/:id/standings。选择最新主赛季，按官方赛区、阶段、position 和 qualified 展示；不硬编码前十晋级。 |
 
 比分与比赛状态以来源返回为准，不凭开赛时间推断正在直播。来源未公布的队伍显示“待官方公布”；未开始时不把默认 0:0 当赛果。官方排名不自行重排。
+
+2026-10-06 核实：BLAST 的赛事对阵图与官方单场页状态可能不一致。Spirit–1win 和 G2–Parivision 的对阵图仍为 isLive=false，单场页已发布 matchState="live"。当前读取 /cs/tournaments/<赛事ID>/match/<比赛UUID首段> 的官方页面，核对完整比赛 UUID 和赛事 ID，以 pre/live/post 对应未开始/进行中/已结束；保留原比赛 ID 和晋级关系。时间只用于选择要查询的比赛，不能单独把比赛改成进行中。单场页延迟 Promise 的 null、undefined 和已有索引引用均安全解析，不执行页面脚本。外部主办方比赛只提供默认 0:0 且没有地图或即时比分时，显示 VS。单场状态读取失败标记 partial，有旧快照时按现有缓存机制保留旧状态和读取时间。
+
+比赛状态检测不读取斗鱼、虎牙、B站、Twitch 等直播平台的开播标志、直播间标题、播放器或重播状态。这些频道仅作为观看入口。赛事频道可能持续重播，频道在线不代表某场比赛正在进行。当前四款游戏的检测源只包括 BLAST 官方比赛页、Riot 官方赛程状态与 EA ALGS 官方 series 状态。
 
 2026-10-05 核实：Riot 首页 SSR 仅查询 completed 和 unstarted，进行中比赛需另外以 eventState=["inProgress"] 读取 homeEvents。该请求使用官网公开查询清单中的操作 ID，无需登录或密钥，仍是 HTTPS GET；携带 JSON Content-Type 与 Apollo 客户端标识。进行中查询不限制开赛日期，以免漏掉跨午夜的比赛；合并时按官方比赛 ID 去重，以进行中接口记录更新旧 SSR 副本。接口失败或 GraphQL 返回错误时沿用已有快照的 stale 机制，不将缺少进行中数据的结果标为完整更新。
 

@@ -1,4 +1,4 @@
-const CACHE='matchpoint-v15-atomic-updates';
+const CACHE='matchpoint-v19-official-status-staleness';
 const APP_STATE='matchpoint-app-state',ACTIVE_BUILD='/__matchpoint-active-build',INSTALLED_BUILD='/__matchpoint-installed-build',CLIENT_BUILD='/__matchpoint-client-build/',RELEASE_PREFIX='matchpoint-release-';
 const SHELL=['/index.html','/styles.css','/manifest.webmanifest','/assets/favicon.svg','/assets/mark.svg','/assets/hero.svg','/assets/icon-192.png','/assets/icon-512.png','/assets/icon-maskable.png','/src/app.js','/src/app-update.js','/src/ui.js','/src/data.js','/src/state.js','/src/reminders.js','/src/calendar.js','/src/localization.js','/src/theme.js','/src/sources.js','/src/watch.js','/src/bracket.js','/src/mindmap.js','/src/elimination.js','/src/diagrams.js','/src/components.js','/src/logo-sources.js','/src/team-logos.js','/src/views/schedule.js','/src/views/bracket.js','/src/views/archive.js'];
 self.addEventListener('install',event=>event.waitUntil((async()=>{

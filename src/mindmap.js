@@ -26,10 +26,25 @@ export function layoutStageMap(event,groups,matches){
  return {type:'membership',nodes:[root,...nodes],edges:nodes.map(n=>({from:'event',to:n.id,kind:'membership'})),width:740,height};
 }
 
-// Large independent matches; these edges mean membership, never advancement.
-export function layoutStageCards(name,matches){
- const list=ordered(matches),columns=Math.min(3,Math.max(1,Math.ceil(list.length/6))),rows=Math.ceil(list.length/columns),height=Math.max(340,rows*188+126);
- const root={id:'stage-root',kind:'root',name,x:24,y:Math.min(290,Math.max(118,height/2-80)),width:220,height:160};
- const nodes=list.map((match,i)=>({id:match.id,kind:'match',match,column:Math.floor(i/rows),x:320+Math.floor(i/rows)*350,y:110+(i%rows)*188,width:290,height:154}));
- return {type:'stage-cards',nodes:[root,...nodes],edges:nodes.map(n=>({from:root.id,to:n.id,kind:'membership'})),width:320+columns*350-60+30,height};
+// Riot stages publish no group or round metadata, so the only honest sub-structure is the real
+// match day. Each day becomes one compact panel built from the same node kinds the Swiss view
+// uses, which keeps membership meaning membership and never asserts advancement.
+const PER_COLUMN=10,DAY_STEP=WIDTH+60;
+const weekday=date=>{const t=Date.parse(date+'T12:00:00');return Number.isFinite(t)?'周'+'日一二三四五六'[new Date(t).getDay()]:'';};
+const dayHeading=key=>key.length>=10?key.slice(5).replace('-','月')+'日':key;
+export function layoutStagePanels(name,matches){
+ const list=ordered(matches);
+ const days=new Map();
+ for(const m of list){const key=m.date||'日期待公布';if(!days.has(key))days.set(key,[]);days.get(key).push(m);}
+ const order=[...days.keys()],rank=new Map(order.map((key,i)=>[key,i]));
+ const columns=[];
+ for(const key of order){const day=days.get(key);for(let i=0;i<day.length;i+=PER_COLUMN)columns.push({key,part:i/PER_COLUMN,matches:day.slice(i,i+PER_COLUMN)});}
+ const nodes=columns.map((c,i)=>({id:'day:'+i,kind:'group',name:c.key,column:i,
+  heading:dayHeading(c.key),sublabel:'第 '+(rank.get(c.key)+1)+' 比赛日'+(c.part?' · 续':''),footerLabel:weekday(c.key),
+  matches:c.matches,width:WIDTH,height:HEADER+c.matches.length*ROW}));
+ const rootHeight=Math.max(160,110+Math.ceil([...String(name)].length/9)*27);
+ const span=Math.max(rootHeight,...nodes.map(n=>n.height));
+ for(const node of nodes){node.x=320+node.column*DAY_STEP;node.y=TOP+(span-node.height)/2;}
+ const root={id:'stage-root',kind:'root',name,column:-1,x:24,y:TOP+(span-rootHeight)/2,width:220,height:rootHeight};
+ return {type:'stage-panels',nodes:[root,...nodes],edges:nodes.map(n=>({from:root.id,to:n.id,kind:'membership'})),columnWidth:DAY_STEP,width:320+columns.length*DAY_STEP-60+30,height:TOP+span+76};
 }

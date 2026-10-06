@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {layoutElimination} from '../src/elimination.js';
-import {archiveDiagrams} from '../server/archive.mjs';
+import {archiveDiagrams,DIAGRAM_VERSION} from '../server/archive.mjs';
 const raw=JSON.parse(await readFile(new URL('./fixtures/london-official-bracket.json',import.meta.url)));
 const promotion=raw.feed.promotions.find(p=>p.templateName==='八支队伍双败淘汰赛');
 const matches=raw.feed.matches.filter(m=>m.stage===promotion.promotionName);
@@ -46,7 +46,7 @@ test('Nodes and paths stay within the diagram, never overlap, preserve official 
 
 test('Saved diagram exports use the same progressive finals layout without rewriting official matches',()=>{
  const before=JSON.stringify(raw.feed),diagrams=archiveDiagrams(raw.feed),stages=diagrams.events[0].stages;
- assert.equal(diagrams.version,3);const stage=stages.find(s=>s.name===promotion.promotionName);assert.equal(stage.layout.type,'elimination');
+ assert.equal(diagrams.version,DIAGRAM_VERSION);const stage=stages.find(s=>s.name===promotion.promotionName);assert.equal(stage.layout.type,'elimination');
  assert.equal(stage.layout.edges.filter(e=>e.to===id(1002186)).length,2);assert.equal(JSON.stringify(raw.feed),before);
 });
 

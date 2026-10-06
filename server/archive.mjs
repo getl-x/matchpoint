@@ -3,8 +3,8 @@ import {readFile,mkdir,writeFile,rename} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {createHash} from 'node:crypto';
 import {discoverHistory,fetchHistory} from './providers/history.mjs';
-import {archiveDiagrams} from '../src/diagrams.js';
-export {archiveDiagrams} from '../src/diagrams.js';
+import {archiveDiagrams,DIAGRAM_VERSION} from '../src/diagrams.js';
+export {archiveDiagrams,DIAGRAM_VERSION} from '../src/diagrams.js';
 const GAMES=['cs2','valorant','lol','apex'];
 const DAY=86400000;
 export function snapshotQuality(feed,standings){const matches=feed.matches;if(!matches.length)return 'unavailable';const unresolved=matches.some(m=>!['finished','cancelled'].includes(m.status)||(feed.game!=='apex'&&m.status==='finished'&&(!m.score||m.teams.some(t=>!t))));return unresolved||feed.partial||standings?.partial?'partial':'saved';}
@@ -57,7 +57,7 @@ export function createArchiveStore({directory=runtimeConfig.archiveDirectory,dis
   const payload={version:1,record:{...record,archiveStatus:status,archivedAt,matchCount:feed.matches.length,refreshWarning},feed,standings,diagrams:archiveDiagrams(feed),archivedAt};
   await atomic(pathFor(record.id),payload);index.records[record.id]={...index.records[record.id],...payload.record,lastAttemptAt:archivedAt,error:null};await persist();return payload;
  }
- async function readEvent(id,{refresh=false}={}){await init();const record=index.records[id];if(!record)throw new Error('官方历史目录中未找到该赛事');if(record.archivedAt&&!refresh){try{const payload=JSON.parse(await readFile(pathFor(id),'utf8'));if(!validPayload(payload,id))throw new Error('已保存的赛事存档格式无效');if(payload.diagrams?.version!==3){payload.diagrams=archiveDiagrams(payload.feed);await atomic(pathFor(id),payload);}return payload;}catch(e){if(e.code!=='ENOENT')throw e;}}
+ async function readEvent(id,{refresh=false}={}){await init();const record=index.records[id];if(!record)throw new Error('官方历史目录中未找到该赛事');if(record.archivedAt&&!refresh){try{const payload=JSON.parse(await readFile(pathFor(id),'utf8'));if(!validPayload(payload,id))throw new Error('已保存的赛事存档格式无效');if(payload.diagrams?.version!==DIAGRAM_VERSION){payload.diagrams=archiveDiagrams(payload.feed);await atomic(pathFor(id),payload);}return payload;}catch(e){if(e.code!=='ENOENT')throw e;}}
  if(pending.has(id))return pending.get(id);
  const previousStatus=record.archiveStatus;const work=(async()=>{record.archiveStatus='loading';try{await persist();return await saveEvent(record,await fetchEvent(record));}catch(error){const current=index.records[id];current.lastAttemptAt=new Date(now()).toISOString();current.error=error.message;if(current.archiveStatus==='loading')current.archiveStatus=current.archivedAt?previousStatus:'unavailable';await persist();throw error;}finally{pending.delete(id);}})();pending.set(id,work);return work;
  }
