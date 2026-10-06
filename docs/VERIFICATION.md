@@ -204,3 +204,13 @@ PWA 缓存更新为 `matchpoint-v18-compact-day-panels`。
 真实官方赛事的 428px、3 倍像素密度截图与文本边界检查通过；证据为 `docs/mobile-layout-verification.json`、`docs/mobile-layout-webkit-verification.json` 与 `docs/screenshots/mobile-match-text-428.png`。PWA 缓存更新为 `matchpoint-v20-mobile-match-layout`，并从主目录重启本机 4177 服务。
 
 WebKit 验证使用桌面自动化浏览器引擎，未代替真实 iPhone/Safari 实机验收。本轮只调整展示，比赛状态和数据仍取官方赛事来源。
+
+## 2026-10-06 滚动后比赛详情弹窗定位修复
+
+用户反馈：手机滚到赛程下方点击比赛，详情弹窗出现在整页上方，需要返回顶部查看。共享 `dialog` 样式的两处 `position:relative` 覆盖了模态弹窗的视口定位；打开时原生焦点行为会把滚动位置移到页面顶部。新增滚动后开关详情的检查在修复前实际失败，之前只验证弹窗内容与正文宽度，未核对当前位置。
+
+修复：共享弹窗改为固定在视口内居中，最大高度保留动态视口单位及旧浏览器回退，长内容在弹窗内滚动。打开时锁定页面滚动，按实际滚动条宽度补偿，避免手机凭空增加侧边空白并重新排版。记录当前页面与滚动位置，关闭按钮、遮罩点击及 Escape 关闭均保留阅读位置，恢复焦点使用 `preventScroll`；WebKit 的原生关闭焦点跳转额外用原滚动位置恢复。从详情进入晋级图时按新页面导航到顶部，不恢复旧页面位置。每次新打开详情从内容顶部开始；关闭按钮预留独立空间，避免遮住标题。滚动内容使用完整面板底色。
+
+验证：Edge/Chromium 与 WebKit 各 28 项手机布局/弹窗检查通过，包含 320 / 390 / 428px 及桌面长页面中四款游戏的详情开关、直播卡片、连续打开、改变视口高度、弹窗内部滚动、背景滚动锁定、屏幕外输入框焦点恢复、三种关闭方式及详情跳转。174 项 Node 测试、79 个文件语法检查、28 项整体浏览器检查及 24 项提醒/PWA 生命周期检查通过。真实官方赛事在 428px、3 倍像素密度下从 scrollY=1588 打开及关闭，滚动位置一致，弹窗标题与关闭按钮均在当前屏幕内。
+
+证据：`docs/mobile-layout-verification.json`、`docs/mobile-layout-webkit-verification.json`、`docs/screenshots/mobile-real-match-dialog.png`。本机 4177 服务已重启；PWA 缓存更新为 `matchpoint-v21-viewport-match-dialog`。WebKit 自动化仍不替代真实 iPhone 实机验收。

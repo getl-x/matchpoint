@@ -12,7 +12,7 @@ import {downloadCalendar} from './calendar.js';
 import {createAppUpdater} from './app-update.js';
 const root=document.querySelector('#app'),dialog=document.querySelector('#modal');
 let installEvent=null,lastFocus=null,detailId=null,archiveRequest=null,archiveReadAt=0,archiveUrlOpened=false;
-let reminderModal=false,pendingMatch=location.pathname==='/following'?new URL(location.href).searchParams.get('match'):null,currentDay=today();
+let reminderModal=false,pendingMatch=location.pathname==='/following'?new URL(location.href).searchParams.get('match'):null,currentDay=today(),modalScrollPosition=null;
 const reminders=createReminderController({state,save,onChange:()=>{if(reminderModal&&dialog.open)renderReminderSettings(true);if(state.route==='following')renderContent();}});
 function renderReminderSettings(preserveDraft=false){
  const minutes=preserveDraft&&dialog.querySelector('#reminder-minutes'),calendar=dialog.querySelector('#reminder-calendar');
@@ -56,8 +56,18 @@ function showAppUpdate(available){
  document.body.append(notice);
 }
 const appUpdater=createAppUpdater({onChange:showAppUpdate});
-function openModal(html){if(!dialog.open)lastFocus=document.activeElement;dialog.innerHTML='<button class="modal-close" data-action="close" aria-label="关闭弹窗">'+icon('close')+'</button>'+html;if(!dialog.open)dialog.showModal();}
-function closeModal(){detailId=null;reminderModal=false;dialog.close();if(lastFocus?.isConnected)lastFocus.focus();}
+// Native focus restoration must not move the reader; intentional navigation still starts at the top.
+function restoreModalScroll(){if(modalScrollPosition&&state.route===modalScrollPosition.route)window.scrollTo({left:modalScrollPosition.x,top:modalScrollPosition.y,behavior:'instant'});}
+function openModal(html){
+ const opening=!dialog.open;
+ if(opening){
+  lastFocus=document.activeElement;modalScrollPosition={x:scrollX,y:scrollY,route:state.route};
+  document.documentElement.style.setProperty('--modal-scrollbar-width',Math.max(0,innerWidth-document.documentElement.clientWidth)+'px');
+ }
+ dialog.innerHTML='<button class="modal-close" data-action="close" aria-label="关闭弹窗">'+icon('close')+'</button>'+html;
+ if(opening){dialog.showModal();dialog.scrollTop=0;restoreModalScroll();}
+}
+function closeModal(){detailId=null;reminderModal=false;dialog.close();if(lastFocus?.isConnected)lastFocus.focus({preventScroll:true});restoreModalScroll();}
 function navigate(route,push=true){if(!['schedule','bracket','archive','following'].includes(route))route='schedule';state.route=route;state.search='';state.status='all';if(route==='following'){state.game='all';state.event='all';}if(route==='bracket'&&state.game!=='all')state.bracketGame=state.game;if(push)history.pushState({},'', '/'+route);render();window.scrollTo({top:0});}
 function linkGroup(title,links){return '<section class="watch-group"><h3>'+title+'</h3><div class="watch-links">'+links.map((l,i)=>'<a class="watch-link" href="'+escape(l.url)+'" target="_blank" rel="noopener noreferrer"><span class="watch-logo">'+(title==='官方渠道'?icon('check'):icon('play'))+'</span><span><b>'+escape(l.name)+'</b><small>'+escape(l.note)+'</small></span>'+icon('arrow')+'</a>').join('')+'</div></section>';}
 function originalNameInfo(m){if(!m.originalEvent||m.originalEvent===m.event)return '';const source=m.nameSource;return '<details class="original-name-info"><summary>查看赛事原名与中文名称来源 '+icon('chevron')+'</summary><p>赛事原名：'+escape(m.originalEvent)+'</p>'+(m.originalStage!==m.stage?'<p>阶段原名：'+escape(m.originalStage)+'</p>':'')+'<p>'+(m.namingType==='official'&&source?.url?'<a href="'+escape(source.url)+'" target="_blank" rel="noopener noreferrer">中文名称采用'+escape(source.name)+'</a>':'海外赛事采用中文译名，保留原名供核对。')+'</p></details>';}
@@ -121,7 +131,7 @@ document.addEventListener('click',event=>{const menu=event.target.closest('.sele
 document.addEventListener('input',event=>{if(event.target.id==='search'){state.search=event.target.value;if(state.route==='bracket'){navigate('schedule');state.search=event.target.value;}if(state.route==='archive')state.archive.page=0;renderContent();}});
 document.addEventListener('change',event=>{if(event.target.dataset.archiveFilter==='year'){state.archive.year=event.target.value;state.archive.page=0;renderContent();return;}if(event.target.dataset.action==='pick-date'&&event.target.value){updateDay();state.date=event.target.value;renderContent();}});
 document.addEventListener('keydown',event=>{if(event.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)&&!dialog.open){event.preventDefault();document.querySelector('#search').focus();}if((event.key==='Enter'||event.key===' ')&&event.target.classList.contains('match-row')){event.preventDefault();showDetail(event.target.dataset.id);}});
-dialog.addEventListener('close',()=>{detailId=null;reminderModal=false;});
+dialog.addEventListener('close',()=>{if(dialog.open)return;detailId=null;reminderModal=false;document.documentElement.style.removeProperty('--modal-scrollbar-width');restoreModalScroll();modalScrollPosition=null;});
 dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)closeModal();}});
 window.addEventListener('popstate',()=>navigate(location.pathname.slice(1),false));window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installEvent=event;});
 window.addEventListener('online',()=>{render();refreshFeeds();});window.addEventListener('offline',()=>{for(const s of Object.values(state.sources)){if(s.status==='ready')s.status='cached';}render();toast('网络已断开，显示上次读取的官方赛程');});

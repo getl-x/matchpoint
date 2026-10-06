@@ -61,6 +61,19 @@ async function layoutIssues(page,liveOnly=false){
  },liveOnly);
 }
 
+async function modalInViewport(page){
+ const geometry=await page.locator('dialog[open]').evaluate(dialog=>{
+  const viewport=visualViewport,box=dialog.getBoundingClientRect(),close=dialog.querySelector('.modal-close').getBoundingClientRect(),heading=dialog.querySelector('.modal-league,h2').getBoundingClientRect(),header=document.createRange();header.selectNodeContents(dialog.querySelector('.modal-eyebrow'));
+  return {box:box.toJSON(),close:close.toJSON(),heading:heading.toJSON(),header:[...header.getClientRects()].map(rect=>rect.toJSON()),left:viewport?.offsetLeft||0,top:viewport?.offsetTop||0,width:viewport?.width||innerWidth,height:viewport?.height||innerHeight,scrollTop:dialog.scrollTop};
+ });
+ for(const name of ['box','close','heading']){
+  const box=geometry[name];
+  assert.ok(box.left>=geometry.left-1&&box.right<=geometry.left+geometry.width+1&&box.top>=geometry.top-1&&box.bottom<=geometry.top+geometry.height+1,name+' must be visible in the current viewport: '+JSON.stringify(geometry));
+ }
+ for(const text of geometry.header)assert.ok(Math.min(text.right,geometry.close.right)-Math.max(text.left,geometry.close.left)<=1||Math.min(text.bottom,geometry.close.bottom)-Math.max(text.top,geometry.close.top)<=1,'The close button must not cover the match header');
+}
+const scrollPosition=page=>page.evaluate(()=>({x:scrollX,y:scrollY}));
+
 (async()=>{
  const {createAppServer}=await import('../server.mjs'),{loadConfig}=await import('../server/config.mjs');
  const root=await fs.mkdtemp(path.join(os.tmpdir(),'matchpoint-mobile-layout-')),feeds=Object.fromEntries(games.map(game=>[game,fixture(game)]));
@@ -69,6 +82,7 @@ async function layoutIssues(page,liveOnly=false){
  let browser;
  const passed=[],failed=[];
  async function check(name,work){
+  if(process.env.TEST_FILTER&&!new RegExp(process.env.TEST_FILTER).test(name))return;
   const context=await browser.newContext({viewport:{width:428,height:926},serviceWorkers:'block'}),page=await context.newPage(),errors=[];
   page.on('pageerror',error=>errors.push(error.message));
   await page.clock.install({time:new Date('2026-10-06T13:11:00Z')});
@@ -122,6 +136,64 @@ async function layoutIssues(page,liveOnly=false){
    await page.locator('.event-select summary').click();await page.locator('[data-action="select-event"][data-event="valorant:layout-event"]').click();
    await page.locator('.status-tabs button>span').evaluateAll(spans=>spans.forEach(span=>span.textContent='1234'));
    assert.deepEqual(await layoutIssues(page),[]);
+  });
+  for(const viewport of [{width:320,height:640},{width:390,height:844},{width:428,height:926},{width:1440,height:900}])await check(viewport.width+'px: opening and closing scrolled match rows preserves the reading position',async({page})=>{
+   await page.setViewportSize(viewport);await page.goto(base+'/schedule');await loaded(page);
+   for(const game of games){
+    const row=page.locator('.match-row[data-id="'+game+':finished"]');
+    await row.evaluate(el=>el.scrollIntoView({block:'center'}));const before=await scrollPosition(page),rowBox=await row.boundingBox();assert.ok(before.y>300);
+    await row.click();await modalInViewport(page);assert.deepEqual(await scrollPosition(page),before);
+    assert.deepEqual(await row.boundingBox(),rowBox,'Locking page scroll must not reflow the selected match');
+    await page.locator('dialog').evaluate(el=>el.scrollTop=el.scrollHeight);
+    assert.deepEqual(await scrollPosition(page),before,'Scrolling match details must not move the page');
+    await page.locator('.modal-close').click();assert.equal(await page.locator('dialog[open]').count(),0);
+    assert.deepEqual(await scrollPosition(page),before,'Closing details must return to the same match');
+   }
+  });
+  await check('Scrolled live cards, repeated openings and viewport resizing keep details on screen',async({page})=>{
+   await page.goto(base+'/schedule');await loaded(page);
+   for(const game of ['cs2','lol','apex']){
+    const card=page.locator('.live-card-body[data-id="'+game+':live"]');
+    await card.evaluate(el=>el.scrollIntoView({block:'center'}));const before=await scrollPosition(page);
+    await card.click();await modalInViewport(page);assert.deepEqual(await scrollPosition(page),before);
+    assert.equal(await page.locator('dialog').evaluate(el=>el.scrollTop),0,'Each new match opens at its heading');
+    await page.setViewportSize({width:428,height:600});await modalInViewport(page);
+    await page.locator('dialog').evaluate(el=>el.scrollTop=el.scrollHeight);await page.locator('.modal-close').click();
+    await page.setViewportSize({width:428,height:926});
+   }
+   await page.locator('.live-card-body[data-id="cs2:live"]').click();await modalInViewport(page);
+   await page.screenshot({path:'docs/screenshots/mobile-match-modal'+(engine==='chromium'?'':'-'+engine)+'.png'});
+   await page.locator('.modal-close').click();
+  });
+  await check('Closing a dialog restores an off-screen focus target without jumping to the top',async({page})=>{
+   await page.goto(base+'/schedule');await loaded(page);await page.locator('#search').focus();
+   // Let the input's native focus scroll finish before setting a deliberate reading position.
+   await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+   const row=page.locator('.match-row[data-id="cs2:finished"]');
+   await row.evaluate(el=>el.scrollIntoView({block:'center'}));const before=await scrollPosition(page);assert.ok(before.y>300);
+   // A mobile tap or programmatic click can leave focus in an off-screen input.
+   await row.evaluate(el=>el.click());await modalInViewport(page);
+   assert.deepEqual(await scrollPosition(page),before,'Opening details must also preserve scroll when focus remains in an input');
+   await page.locator('.modal-close').click();assert.deepEqual(await scrollPosition(page),before);
+   assert.equal(await page.evaluate(()=>document.activeElement.id),'search');
+  });
+  await check('Escape and backdrop dismissal preserve page position; background wheel scrolling is blocked',async({page})=>{
+   await page.goto(base+'/schedule');await loaded(page);
+   const row=page.locator('.match-row[data-id="lol:finished"]');await row.evaluate(el=>el.scrollIntoView({block:'center'}));const before=await scrollPosition(page);
+   await row.click();await modalInViewport(page);
+   await page.mouse.move(2,200);await page.mouse.wheel(0,500);await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+   assert.deepEqual(await scrollPosition(page),before,'The background must not scroll behind the modal');
+   await page.keyboard.press('Escape');assert.equal(await page.locator('dialog[open]').count(),0);assert.deepEqual(await scrollPosition(page),before);
+   await row.click();await modalInViewport(page);await page.mouse.click(2,200);
+   assert.equal(await page.locator('dialog[open]').count(),0);assert.deepEqual(await scrollPosition(page),before);
+  });
+  await check('Navigating from a scrolled match dialog starts the new page at the top',async({page})=>{
+   await page.goto(base+'/schedule');await loaded(page);
+   const row=page.locator('.match-row[data-id="cs2:finished"]');await row.evaluate(el=>el.scrollIntoView({block:'center'}));assert.ok((await scrollPosition(page)).y>300);
+   await row.click();await page.locator('[data-action="open-bracket"]').click();
+   await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+   assert.equal(new URL(page.url()).pathname,'/bracket');assert.equal(await page.locator('dialog[open]').count(),0);
+   assert.deepEqual(await scrollPosition(page),{x:0,y:0},'Closing the old dialog must not undo intentional navigation');
   });
   await fs.writeFile('docs/mobile-layout'+(engine==='chromium'?'':'-'+engine)+'-verification.json',JSON.stringify({checkedAt:new Date().toISOString(),engine,passed,failed},null,2));
   assert.deepEqual(failed.map(failure=>failure.name),[]);console.log('Mobile layout browser checks: '+passed.length+' passed.');
